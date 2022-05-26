@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:six_am_mart/config/shared_prefs.dart';
 import '/enums/auth_status.dart';
 import '/config/urls.dart';
 import '/repositories/auth/base_auth_repo.dart';
@@ -26,8 +28,20 @@ class AuthRepository extends BaseAuthRepository {
       if (phoneNumber == null || password == null) {
         return;
       }
+      final prefs = SharedPrefs();
       final data = {'phone': phoneNumber, 'password': password};
       final response = await _dio.post(Urls.login, data: data);
+
+      if (response.statusCode == 200) {
+        final responseData = response.data as Map?;
+        if (responseData != null) {
+          final token = responseData['token'];
+
+          if (token != null) {
+            prefs.setToken(token);
+          }
+        }
+      }
 
       print('response ${response.data}');
     } on DioError catch (error) {
@@ -35,5 +49,22 @@ class AuthRepository extends BaseAuthRepository {
     } catch (error) {
       print('Error in login ${error.toString()}');
     }
+  }
+
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.containsKey('token')) {
+      print('This runs 1');
+
+      return true;
+      //final user = await getUser(prefs.getString('token'));
+      // if (user != null) {
+      //   print('User $user');
+      //   return true;
+      // }
+    }
+
+    return false;
   }
 }

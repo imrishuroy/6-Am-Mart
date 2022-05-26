@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/blocs/bloc/auth_bloc.dart';
+import 'package:six_am_mart/config/auth_wrapper.dart';
+import 'package:six_am_mart/config/custom_router.dart';
+import 'package:six_am_mart/repositories/user/user_repository.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/shared_prefs.dart';
 import 'repositories/auth/auth_repo.dart';
@@ -54,37 +58,29 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<AuthRepository>(
           create: (_) => AuthRepository(),
         ),
+        RepositoryProvider<UserRepository>(
+          create: (_) => UserRepository(),
+        )
       ],
-      child: MaterialApp(
-        //showPerformanceOverlay: true,
-        theme: ThemeData(
-          fontFamily: 'GoogleSans',
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+              userRepository: context.read<UserRepository>(),
+            ),
+          )
+        ],
+        child: MaterialApp(
+          //showPerformanceOverlay: true,
+          theme: ThemeData(
+            fontFamily: 'GoogleSans',
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          debugShowCheckedModeBanner: false,
 
-        // onGenerateRoute: CustomRouter.onGenerateRoute,
-        // initialRoute: SplashScreen.routeName,
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context
-                .read<AuthRepository>()
-                .loginUser(phoneNumber: '8540928489', password: '12345678');
-          },
-          child: Text('Login'),
+          onGenerateRoute: CustomRouter.onGenerateRoute,
+          initialRoute: AuthWrapper.routeName,
         ),
       ),
     );

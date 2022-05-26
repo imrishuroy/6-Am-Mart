@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/screens/sign-in/sign_in_screen.dart';
+import '/config/auth_wrapper.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -8,6 +10,12 @@ class CustomRouter {
         return MaterialPageRoute(
             settings: const RouteSettings(name: '/'),
             builder: (_) => const Scaffold());
+
+      case AuthWrapper.routeName:
+        return AuthWrapper.route();
+
+      case SignInScreen.routeName:
+        return SignInScreen.route();
 
       default:
         return _errorRoute();

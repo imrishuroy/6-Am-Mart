@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
-import 'package:six_am_mart/models/failure.dart';
-import 'package:six_am_mart/models/user.dart';
-import 'package:six_am_mart/repositories/user/base_user_repository.dart';
+import '/models/failure.dart';
+import '/models/user.dart';
+import '/repositories/user/base_user_repository.dart';
 
 class UserRepository extends BaseUserRepository {
   final _dio = Dio();
