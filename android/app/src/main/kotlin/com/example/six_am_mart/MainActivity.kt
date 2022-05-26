@@ -1,4 +1,4 @@
-package com.example.six_am_mart
+package com.sixamtech.sixam_mart
 
 import io.flutter.embedding.android.FlutterActivity
 
