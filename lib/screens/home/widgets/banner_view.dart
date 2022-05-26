@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:six_am_mart/config/urls.dart';
 
 import 'package:six_am_mart/helpers/dimensions.dart';
 import 'package:six_am_mart/models/banner.dart';
+import 'package:six_am_mart/widgets/display_image.dart';
 
 class BannerView extends StatelessWidget {
   final List<AppBanner?> banners;
@@ -28,19 +30,19 @@ class BannerView extends StatelessWidget {
         itemBuilder: (context, index, realIndex) {
           final banner = banners[index];
 
-          final imageUrl =
-              'https://6ammart-admin.6amtech.com/storage/app/public/banner/' +
-                  '${banner?.image}';
-          //final imgUrl = carouselImageUrls[index];
+          final imageUrl = '${Urls.bannerImg}${banner?.image}';
+
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                child: DisplayImage(imageUrl: imageUrl)
+
+                //  Image.network(
+                //   imageUrl,
+                //   fit: BoxFit.cover,
+                // ),
+                ),
           );
         },
       ),

@@ -27,7 +27,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     BlocProvider<HomeCubit>(
       create: (context) => HomeCubit(
         dashBoardRepository: context.read<DashBoardRepository>(),
-      )..loadBanners(),
+      )..load(),
       child: const HomeScreen(),
     ),
     Container(color: Colors.red, height: 400, width: 200.0),
