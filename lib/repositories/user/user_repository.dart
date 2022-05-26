@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:six_am_mart/config/shared_prefs.dart';
-import 'package:six_am_mart/config/urls.dart';
-
+import '/config/shared_prefs.dart';
+import '/config/urls.dart';
 import '/models/failure.dart';
-import '/models/user.dart';
 import '/repositories/user/base_user_repository.dart';
 
 class UserRepository extends BaseUserRepository {

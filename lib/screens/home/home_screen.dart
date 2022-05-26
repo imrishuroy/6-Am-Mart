@@ -1,11 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/screens/home/widgets/category_view.dart';
+import '/screens/home/widgets/category_view.dart';
 import '/screens/home/cubit/home_cubit.dart';
 import '/screens/home/widgets/banner_view.dart';
-
-import 'widgets/category_tile.dart';
 import 'widgets/display_card.dart';
 import 'widgets/search_bar.dart';
 

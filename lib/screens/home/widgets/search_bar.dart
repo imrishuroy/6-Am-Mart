@@ -17,7 +17,7 @@ class _SearchBarState extends State<SearchBar> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color.fromARGB(255, 202, 202, 202),
               blurRadius: 1, // soften the shadow
@@ -28,7 +28,7 @@ class _SearchBarState extends State<SearchBar> {
               ),
             )
           ]),
-      child: TextField(
+      child: const TextField(
         cursorColor: Colors.black87,
         decoration: InputDecoration(
             hintText: 'what you wish for ?',

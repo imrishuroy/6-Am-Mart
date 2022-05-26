@@ -7,13 +7,14 @@ class NavButton extends StatelessWidget {
   final ValueChanged<int> onTap;
   final Widget child;
 
-  NavButton({
+  const NavButton({
+    Key? key,
     required this.onTap,
     required this.position,
     required this.length,
     required this.index,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

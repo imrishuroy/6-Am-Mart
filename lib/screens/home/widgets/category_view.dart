@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/config/urls.dart';
-import 'package:six_am_mart/models/category.dart';
-
+import '/config/urls.dart';
+import '/models/category.dart';
 import 'category_tile.dart';
 
 class CategoryView extends StatelessWidget {

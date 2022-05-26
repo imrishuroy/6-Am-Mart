@@ -60,7 +60,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     print('Token  ${SharedPrefs().token}');
     return Scaffold(
       body: PageView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         itemCount: _screens.length,
         itemBuilder: (contex, index) {

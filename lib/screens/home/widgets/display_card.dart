@@ -16,7 +16,7 @@ class DisplayCard extends StatelessWidget {
               width: size.width * 0.8,
               height: 150,
               child: ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   child: Image.asset('assets/image/veggies.png',
@@ -25,7 +25,7 @@ class DisplayCard extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
@@ -34,7 +34,7 @@ class DisplayCard extends StatelessWidget {
                 width: size.width * 0.8,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child: Text(
+                child: const Text(
                   'Dummy Text',
                   textAlign: TextAlign.center,
                 ),
