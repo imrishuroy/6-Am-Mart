@@ -30,8 +30,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           print('User $user');
           //    final _prefs =awa SharedPreferences.getInstance();
 
-          emit(user != null
-              ? AuthState.authenticated(user)
+          emit(user
+              ? AuthState.authenticated(null)
               : AuthState.unauthenticated());
           break;
 
@@ -54,12 +54,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     return super.close();
   }
 
-  Future<User?> _tryGetUser() async {
+  // Future<User?> _tryGetUser() async {
+  Future<bool> _tryGetUser() async {
     try {
-      final user = await _userRepository.getUserDetails();
-      return user;
+      final result = await _userRepository.getUserDetails();
+      return result;
     } on Exception {
-      return null;
+      return false;
     }
   }
 }

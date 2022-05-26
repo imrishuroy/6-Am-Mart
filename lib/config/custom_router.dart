@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:six_am_mart/screens/dashboard/dashboard_screen.dart';
 import '/screens/sign-in/sign_in_screen.dart';
 import '/config/auth_wrapper.dart';
 
@@ -17,6 +18,8 @@ class CustomRouter {
       case SignInScreen.routeName:
         return SignInScreen.route();
 
+      case DashBoardScreen.routeName:
+        return DashBoardScreen.route();
       default:
         return _errorRoute();
     }
