@@ -8,4 +8,7 @@ class Urls {
   static const String login = '$_baseUrl/api/v1/auth/login';
 
   static const String customerInfo = '$_baseUrl/api/v1/customer/info';
+
+  static const String catagory = '$_baseUrl/api/v1/categories';
+  static const String banner = '$_baseUrl/api/v1/banners';
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/home/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/repositories/dashboard/dashboard_repository.dart';
+import 'package:six_am_mart/screens/home/cubit/home_cubit.dart';
+import '/screens/home/home_screen.dart';
 import '/config/shared_prefs.dart';
 import 'widgets/curved_nav_bar.dart';
 
@@ -20,9 +23,13 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   late PageController _pageController;
-  int _pageIndex = 0;
   final List<Widget> _screens = [
-    const HomeScreen(),
+    BlocProvider<HomeCubit>(
+      create: (context) => HomeCubit(
+        dashBoardRepository: context.read<DashBoardRepository>(),
+      )..loadBanners(),
+      child: const HomeScreen(),
+    ),
     Container(color: Colors.red, height: 400, width: 200.0),
     Container(color: Colors.red, height: 400, width: 200.0),
     Container(color: Colors.red, height: 400, width: 200.0),
@@ -45,7 +52,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    _pageIndex = 0;
     _pageController = PageController(initialPage: 0);
   }
 
@@ -63,13 +69,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
         child: CurvedNavigationBar(
             color: Colors.grey.shade200,
             backgroundColor: Colors.transparent,
             buttonBackgroundColor: Colors.green.shade400,
-            animationDuration: Duration(milliseconds: 360),
+            animationDuration: const Duration(milliseconds: 360),
             height: 60,
             items: _naviagtionIcons,
             onTap: (index) {
@@ -82,7 +88,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void _setPage(int pageIndex) {
     setState(() {
       _pageController.jumpToPage(pageIndex);
-      _pageIndex = pageIndex;
     });
   }
 }

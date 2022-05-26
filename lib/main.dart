@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:six_am_mart/blocs/bloc/auth_bloc.dart';
 import 'package:six_am_mart/config/auth_wrapper.dart';
 import 'package:six_am_mart/config/custom_router.dart';
+import 'package:six_am_mart/repositories/dashboard/dashboard_repository.dart';
 import 'package:six_am_mart/repositories/user/user_repository.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/shared_prefs.dart';
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<UserRepository>(
           create: (_) => UserRepository(),
+        ),
+        RepositoryProvider<DashBoardRepository>(
+          create: (_) => DashBoardRepository(),
         )
       ],
       child: MultiBlocProvider(
