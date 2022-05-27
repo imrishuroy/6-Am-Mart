@@ -4,8 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/config/auth_wrapper.dart';
+import '/theme/light_theme.dart';
 import '/blocs/bloc/auth_bloc.dart';
-import '/config/auth_wrapper.dart';
 import '/config/custom_router.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
 import '/repositories/user/user_repository.dart';
@@ -77,10 +78,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           //showPerformanceOverlay: true,
-          theme: ThemeData(
-            fontFamily: 'GoogleSans',
-            scaffoldBackgroundColor: Colors.white,
-          ),
+          theme: light(),
           debugShowCheckedModeBanner: false,
 
           onGenerateRoute: CustomRouter.onGenerateRoute,

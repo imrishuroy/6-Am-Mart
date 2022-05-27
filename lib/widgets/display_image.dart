@@ -18,8 +18,8 @@ class DisplayImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      width: width ?? 1000.0,
-      height: height,
+      //  width: width ?? 1000.0,
+      // height: height,
       // height: double.infinity,
       imageUrl: imageUrl ?? Urls.errorImage,
       fit: fit,

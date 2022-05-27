@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import '/models/module.dart';
 import '/models/category.dart';
 import '/models/banner.dart';
 import '/models/failure.dart';
@@ -17,12 +18,17 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(state.copyWith(status: HomeStatus.loading));
       final banners = await _dashBoardRepository.getBanners();
-      final categories = await _dashBoardRepository.getCategories();
+      final modules = await _dashBoardRepository.getModules();
+      // final categories = await _dashBoardRepository.getCategories();
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           status: HomeStatus.succuss,
           banners: banners,
-          categories: categories));
+          modules: modules,
+          categories: [],
+        ),
+      );
     } on Failure catch (failure) {
       emit(state.copyWith(failure: failure, status: HomeStatus.error));
     }

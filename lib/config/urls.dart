@@ -12,6 +12,8 @@ class Urls {
   static const String catagory = '$_baseUrl/api/v1/categories';
   static const String banner = '$_baseUrl/api/v1/banners';
 
+  static const String module = '$_baseUrl/api/v1/module';
+
   // Image Urls
 
   static const String categoryImg =
@@ -19,6 +21,9 @@ class Urls {
 
   static const String bannerImg =
       'https://6ammart-admin.6amtech.com/storage/app/public/banner/';
+
+  static const String moduleImg =
+      'https://6ammart-admin.6amtech.com/storage/app/public/module/';
 
   // error image
   static const String errorImage =

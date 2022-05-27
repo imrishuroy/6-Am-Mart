@@ -17,15 +17,17 @@ class BannerView extends StatelessWidget {
     return Expanded(
       child: CarouselSlider.builder(
         options: CarouselOptions(
-            height: size.height * 0.18,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 3),
-            autoPlayAnimationDuration: const Duration(milliseconds: 1000),
-            onPageChanged: (index, reason) {
-              // setState(() {
-              //   topCarouselActiveIndex = index;
-              // });
-            }),
+          // height: size.height * 0.18,
+          height: size.height * 0.16,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+          onPageChanged: (index, reason) {
+            // setState(() {
+            //   topCarouselActiveIndex = index;
+            // });
+          },
+        ),
         itemCount: banners.length,
         itemBuilder: (context, index, realIndex) {
           final banner = banners[index];
@@ -36,9 +38,12 @@ class BannerView extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                child: DisplayImage(imageUrl: imageUrl)
+                child: DisplayImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                )
 
-                //  Image.network(
+                //     Image.network(
                 //   imageUrl,
                 //   fit: BoxFit.cover,
                 // ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:six_am_mart/models/category.dart';
+import 'package:six_am_mart/models/module.dart';
 import '/config/urls.dart';
 import '/models/banner.dart';
 import '/models/failure.dart';
@@ -14,7 +15,7 @@ class DashBoardRepository extends BaseDashBoardRepo {
       final headers = {
         'Content-Type': 'application/json; charset=UTF-8',
         'zoneID': '1',
-        'moduleID': '1',
+        'moduleID': '0',
       };
 
       final response =
@@ -37,6 +38,28 @@ class DashBoardRepository extends BaseDashBoardRepo {
     } catch (error) {
       print('Error in getting banners ${error.toString()}');
       throw const Failure(message: 'Error getting banners');
+    }
+  }
+
+  Future<List<Module?>> getModules() async {
+    try {
+      List<Module?> modules = [];
+
+      final response = await _dio.get(Urls.module);
+      if (response.statusCode == 200) {
+        final data = response.data as List? ?? [];
+
+        for (var element in data) {
+          modules.add(Module.fromMap(element));
+        }
+      }
+      return modules;
+    } on DioError catch (error) {
+      print('Error in getting modules ${error.message}');
+      throw Failure(message: error.message);
+    } catch (error) {
+      print('Error getting modules ${error.toString()}');
+      throw const Failure(message: 'Error getting modules');
     }
   }
 

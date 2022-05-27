@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/screens/home/widgets/category_view.dart';
 import '/screens/home/cubit/home_cubit.dart';
 import '/screens/home/widgets/banner_view.dart';
 import 'widgets/display_card.dart';
+import 'widgets/modules_view.dart';
 import 'widgets/search_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -97,7 +97,8 @@ class HomeScreen extends StatelessWidget {
                             fontSize: size.height * 0.018),
                       ),
                       const SizedBox(height: 22),
-                      CategoryView(categories: state.categories),
+                      ModuleView(modules: state.modules),
+                      //CategoryView(categories: state.categories),
                       const SizedBox(height: 8),
                       SizedBox(
                         height: 220,
