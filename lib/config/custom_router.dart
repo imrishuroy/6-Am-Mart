@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:six_am_mart/screens/dashboard/dashboard_screen.dart';
+import 'package:six_am_mart/screens/on-boarding/on_boarding_screen.dart';
 import 'package:six_am_mart/screens/sign-up/sign_up_screen.dart';
 import 'package:six_am_mart/screens/splash/splash_screen.dart';
 import '/screens/sign-in/sign_in_screen.dart';
@@ -29,6 +30,8 @@ class CustomRouter {
       case SignUpScreen.routeName:
         return SignUpScreen.route();
 
+      case OnBoardingScreen.routeName:
+        return OnBoardingScreen.route();
       default:
         return _errorRoute();
     }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:six_am_mart/config/auth_wrapper.dart';
+import 'package:six_am_mart/screens/on-boarding/on_boarding_screen.dart';
 import '/theme/light_theme.dart';
 import '/blocs/bloc/auth_bloc.dart';
 import '/config/custom_router.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Onboarding  ${SharedPrefs().showIntro}');
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
 
@@ -82,7 +84,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
 
           onGenerateRoute: CustomRouter.onGenerateRoute,
-          initialRoute: AuthWrapper.routeName,
+          initialRoute: SharedPrefs().showIntro
+              ? OnBoardingScreen.routeName
+              : AuthWrapper.routeName,
         ),
       ),
     );

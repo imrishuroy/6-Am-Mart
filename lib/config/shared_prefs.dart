@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+const String _showIntro = 'showIntro';
 const String keyTheme = 'theme';
 const String _token = 'token';
 const String _firstTime = 'firstTime';
@@ -31,9 +32,17 @@ class SharedPrefs {
 
   bool get skipAd => _sharedPrefs?.getBool(_skipAd) ?? true;
 
+  bool get showIntro => _sharedPrefs?.getBool(_showIntro) ?? true;
+
   Future<void> setToken(String value) async {
     if (_sharedPrefs != null) {
       await _sharedPrefs?.setString(_token, value);
+    }
+  }
+
+  Future<void> disableIntro() async {
+    if (_sharedPrefs != null) {
+      await _sharedPrefs?.setBool(_showIntro, false);
     }
   }
 
