@@ -1,0 +1,7 @@
+// Onboarding 
+
+1. Select Language
+2. Onboarding ( intro slider )
+3.Splash Scree ( with network connectivity check)
+3. Login 
+4. Sign Up

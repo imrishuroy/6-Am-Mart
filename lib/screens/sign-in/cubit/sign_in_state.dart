@@ -5,7 +5,9 @@ enum SignInStatus { initial, submitting, succuss, error }
 class SignInState extends Equatable {
   final String phoneNumber;
   final String password;
+
   final SignInStatus status;
+
   final Failure failure;
   final bool showPassword;
 

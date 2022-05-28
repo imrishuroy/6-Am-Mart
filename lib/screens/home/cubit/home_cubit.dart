@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:six_am_mart/models/store.dart';
 import '/models/module.dart';
 import '/models/category.dart';
 import '/models/banner.dart';
@@ -19,6 +20,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(status: HomeStatus.loading));
       final banners = await _dashBoardRepository.getBanners();
       final modules = await _dashBoardRepository.getModules();
+      final stores = await _dashBoardRepository.getFeaturedStores();
       // final categories = await _dashBoardRepository.getCategories();
 
       emit(
@@ -26,6 +28,7 @@ class HomeCubit extends Cubit<HomeState> {
           status: HomeStatus.succuss,
           banners: banners,
           modules: modules,
+          featuredStores: stores,
           categories: [],
         ),
       );

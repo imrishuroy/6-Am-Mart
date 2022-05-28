@@ -7,6 +7,8 @@ class HomeState extends Equatable {
   final List<AppCategory?> categories;
   final List<Module?> modules;
 
+  final List<Store?> featuredStores;
+
   final Failure failure;
   final HomeStatus status;
 
@@ -16,6 +18,7 @@ class HomeState extends Equatable {
     required this.status,
     required this.categories,
     required this.modules,
+    required this.featuredStores,
   });
 
   factory HomeState.initial() => const HomeState(
@@ -24,6 +27,7 @@ class HomeState extends Equatable {
         status: HomeStatus.initial,
         categories: [],
         modules: [],
+        featuredStores: [],
       );
 
   HomeState copyWith({
@@ -32,6 +36,7 @@ class HomeState extends Equatable {
     List<Module?>? modules,
     Failure? failure,
     HomeStatus? status,
+    List<Store?>? featuredStores,
   }) {
     return HomeState(
       banners: banners ?? this.banners,
@@ -39,13 +44,15 @@ class HomeState extends Equatable {
       modules: modules ?? this.modules,
       failure: failure ?? this.failure,
       status: status ?? this.status,
+      featuredStores: featuredStores ?? this.featuredStores,
     );
   }
 
   @override
-  List<Object> get props => [banners, categories, modules, failure, status];
+  List<Object> get props =>
+      [banners, categories, modules, featuredStores, failure, status];
 
   @override
   String toString() =>
-      'DashboardState(banners: $banners, categories: $categories, modules: $modules, failure: $failure, status: $status)';
+      'DashboardState(banners: $banners, categories: $categories, modules: $modules,featuredStores: $featuredStores, failure: $failure, status: $status)';
 }

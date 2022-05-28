@@ -17,7 +17,7 @@ class ModuleView extends StatelessWidget {
         horizontal: 12,
       ),
       child: SizedBox(
-        height: modules.length * 87,
+        height: modules.length * 75,
         child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

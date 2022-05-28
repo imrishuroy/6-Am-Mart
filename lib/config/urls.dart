@@ -14,6 +14,9 @@ class Urls {
 
   static const String module = '$_baseUrl/api/v1/module';
 
+  static const String featuredStores =
+      '$_baseUrl/api/v1/stores/get-stores/all?featured=1&offset=1&limit=50';
+
   // Image Urls
 
   static const String categoryImg =
@@ -24,6 +27,9 @@ class Urls {
 
   static const String moduleImg =
       'https://6ammart-admin.6amtech.com/storage/app/public/module/';
+
+  static const String storeCoverImg =
+      'https://6ammart-admin.6amtech.com/storage/app/public/store/cover/';
 
   // error image
   static const String errorImage =

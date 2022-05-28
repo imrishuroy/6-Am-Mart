@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:six_am_mart/models/category.dart';
 import 'package:six_am_mart/models/module.dart';
+import 'package:six_am_mart/models/store.dart';
 import '/config/urls.dart';
 import '/models/banner.dart';
 import '/models/failure.dart';
@@ -60,6 +61,37 @@ class DashBoardRepository extends BaseDashBoardRepo {
     } catch (error) {
       print('Error getting modules ${error.toString()}');
       throw const Failure(message: 'Error getting modules');
+    }
+  }
+
+  Future<List<Store?>> getFeaturedStores() async {
+    try {
+      List<Store?> featuredStores = [];
+      final headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'zoneID': '1',
+        'moduleID': '0',
+      };
+
+      final response = await _dio.get(Urls.featuredStores,
+          options: Options(headers: headers));
+
+      if (response.statusCode == 200) {
+        final responseData = response.data as Map?;
+        if (responseData != null) {
+          final stores = response.data['stores'] as List? ?? [];
+          for (var element in stores) {
+            featuredStores.add(Store.fromMap(element));
+          }
+        }
+      }
+      return featuredStores;
+    } on DioError catch (error) {
+      print('Error in getting featured stores ${error.message}');
+      throw Failure(message: error.message);
+    } catch (error) {
+      print('Error in getting featured stores ${error.toString()}');
+      throw const Failure(message: 'Error getting featured stores');
     }
   }
 
