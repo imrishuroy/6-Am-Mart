@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/models/failure.dart';
-import 'package:six_am_mart/repositories/auth/auth_repo.dart';
+import '/models/failure.dart';
+import '/repositories/auth/auth_repo.dart';
 
 part 'sign_in_state.dart';
 
@@ -28,13 +28,22 @@ class SignInCubit extends Cubit<SignInState> {
   void signInWithPhoneNo() async {
     emit(state.copyWith(status: SignInStatus.submitting));
     try {
-      await _authRepository.loginUser(
+      final result = await _authRepository.loginUser(
         phoneNumber: state.phoneNumber,
         password: state.password,
       );
-      emit(state.copyWith(status: SignInStatus.succuss));
-    } on Failure catch (error) {
-      emit(state.copyWith(failure: error, status: SignInStatus.error));
+      if (result) {
+        emit(state.copyWith(status: SignInStatus.succuss));
+      } else {
+        emit(
+          state.copyWith(
+            status: SignInStatus.error,
+            failure: const Failure(message: 'Error login, please try again'),
+          ),
+        );
+      }
+    } on Failure catch (failure) {
+      emit(state.copyWith(failure: failure, status: SignInStatus.error));
     }
   }
 }

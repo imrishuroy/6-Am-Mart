@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/widgets/display_image.dart';
+import '/widgets/display_image.dart';
 
 class ModuleTile extends StatelessWidget {
   const ModuleTile({Key? key, required this.imageSrc}) : super(key: key);

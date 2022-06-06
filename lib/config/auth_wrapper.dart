@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/screens/sign-in/sign_in_screen.dart';
 import '/screens/dashboard/dashboard_screen.dart';
-
 import '/blocs/bloc/auth_bloc.dart';
 import '/enums/enums.dart';
 import '/repositories/auth/auth_repo.dart';
@@ -42,7 +41,9 @@ class AuthWrapper extends StatelessWidget {
           }
         },
         child: const Scaffold(
-            backgroundColor: Colors.white, body: CircularProgressIndicator()),
+          backgroundColor: Colors.white,
+          body: Center(child: CircularProgressIndicator()),
+        ),
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/dashboard/dashboard_screen.dart';
-import 'package:six_am_mart/screens/on-boarding/on_boarding_screen.dart';
-import 'package:six_am_mart/screens/sign-up/sign_up_screen.dart';
-import 'package:six_am_mart/screens/splash/splash_screen.dart';
+import 'package:six_am_mart/screens/store/store_screen.dart';
+import '/screens/dashboard/dashboard_screen.dart';
+import '/screens/on-boarding/on_boarding_screen.dart';
+import '/screens/sign-up/sign_up_screen.dart';
+import '/screens/splash/splash_screen.dart';
 import '/screens/sign-in/sign_in_screen.dart';
 import '/config/auth_wrapper.dart';
 
@@ -32,6 +33,10 @@ class CustomRouter {
 
       case OnBoardingScreen.routeName:
         return OnBoardingScreen.route();
+
+      case StoreScreen.routeName:
+        return StoreScreen.route(args: settings.arguments as StoreScreenArgs);
+
       default:
         return _errorRoute();
     }

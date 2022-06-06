@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/repositories/dashboard/dashboard_repository.dart';
-import 'package:six_am_mart/screens/home/cubit/home_cubit.dart';
+import '/repositories/dashboard/dashboard_repository.dart';
+import '/screens/home/cubit/home_cubit.dart';
 import '/screens/home/home_screen.dart';
 import '/config/shared_prefs.dart';
 import 'widgets/curved_nav_bar.dart';

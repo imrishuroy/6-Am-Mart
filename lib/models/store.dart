@@ -11,6 +11,7 @@ class Store extends Equatable {
   final String? coverPhoto;
   final int? avgRating;
   final int? ratingCount;
+  final String? address;
 
   const Store({
     this.id,
@@ -21,6 +22,7 @@ class Store extends Equatable {
     this.coverPhoto,
     this.avgRating,
     this.ratingCount,
+    this.address,
   });
 
   Store copyWith({
@@ -32,6 +34,7 @@ class Store extends Equatable {
     String? coverPhoto,
     int? avgRating,
     int? ratingCount,
+    String? address,
   }) {
     return Store(
       id: id ?? this.id,
@@ -42,6 +45,7 @@ class Store extends Equatable {
       coverPhoto: coverPhoto ?? this.coverPhoto,
       avgRating: avgRating ?? this.avgRating,
       ratingCount: ratingCount ?? this.ratingCount,
+      address: address ?? this.address,
     );
   }
 
@@ -55,6 +59,7 @@ class Store extends Equatable {
       'coverPhoto': coverPhoto,
       'avgRating': avgRating,
       'ratingCount': ratingCount,
+      'address': address,
     };
   }
 
@@ -68,6 +73,7 @@ class Store extends Equatable {
       coverPhoto: map['cover_photo'],
       avgRating: map['avg_rating']?.toInt(),
       ratingCount: map['rating_count']?.toInt(),
+      address: map['address'],
     );
   }
 
@@ -77,7 +83,7 @@ class Store extends Equatable {
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, phone: $phone, email: $email, logo: $logo, coverPhoto: $coverPhoto, avgRating: $avgRating, ratingCount: $ratingCount)';
+    return 'Store(id: $id, name: $name, phone: $phone, email: $email, logo: $logo, coverPhoto: $coverPhoto, avgRating: $avgRating, ratingCount: $ratingCount, address: $address)';
   }
 
   @override
@@ -91,6 +97,7 @@ class Store extends Equatable {
       coverPhoto,
       avgRating,
       ratingCount,
+      address,
     ];
   }
 }

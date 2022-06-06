@@ -4,8 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/config/auth_wrapper.dart';
-import 'package:six_am_mart/screens/on-boarding/on_boarding_screen.dart';
+import '/repositories/store/store_repository.dart';
+import '/config/auth_wrapper.dart';
+import '/screens/on-boarding/on_boarding_screen.dart';
 import '/theme/light_theme.dart';
 import '/blocs/bloc/auth_bloc.dart';
 import '/config/custom_router.dart';
@@ -67,6 +68,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<DashBoardRepository>(
           create: (_) => DashBoardRepository(),
+        ),
+        RepositoryProvider<StoreRepository>(
+          create: (_) => StoreRepository(),
         )
       ],
       child: MultiBlocProvider(
@@ -87,6 +91,7 @@ class MyApp extends StatelessWidget {
           initialRoute: SharedPrefs().showIntro
               ? OnBoardingScreen.routeName
               : AuthWrapper.routeName,
+          // initialRoute: StoreScreen.routeName,
         ),
       ),
     );

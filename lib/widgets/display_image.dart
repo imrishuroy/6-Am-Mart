@@ -18,25 +18,38 @@ class DisplayImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      //  width: width ?? 1000.0,
-      // height: height,
-      // height: double.infinity,
-      imageUrl: imageUrl ?? Urls.errorImage,
-      fit: fit,
-      progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 2.0,
-          value: downloadProgress.progress,
-          // color: Colors.blue,
-          color: Colors.transparent,
-        ),
-      ),
-      errorWidget: (context, url, error) =>
-          const Center(child: Icon(Icons.error, color: Colors.grey)),
-    );
+        width: width,
+        height: height,
+        // height: double.infinity,
+        imageUrl: imageUrl ?? Urls.errorImage,
+        fit: fit,
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            Image.asset(
+              'assets/image/placeholder.jpg',
+              fit: BoxFit.cover,
+              // height: height ?? double.infinity,
+              // width: width ?? double.infinity,
+            ),
+        // Center(
+        //       child:
+
+        //       CircularProgressIndicator(
+        //         strokeWidth: 2.0,
+        //         value: downloadProgress.progress,
+        //         // color: Colors.blue,
+        //         color: Colors.transparent,
+        //       ),
+        //     ),
+        errorWidget: (context, url, error) => Image.asset(
+              'assets/image/placeholder.jpg',
+              fit: BoxFit.cover,
+              // height: height ?? double.infinity,
+              // width: width ?? double.infinity,
+            )
+        // const Center(child: Icon(Icons.error, color: Colors.grey)),
+        );
   }
 }
-
 
 // import 'package:assignments/widgets/loading_indicator.dart';
 // import 'package:cached_network_image/cached_network_image.dart';

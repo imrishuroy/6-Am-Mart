@@ -31,6 +31,18 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  void _login() async {
+    final signInCubit = context.read<SignInCubit>();
+
+    print('Phone ${signInCubit.state.phoneNumber}');
+    print('Passeor ${signInCubit.state.password}');
+    if (_formKey.currentState!.validate()) {
+      signInCubit.signInWithPhoneNo();
+
+      // Navigator.of(context).pushNamed(DashBoardScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -40,6 +52,9 @@ class _SignInScreenState extends State<SignInScreen> {
         listener: (context, state) {
           if (state.status == SignInStatus.error) {
             ShowSnackBar.showSnackBar(context, title: state.failure.message);
+          }
+          if (state.status == SignInStatus.succuss) {
+            Navigator.of(context).pushNamed(DashBoardScreen.routeName);
           }
         },
         builder: (context, state) {
@@ -217,40 +232,29 @@ class _SignInScreenState extends State<SignInScreen> {
                                       SignInButton(
                                         title: 'Sign In',
                                         loading: false,
-                                        onClick: () async {
-                                          print('Phone ${state.phoneNumber}');
-                                          print('Passeor ${state.password}');
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            context
-                                                .read<SignInCubit>()
-                                                .signInWithPhoneNo();
+                                        onClick: _login,
+                                        // onClick: () async {
+                                        // ResponseModel responseModel =
+                                        //     await authController.login(
+                                        //         phone, password);
 
-                                            Navigator.of(context).pushNamed(
-                                                DashBoardScreen.routeName);
-                                          }
+                                        // if (responseModel.isSuccess) {
+                                        //   Get.offAllNamed('/');
+                                        // }
 
-                                          // ResponseModel responseModel =
-                                          //     await authController.login(
-                                          //         phone, password);
-
-                                          // if (responseModel.isSuccess) {
-                                          //   Get.offAllNamed('/');
-                                          // }
-
-                                          // if (!responseModel.isSuccess) {
-                                          //   setState(() {
-                                          //     phone = '';
-                                          //     password = '';
-                                          //   });
-                                          //   passwordController.text = '';
-                                          //   Get.snackbar('Failed to signin',
-                                          //       responseModel.message,
-                                          //       snackPosition: SnackPosition.BOTTOM,
-                                          //       backgroundColor: Colors.red.shade400,
-                                          //       colorText: Colors.white);
-                                          //}
-                                        },
+                                        // if (!responseModel.isSuccess) {
+                                        //   setState(() {
+                                        //     phone = '';
+                                        //     password = '';
+                                        //   });
+                                        //   passwordController.text = '';
+                                        //   Get.snackbar('Failed to signin',
+                                        //       responseModel.message,
+                                        //       snackPosition: SnackPosition.BOTTOM,
+                                        //       backgroundColor: Colors.red.shade400,
+                                        //       colorText: Colors.white);
+                                        //}
+                                        //  },
                                       ),
                                     ],
                                   ),

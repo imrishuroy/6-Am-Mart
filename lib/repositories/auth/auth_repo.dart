@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:six_am_mart/models/failure.dart';
 import '/config/shared_prefs.dart';
 import '/enums/auth_status.dart';
 import '/config/urls.dart';
@@ -20,13 +21,13 @@ class AuthRepository extends BaseAuthRepository {
 
   Future<void> registerUser() async {}
 
-  Future<void> loginUser({
+  Future<bool> loginUser({
     required String? phoneNumber,
     required String? password,
   }) async {
     try {
       if (phoneNumber == null || password == null) {
-        return;
+        return false;
       }
       final prefs = SharedPrefs();
       final data = {'phone': phoneNumber, 'password': password};
@@ -35,19 +36,22 @@ class AuthRepository extends BaseAuthRepository {
       if (response.statusCode == 200) {
         final responseData = response.data as Map?;
         if (responseData != null) {
-          final token = responseData['token'];
+          final token = responseData['token'] as String?;
 
           if (token != null) {
-            prefs.setToken(token);
+            await prefs.setToken(token);
+            return true;
           }
         }
       }
-
       print('response ${response.data}');
+      return false;
     } on DioError catch (error) {
       print('Error in login ${error.message}');
+      throw Failure(message: error.message);
     } catch (error) {
       print('Error in login ${error.toString()}');
+      throw Failure(message: error.toString());
     }
   }
 

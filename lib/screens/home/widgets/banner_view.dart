@@ -14,43 +14,48 @@ class BannerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Expanded(
-      child: CarouselSlider.builder(
-        options: CarouselOptions(
-          // height: size.height * 0.18,
-          height: size.height * 0.16,
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 3),
-          autoPlayAnimationDuration: const Duration(milliseconds: 1000),
-          onPageChanged: (index, reason) {
-            // setState(() {
-            //   topCarouselActiveIndex = index;
-            // });
-          },
-        ),
-        itemCount: banners.length,
-        itemBuilder: (context, index, realIndex) {
-          final banner = banners[index];
+    print('Banners -- $banners');
 
-          final imageUrl = '${Urls.bannerImg}${banner?.image}';
+    return banners.isEmpty
+        ? const SizedBox.shrink()
+        : Expanded(
+            child: CarouselSlider.builder(
+              options: CarouselOptions(
+                // height: size.height * 0.18,
+                height: size.height * 0.16,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+                onPageChanged: (index, reason) {
+                  // setState(() {
+                  //   topCarouselActiveIndex = index;
+                  // });
+                },
+              ),
+              itemCount: banners.length,
+              itemBuilder: (context, index, realIndex) {
+                final banner = banners[index];
 
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                child: DisplayImage(
-                  imageUrl: imageUrl,
-                  fit: BoxFit.cover,
-                )
+                final imageUrl = '${Urls.bannerImg}${banner?.image}';
 
-                //     Image.network(
-                //   imageUrl,
-                //   fit: BoxFit.cover,
-                // ),
-                ),
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.radiusSmall),
+                      child: DisplayImage(
+                        imageUrl: imageUrl,
+                        fit: BoxFit.cover,
+                      )
+
+                      //     Image.network(
+                      //   imageUrl,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      ),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:six_am_mart/screens/store/store_screen.dart';
 import '/screens/home/widgets/module_tile.dart';
 import '/models/module.dart';
 import '/config/urls.dart';
@@ -16,25 +17,30 @@ class ModuleView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: 12,
       ),
-      child: SizedBox(
-        height: modules.length * 75,
-        child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: modules.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 6.0,
-            childAspectRatio: 1.35,
-          ),
-          itemBuilder: (context, index) {
-            final module = modules[index];
-            final imageUrl = '${Urls.moduleImg}${module?.thumbnail}';
-
-            return ModuleTile(imageSrc: imageUrl);
-          },
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: modules.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 6.0,
+          childAspectRatio: 1.35,
         ),
+        itemBuilder: (context, index) {
+          final module = modules[index];
+          final imageUrl = '${Urls.moduleImg}${module?.thumbnail}';
+
+          return GestureDetector(
+            onTap: () {
+              if (module?.id != null) {
+                Navigator.of(context).pushNamed(StoreScreen.routeName,
+                    arguments: StoreScreenArgs(id: module!.id.toString()));
+              }
+            },
+            child: ModuleTile(imageSrc: imageUrl),
+          );
+        },
       ),
     );
   }

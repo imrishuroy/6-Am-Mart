@@ -15,15 +15,21 @@ class DashBoardRepository extends BaseDashBoardRepo {
       List<AppBanner?> banners = [];
       final headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'zoneID': '1',
-        'moduleID': '0',
+        'zoneID': '[1]',
+        //'moduleID': '0',
+        //'X-localization': 'en'
       };
 
       final response =
+          // await _dio.get(
+          //     'https://6ammart-admin.6amtech.com/api/v1/banners',
+          //     options: Options(headers: headers));
           await _dio.get(Urls.banner, options: Options(headers: headers));
 
+      print('Banner response data -- ${response.data}');
       if (response.statusCode == 200) {
         final responseData = response.data;
+        print('Banner response data -- $responseData');
         if (responseData != null) {
           final bannersData = responseData['banners'] as List? ?? [];
 
@@ -69,8 +75,8 @@ class DashBoardRepository extends BaseDashBoardRepo {
       List<Store?> featuredStores = [];
       final headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'zoneID': '1',
-        'moduleID': '0',
+        'zoneID': '[1]',
+        //'moduleID': '0',
       };
 
       final response = await _dio.get(Urls.featuredStores,
