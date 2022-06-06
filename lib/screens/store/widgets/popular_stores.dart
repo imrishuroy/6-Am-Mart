@@ -22,62 +22,59 @@ class PopularStores extends StatelessWidget {
                 final store = popularStores[index];
                 final imgUrl = '${Urls.storeCoverImg}${store?.coverPhoto}';
 
-                return Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(6.0),
-                            topRight: Radius.circular(6.0),
-                          ),
-                          child: DisplayImage(
-                            imageUrl: imgUrl,
-                            fit: BoxFit.cover,
-                            width: 250.0,
-                            // width: double.infinity,
-                            height: 120.0,
-                            // width: 100.0,
-                          ),
+                return Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(6.0),
+                          topRight: Radius.circular(6.0),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 7.0,
-                            vertical: 10.0,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                store?.name ?? 'N/A',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                store?.address ?? 'N/A',
-                                style: TextStyle(
-                                  color: Colors.grey.shade500,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.5,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              RatingBar(
-                                rating: store?.avgRating?.toDouble() ?? 0,
-                                ratingCount: store?.avgRating ?? 0,
-                                size: 14.0,
-                              )
-                            ],
-                          ),
+                        child: DisplayImage(
+                          imageUrl: imgUrl,
+                          fit: BoxFit.cover,
+                          width: 250.0,
+                          // width: double.infinity,
+                          height: 120.0,
+                          // width: 100.0,
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 7.0,
+                          vertical: 10.0,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              store?.name ?? 'N/A',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              store?.address ?? 'N/A',
+                              style: TextStyle(
+                                color: Colors.grey.shade500,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13.5,
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            RatingBar(
+                              rating: store?.avgRating?.toDouble() ?? 0,
+                              ratingCount: store?.avgRating ?? 0,
+                              size: 14.0,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

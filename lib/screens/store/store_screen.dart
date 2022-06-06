@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/screens/store/widgets/all_stores.dart';
 import '/config/urls.dart';
 import '/helpers/dimensions.dart';
 import '/screens/store/widgets/popular_stores.dart';
 import '/widgets/display_image.dart';
 import '/widgets/loading_indicator.dart';
-import '/widgets/ratting_bar.dart';
 import '/repositories/store/store_repository.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'cubit/store_cubit.dart';
@@ -245,7 +245,8 @@ class _StoreScreenState extends State<StoreScreen>
 
                                   return Container(
                                     margin: const EdgeInsets.symmetric(
-                                        horizontal: 12),
+                                      horizontal: 3.5,
+                                    ),
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(
                                             Dimensions.radiusSmall),
@@ -264,15 +265,23 @@ class _StoreScreenState extends State<StoreScreen>
                               ),
                         const SizedBox(height: 20.0),
                         AnimatedSmoothIndicator(
-                          activeIndex: carouselActiveIndex,
-                          count: state.banners.length,
-                          effect: SlideEffect(
-                            dotHeight: 8,
-                            dotWidth: 8,
-                            dotColor: Colors.grey.shade400,
-                            activeDotColor: Colors.grey.shade800,
-                          ),
-                        )
+                            activeIndex: carouselActiveIndex,
+                            count: state.banners.length,
+                            effect: ScrollingDotsEffect(
+                              activeDotColor: Colors.green,
+                              activeStrokeWidth: 9.0,
+                              dotHeight: 6.0,
+                              dotWidth: 6.0,
+                              dotColor: Colors.green.shade200,
+                            )
+
+                            // SlideEffect(
+                            //   dotHeight: 7,
+                            //   dotWidth: 7,
+                            //   dotColor: Colors.lightGreen.shade300,
+                            //   activeDotColor: Colors.green,
+                            // ),
+                            )
                       ],
                     ),
                   ),
@@ -302,92 +311,7 @@ class _StoreScreenState extends State<StoreScreen>
                   ),
 
                   const SizedBox(height: 20.0),
-
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.allStores.length,
-                    separatorBuilder: (context, index) {
-                      return const Divider();
-                    },
-                    itemBuilder: (context, index) {
-                      final store = state.allStores[index];
-                      final imgUrl =
-                          '${Urls.storeCoverImg}${store?.coverPhoto}';
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6.0),
-                              child: DisplayImage(
-                                imageUrl: imgUrl,
-                                fit: BoxFit.cover,
-                                width: 80,
-                                height: 80,
-                              ),
-                            ),
-                            const SizedBox(width: 12.0),
-                            SizedBox(
-                              height: 80,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    store?.name ?? 'N/A',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
-                                      letterSpacing: -0.4,
-                                      color: Color.fromRGBO(0, 0, 0, 1),
-                                    ),
-                                  ),
-                                  Text(
-                                    store?.address ?? 'N/A',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.clip,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                        letterSpacing: -0.4,
-                                        color:
-                                            Color.fromRGBO(136, 136, 126, 1)),
-                                  ),
-
-                                  RatingBar(
-                                    rating: store?.avgRating?.toDouble() ?? 0,
-                                    ratingCount: store?.avgRating ?? 0,
-                                    size: 14.0,
-                                  ),
-
-                                  // Container(
-                                  //   padding: const EdgeInsets.only(top: 10),
-                                  //   alignment: Alignment.center,
-                                  //   child: Row(
-                                  //     children: <Widget>[
-                                  // Text(
-                                  //   "$openHour — $closeHour",
-                                  //   style: TextStyle(
-                                  //     fontWeight: FontWeight.w500,
-                                  //     fontSize: 12,
-                                  //     letterSpacing: -0.4,
-                                  //     color: Color.fromRGBO(0, 0, 0, 1),
-                                  //   ),
-
-                                  // ),
-                                  // ],
-                                  //),
-                                  // )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  AllStores(allStores: state.allStores)
 
                   //  ShopListVertical()
                 ],
