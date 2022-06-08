@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:six_am_mart/models/item.dart';
 import 'package:six_am_mart/screens/store/widgets/info_bar.dart';
+import 'package:six_am_mart/screens/store/widgets/item_tile.dart';
 import '/config/urls.dart';
 import '/repositories/store/store_repository.dart';
 import '/screens/store/cubit/store_cubit.dart';
@@ -38,7 +37,6 @@ class StoresItemsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     print('Cover image  ${Urls.storeCoverImg}${store?.coverPhoto}');
     return Scaffold(
       body: BlocConsumer<StoreCubit, StoreState>(
@@ -279,83 +277,8 @@ class _CategoryItemsState extends State<CategoryItems> {
             itemCount: snapshot.data?.length,
             itemBuilder: (context, index) {
               final item = snapshot.data?[index];
-              print('Item image = ${item?.image}');
 
-              final imgUrl = '${Urls.itemImage}${item?.image}';
-
-              return SizedBox(
-                width: 165.0,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 5.0),
-                        Center(
-                          child: DisplayImage(
-                            imageUrl: imgUrl,
-                            height: 120,
-                            width: 120.0,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Text(
-                          item?.name ?? 'N/A',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-
-                        const SizedBox(height: 15.0),
-                        Text(
-                          '${item?.unit?.id} ${item?.unitType}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '₹${item?.price}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 9.0,
-                                vertical: 6.0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                border: Border.all(
-                                    color: Colors.grey.shade300, width: 0.5),
-                              ),
-                              child: const Text(
-                                '+ Add',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                        //price
-                        // + button
-                      ],
-                    ),
-                  ),
-                ),
-              );
+              return ItemTile(item: item);
             },
           );
         },

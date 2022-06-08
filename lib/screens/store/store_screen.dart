@@ -259,23 +259,16 @@ class _StoreScreenState extends State<StoreScreen>
                               ),
                         const SizedBox(height: 20.0),
                         AnimatedSmoothIndicator(
-                            activeIndex: carouselActiveIndex,
-                            count: state.banners.length,
-                            effect: ScrollingDotsEffect(
-                              activeDotColor: Colors.green,
-                              activeStrokeWidth: 9.0,
-                              dotHeight: 6.0,
-                              dotWidth: 6.0,
-                              dotColor: Colors.green.shade200,
-                            )
-
-                            // SlideEffect(
-                            //   dotHeight: 7,
-                            //   dotWidth: 7,
-                            //   dotColor: Colors.lightGreen.shade300,
-                            //   activeDotColor: Colors.green,
-                            // ),
-                            )
+                          activeIndex: carouselActiveIndex,
+                          count: state.banners.length,
+                          effect: ScrollingDotsEffect(
+                            activeDotColor: Colors.green,
+                            activeStrokeWidth: 9.0,
+                            dotHeight: 6.0,
+                            dotWidth: 6.0,
+                            dotColor: Colors.green.shade200,
+                          ),
+                        )
                       ],
                     ),
                   ),

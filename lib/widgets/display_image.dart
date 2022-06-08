@@ -27,8 +27,8 @@ class DisplayImage extends StatelessWidget {
             Image.asset(
               'assets/image/placeholder.jpg',
               fit: BoxFit.cover,
-              // height: height ?? double.infinity,
-              // width: width ?? double.infinity,
+              height: height,
+              width: width,
             ),
         // Center(
         //       child:
@@ -43,8 +43,8 @@ class DisplayImage extends StatelessWidget {
         errorWidget: (context, url, error) => Image.asset(
               'assets/image/placeholder.jpg',
               fit: BoxFit.cover,
-              // height: height ?? double.infinity,
-              // width: width ?? double.infinity,
+              height: height,
+              width: width,
             )
         // const Center(child: Icon(Icons.error, color: Colors.grey)),
         );
