@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/store/store_screen.dart';
+import '/screens/store/screens/store_items_screen.dart';
+import '/screens/store/store_screen.dart';
 import '/screens/dashboard/dashboard_screen.dart';
 import '/screens/on-boarding/on_boarding_screen.dart';
 import '/screens/sign-up/sign_up_screen.dart';
@@ -36,6 +37,10 @@ class CustomRouter {
 
       case StoreScreen.routeName:
         return StoreScreen.route(args: settings.arguments as StoreScreenArgs);
+
+      case StoresItemsScreen.routeName:
+        return StoresItemsScreen.route(
+            args: settings.arguments as StoresItemsArgs);
 
       default:
         return _errorRoute();

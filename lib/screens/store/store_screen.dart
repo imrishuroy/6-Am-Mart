@@ -43,12 +43,6 @@ class _StoreScreenState extends State<StoreScreen>
     with TickerProviderStateMixin {
   int activeTabIndex = 0;
   int carouselActiveIndex = 0;
-  List<String> imageUrls = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPXxtubdc9aLjJJV6p3XPAjWwiP7gI3MtM0Q&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPXxtubdc9aLjJJV6p3XPAjWwiP7gI3MtM0Q&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPXxtubdc9aLjJJV6p3XPAjWwiP7gI3MtM0Q&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPXxtubdc9aLjJJV6p3XPAjWwiP7gI3MtM0Q&usqp=CAU',
-  ];
 
   @override
   void initState() {

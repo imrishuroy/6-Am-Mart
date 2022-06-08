@@ -23,6 +23,10 @@ class Urls {
 
   static const String allStore = '$_baseUrl/api/v1/stores/get-stores/all';
 
+  static const storeItem = '$_baseUrl/api/v1/items/latest';
+
+  static const storeDetails = '$_baseUrl/api/v1/stores/details/';
+
   // Image Urls
 
   static const String categoryImg =
@@ -43,6 +47,9 @@ class Urls {
   // error image
   static const String errorImage =
       'https://developers.google.com/maps/documentation/streetview/images/error-image-generic.png';
+
+  static const itemImage =
+      'https://6ammart-admin.6amtech.com/storage/app/public/product/';
 }
 
 
