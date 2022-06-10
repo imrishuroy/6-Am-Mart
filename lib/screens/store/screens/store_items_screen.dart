@@ -113,6 +113,8 @@ class StoresItemsScreen extends StatelessWidget {
                               child: DisplayImage(
                                 imageUrl: '${Urls.storeLogoImg}${store?.logo}',
                                 //height: 300.0,
+                                height: 60.0,
+                                width: 60.0,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -262,7 +264,7 @@ class _CategoryItemsState extends State<CategoryItems> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 240.0,
+      height: 260.0,
       child: FutureBuilder<List<Item?>>(
         future: context.read<StoreRepository>().getStoreItems(
             moduleId: widget.moduleId,
@@ -277,6 +279,7 @@ class _CategoryItemsState extends State<CategoryItems> {
             itemCount: snapshot.data?.length,
             itemBuilder: (context, index) {
               final item = snapshot.data?[index];
+              print('Item variations -- ${item?.variations}');
 
               return ItemTile(item: item);
             },

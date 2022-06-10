@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/screens/item/widgets/choose_varient.dart';
+import '/constants/constants.dart';
 import '/widgets/ratting_bar.dart';
 import '/models/item.dart';
 import 'widgets/items_images.dart';
@@ -19,6 +21,31 @@ class ItemDetailsScreen extends StatelessWidget {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (_) => ItemDetailsScreen(item: args.item),
+    );
+  }
+
+  void showVarient(BuildContext context) {
+    showModalBottomSheet<void>(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0),
+            ),
+          ),
+          height: 600,
+          child: ChooseVarient(item: item),
+        );
+      },
     );
   }
 
@@ -78,13 +105,44 @@ class ItemDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () => showVarient(context),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 9.0,
+                          vertical: 7.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                              color: Colors.grey.shade300, width: 0.5),
+                        ),
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.add,
+                              color: green,
+                              size: 20.0,
+                            ),
+                            SizedBox(width: 1.0),
+                            Text(
+                              'ADD',
+                              style: TextStyle(
+                                color: green,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    )
+                    ),
+                    // IconButton(
+                    //   onPressed: () {},
+                    //   icon: const Icon(
+                    //     Icons.favorite_border,
+                    //     color: Colors.grey,
+                    //   ),
+                    // )
                   ],
                 ),
                 const SizedBox(height: 10.0),
