@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:six_am_mart/api/api.dart';
 import '/models/category.dart';
 import '/models/store_details.dart';
 import '/models/item.dart';
@@ -11,7 +12,16 @@ import '/repositories/store/base_store_repo.dart';
 class StoreRepository extends BaseStoreRepositoy {
   final Dio _dio;
 
-  StoreRepository({Dio? dio}) : _dio = dio ?? Dio();
+  StoreRepository({Dio? dio})
+      : _dio = dio ??
+            Dio(
+              BaseOptions(
+                baseUrl: Urls.baseUrl,
+                receiveTimeout: 15000, // 15 seconds
+                connectTimeout: 15000,
+                sendTimeout: 15000,
+              ),
+            );
 
   Future<List<AppBanner?>> getStoreBanners({required String moduleId}) async {
     try {
@@ -22,9 +32,12 @@ class StoreRepository extends BaseStoreRepositoy {
         'moduleID': moduleId,
         //'X-localization': 'en'
       };
+      print('Dio created -- ${Api.createDio()}');
 
-      final response =
-          await _dio.get(Urls.banner, options: Options(headers: headers));
+      final response = await Api.createDio().get(Urls.banner);
+
+      // final response =
+      //     await _dio.get(Urls.banner, options: Options(headers: headers));
 
       print('Banner response data -- ${response.data}');
       if (response.statusCode == 200) {
@@ -234,8 +247,9 @@ class StoreRepository extends BaseStoreRepositoy {
 
       final storeDetails = await getStoreDetails(storeId: storeId);
 
-      final response =
-          await _dio.get(Urls.catagory, options: Options(headers: headers));
+      final response = await Api.createDio().get(Urls.catagory);
+      // final response =
+      //     await _dio.get(Urls.catagory, options: Options(headers: headers));
 
       print('Category data -- ${response.data}');
       if (response.statusCode == 200) {

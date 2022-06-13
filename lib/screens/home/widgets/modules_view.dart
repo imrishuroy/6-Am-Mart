@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:six_am_mart/screens/parcel/parcel_screen.dart';
 import 'package:six_am_mart/screens/store/store_screen.dart';
 import '/screens/home/widgets/module_tile.dart';
 import '/models/module.dart';
@@ -30,12 +31,18 @@ class ModuleView extends StatelessWidget {
         itemBuilder: (context, index) {
           final module = modules[index];
           final imageUrl = '${Urls.moduleImg}${module?.thumbnail}';
+          print('MOdule name ppaa $module');
 
           return GestureDetector(
             onTap: () {
-              if (module?.id != null) {
-                Navigator.of(context).pushNamed(StoreScreen.routeName,
-                    arguments: StoreScreenArgs(id: module!.id.toString()));
+              if (module?.moduleName == 'Parcel') {
+                // Naivigate to parcel screen
+                Navigator.of(context).pushNamed(ParcelScreen.routeName);
+              } else {
+                if (module?.id != null) {
+                  Navigator.of(context).pushNamed(StoreScreen.routeName,
+                      arguments: StoreScreenArgs(id: module!.id.toString()));
+                }
               }
             },
             child: ModuleTile(imageSrc: imageUrl),

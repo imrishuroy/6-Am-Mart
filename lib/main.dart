@@ -4,14 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/api/api.dart';
 import '/repositories/store/store_repository.dart';
 import '/config/auth_wrapper.dart';
 import '/screens/on-boarding/on_boarding_screen.dart';
 import '/theme/light_theme.dart';
-import '/blocs/bloc/auth_bloc.dart';
 import '/config/custom_router.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
 import '/repositories/user/user_repository.dart';
+import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/shared_prefs.dart';
 import 'repositories/auth/auth_repo.dart';
@@ -71,7 +72,8 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<StoreRepository>(
           create: (_) => StoreRepository(),
-        )
+        ),
+        RepositoryProvider<Api>(create: (_) => Api()),
       ],
       child: MultiBlocProvider(
         providers: [

@@ -41,6 +41,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_local_notifications: ^9.5.3+1
+  flutter_svg: ^1.1.0
   flutter_typeahead: ^4.0.0
   flutter_widget_from_html_core: ^0.8.5+3
   fwfh_text_style: ^2.7.3+2
@@ -82,6 +83,7 @@ flutter:
   assets:
     - assets/image/
     - assets/language/
+    - assets/svgs/
 
   fonts:
     - family: Roboto

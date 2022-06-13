@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/item/item_details_screen.dart';
+import '/screens/item/item_details_screen.dart';
+import '/screens/parcel/parcel_screen.dart';
+import '/screens/store/screens/view_all_items.dart';
 import '/screens/store/screens/store_items_screen.dart';
 import '/screens/store/store_screen.dart';
 import '/screens/dashboard/dashboard_screen.dart';
@@ -46,6 +48,13 @@ class CustomRouter {
       case ItemDetailsScreen.routeName:
         return ItemDetailsScreen.route(
             args: settings.arguments as ItemDetailsArgs);
+
+      case ViewAllItems.routeName:
+        return ViewAllItems.route(args: settings.arguments as ViewAllItemsArgs);
+
+      case ParcelScreen.routeName:
+        return ParcelScreen.route();
+
       default:
         return _errorRoute();
     }

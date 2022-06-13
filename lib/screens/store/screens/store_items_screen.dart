@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/constants/constants.dart';
 import 'package:six_am_mart/models/item.dart';
+import 'package:six_am_mart/screens/store/screens/view_all_items.dart';
 import 'package:six_am_mart/screens/store/widgets/info_bar.dart';
 import 'package:six_am_mart/screens/store/widgets/item_tile.dart';
 import '/config/urls.dart';
@@ -194,36 +196,64 @@ class StoresItemsScreen extends StatelessWidget {
               ),
               //const SizedBox(height: 10.0),
               Expanded(
-                child: Container(
-                  //  color: Colors.grey.shade100,
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: ListView.builder(
-                    itemCount: state.categories.length,
-                    itemBuilder: (context, index) {
-                      final category = state.categories[index];
+                child: ListView.builder(
+                  itemCount: state.categories.length,
+                  itemBuilder: (context, index) {
+                    final category = state.categories[index];
 
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            category?.name ?? '',
-                            style: const TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.0,
-                            ),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                category?.name ?? '',
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => Navigator.of(context).pushNamed(
+                                  ViewAllItems.routeName,
+                                  arguments: ViewAllItemsArgs(
+                                    categoryId: category?.id,
+                                    storeId: store?.id,
+                                    moduleId: store?.moduleId.toString() ?? '1',
+                                    categoryName: category?.name ?? '',
+                                  ),
+                                ),
+                                child: const Text(
+                                  'VIEW ALL',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontSize: 12.5,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                          const SizedBox(height: 10.0),
-                          CategoryItems(
+                        ),
+                        const SizedBox(height: 10.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: CategoryItems(
                             categoryId: category?.id,
                             storeId: store?.id,
                             moduleId: store?.moduleId.toString() ?? '1',
                           ),
-                          const SizedBox(height: 20.0)
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Divider(thickness: 4, color: Colors.grey.shade300),
+                        const SizedBox(height: 20.0)
+                      ],
+                    );
+                  },
                 ),
               )
             ],
@@ -267,9 +297,10 @@ class _CategoryItemsState extends State<CategoryItems> {
       height: 260.0,
       child: FutureBuilder<List<Item?>>(
         future: context.read<StoreRepository>().getStoreItems(
-            moduleId: widget.moduleId,
-            storeId: widget.storeId,
-            categoryId: widget.categoryId),
+              moduleId: widget.moduleId,
+              storeId: widget.storeId,
+              categoryId: widget.categoryId,
+            ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox.shrink();

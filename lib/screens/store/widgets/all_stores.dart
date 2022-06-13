@@ -11,6 +11,7 @@ class AllStores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -43,24 +44,30 @@ class AllStores extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        store?.name ?? 'N/A',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          letterSpacing: -0.4,
-                          color: Color.fromRGBO(0, 0, 0, 1),
+                      SizedBox(
+                        width: size.width * 0.6,
+                        child: Text(
+                          store?.name ?? 'N/A',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            letterSpacing: -0.4,
+                            color: Color.fromRGBO(0, 0, 0, 1),
+                          ),
                         ),
                       ),
-                      Text(
-                        store?.address ?? 'N/A',
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            letterSpacing: -0.4,
-                            color: Color.fromRGBO(136, 136, 126, 1)),
+                      SizedBox(
+                        width: size.width * 0.6,
+                        child: Text(
+                          store?.address ?? 'N/A',
+                          maxLines: 2,
+                          overflow: TextOverflow.clip,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              letterSpacing: -0.4,
+                              color: Color.fromRGBO(136, 136, 126, 1)),
+                        ),
                       ),
                       RatingBar(
                         rating: store?.avgRating?.toDouble() ?? 0,

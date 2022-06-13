@@ -1,4 +1,6 @@
 class Dimensions {
+  // final double width;
+  // Dimensions({required this.width});
   // static double fontSizeExtraSmall = Get.context.width >= 1300 ? 14 : 10;
   // static double fontSizeSmall = Get.context.width >= 1300 ? 16 : 12;
   // static double fontSizeDefault = Get.context.width >= 1300 ? 18 : 14;
