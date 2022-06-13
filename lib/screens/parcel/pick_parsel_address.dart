@@ -1,59 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '/repositories/location/location_repository.dart';
+import '/utils/utils.dart';
+import '/widgets/custom_button.dart';
+import '/screens/location/widgets/search_location.dart';
 
 import '/helpers/dimensions.dart';
-import '/models/address_model.dart';
 
-import 'widgets/search_location.dart';
-
-class PickMapScreen extends StatefulWidget {
-  final bool fromSignUp;
-  final bool fromAddAddress;
-  final bool canRoute;
-  final String route;
-  final GoogleMapController? googleMapController;
-  final Function(AddressModel? address)? onPicked;
-  const PickMapScreen({
+class PickParcelAddress extends StatefulWidget {
+  const PickParcelAddress({
     Key? key,
-    required this.fromSignUp,
-    required this.fromAddAddress,
-    required this.canRoute,
-    required this.route,
-    this.googleMapController,
-    this.onPicked,
   }) : super(key: key);
 
   @override
-  State<PickMapScreen> createState() => _PickMapScreenState();
+  State<PickParcelAddress> createState() => _PickParcelAddressState();
 }
 
-class _PickMapScreenState extends State<PickMapScreen> {
+class _PickParcelAddressState extends State<PickParcelAddress> {
   GoogleMapController? _mapController;
   CameraPosition? _cameraPosition;
-  LatLng? _initialPosition = LatLng(26.0, 44.0);
+  LatLng? _initialPosition;
 
   void _onMapCreated(GoogleMapController? controller) {
     _mapController = controller;
+  }
+
+  void getCurrentLatLng() async {
+    final position =
+        await context.read<LocationRepository>().getCurrentPosition();
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+    });
+  }
+
+  String? address;
+
+  Future<void> getAddressFromGeocode(LatLng latLng) async {
+    final locationRepo = context.read<LocationRepository>();
+    final address = await locationRepo.getAddressFromLatLng(
+      lat: latLng.latitude,
+      lng: latLng.longitude,
+    );
+    print('Address from lat long -- $address');
+    setState(() {
+      this.address = address;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _onMapCreated(_mapController);
+    getCurrentLatLng();
 
     // _onMapCreated(await GoogleMapController.init(id, initialCameraPosition, googleMapState))
 
-    if (widget.fromAddAddress) {
-      //Get.find<LocationController>().setPickData();
-    }
     // _initialPosition = LatLng(
     //   double.parse(
     //       Get.find<SplashController>().configModel.defaultLocation.lat ?? '0'),
     //   double.parse(
     //       Get.find<SplashController>().configModel.defaultLocation.lng ?? '0'),
     // );
-    _initialPosition = const LatLng(26.0, 44.0);
+    //getCurrentLatLng_initialPosition = const LatLng(26.0, 44.0);
 
     // if (Get.find<SplashController>().configModel.module == null &&
     //     Get.find<SplashController>().moduleList == null) {
@@ -63,6 +73,7 @@ class _PickMapScreenState extends State<PickMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Initial postion - $_initialPosition');
     return Scaffold(
       // appBar: ResponsiveHelper.isDesktop(context) ? WebMenuBar() : null,
       ///  endDrawer: MenuDrawer(),
@@ -72,39 +83,47 @@ class _PickMapScreenState extends State<PickMapScreen> {
             width: Dimensions.webMaxWidth,
             child: Stack(
               children: [
-                GoogleMap(
-                  initialCameraPosition: const CameraPosition(
-                    target: (LatLng(26.643, 84.9040)),
-                    // target: widget.fromAddAddress
-                    //     ? LatLng(locationController.position.latitude,
-                    //         locationController.position.longitude)
-                    //     : _initialPosition,
-                    zoom: 17,
+                if (_initialPosition != null)
+                  GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: (_initialPosition!),
+                      zoom: 17,
+                    ),
+                    myLocationButtonEnabled: false,
+                    onMapCreated: _onMapCreated,
+                    // if (!widget.fromAddAddress) {
+                    //   Get.find<LocationController>().getCurrentLocation(false,
+                    //       mapController: mapController);
+                    // }
+                    // },
+                    // scrollGesturesEnabled: !Get.isDialogOpen,
+                    zoomControlsEnabled: false,
+                    onCameraMove: (CameraPosition cameraPosition) {
+                      print(
+                          'Camera postion on idle --- ${_cameraPosition?.target}');
+                      _cameraPosition = cameraPosition;
+                      print(
+                          'Camera postion on moving --- ${_cameraPosition?.target}');
+                    },
+                    onCameraMoveStarted: () {
+                      //locationController.disableButton();
+                    },
+                    onCameraIdle: () {
+                      print(
+                          'Camera postion on idle --- ${_cameraPosition?.target}');
+                      if (_cameraPosition?.target != null) {
+                        getAddressFromGeocode(_cameraPosition!.target);
+                      }
+
+                      // Get.find<LocationController>()
+                      //     .updatePosition(_cameraPosition, false);
+                    },
                   ),
-                  // myLocationButtonEnabled: false,
-                  onMapCreated: _onMapCreated,
-                  // if (!widget.fromAddAddress) {
-                  //   Get.find<LocationController>().getCurrentLocation(false,
-                  //       mapController: mapController);
-                  // }
-                  // },
-                  // scrollGesturesEnabled: !Get.isDialogOpen,
-                  //zoomControlsEnabled: false,
-                  // onCameraMove: (CameraPosition cameraPosition) {
-                  //   _cameraPosition = cameraPosition;
-                  // },
-                  // onCameraMoveStarted: () {
-                  // locationController.disableButton();
-                  //},
-                  // onCameraIdle: () {
-                  //   // Get.find<LocationController>()
-                  //   //     .updatePosition(_cameraPosition, false);
-                  // },
+                Center(
+                  child: _initialPosition != null
+                      ? Image.asset(Images.pickMarker, height: 50, width: 50)
+                      : const CircularProgressIndicator(),
                 ),
-                // Center(
-                //     child: !locationController.loading
-                //         ? Image.asset(Images.pick_marker, height: 50, width: 50)
-                // //         : CircularProgressIndicator()),
                 Positioned(
                   top: Dimensions.paddingSizeLarge,
                   left: Dimensions.paddingSizeLarge,
@@ -112,7 +131,7 @@ class _PickMapScreenState extends State<PickMapScreen> {
                   child: SearchLocationWidget(
                     mapController: _mapController,
                     // pickedAddress: locationController.pickAddress,
-                    pickedAddress: 'Picked address', isEnabled: false,
+                    pickedAddress: address ?? '', isEnabled: true,
                   ),
                 ),
                 Positioned(
@@ -121,7 +140,11 @@ class _PickMapScreenState extends State<PickMapScreen> {
                   child: FloatingActionButton(
                       mini: true,
                       backgroundColor: Theme.of(context).cardColor,
-                      onPressed: () {},
+                      onPressed: () async {
+                        //getCurrentLatLng();
+                        _mapController?.animateCamera(
+                            CameraUpdate.newLatLng(_initialPosition!));
+                      },
                       child: Icon(
                         Icons.my_location,
                         color: Theme.of(context).primaryColor,
@@ -133,6 +156,17 @@ class _PickMapScreenState extends State<PickMapScreen> {
                       // }),
                       ),
                 ),
+
+                Positioned(
+                  bottom: Dimensions.paddingSizeLarge,
+                  left: Dimensions.paddingSizeSmall,
+                  right: Dimensions.paddingSizeSmall,
+                  child: CustomButton(
+                    buttonText: 'Pick Address',
+                    onPressed: () {},
+                  ),
+                )
+
                 // Positioned(
                 //   bottom: Dimensions.paddingSizeLarge,
                 //   left: Dimensions.paddingSizeSmall,

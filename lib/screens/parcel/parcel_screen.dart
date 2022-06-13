@@ -3,6 +3,9 @@ import 'package:six_am_mart/screens/location/pick_map_screen.dart';
 import 'package:six_am_mart/screens/location/widgets/search_location.dart';
 import 'package:six_am_mart/widgets/display_image.dart';
 
+import 'demo_map_screen.dart';
+import 'pick_parsel_address.dart';
+
 class ParcelScreen extends StatelessWidget {
   static const String routeName = '/parcel';
   const ParcelScreen({Key? key}) : super(key: key);
@@ -165,17 +168,19 @@ class AddBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => PickMapScreen(
-            fromAddAddress: false,
-            canRoute: true,
-            fromSignUp: false,
-            route: '/pick',
-            onPicked: (_) {},
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => const PickParcelAddress(),
+      )
+          // MaterialPageRoute(
+          //   builder: (_) => PickMapScreen(
+          //     fromAddAddress: false,
+          //     canRoute: true,
+          //     fromSignUp: false,
+          //     route: '/pick',
+          //     onPicked: (_) {},
+          //   ),
+          // ),
           ),
-        ),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

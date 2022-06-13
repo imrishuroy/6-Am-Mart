@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:six_am_mart/api/api.dart';
+import 'package:six_am_mart/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
 import '/config/auth_wrapper.dart';
 import '/screens/on-boarding/on_boarding_screen.dart';
@@ -73,7 +74,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<StoreRepository>(
           create: (_) => StoreRepository(),
         ),
-        RepositoryProvider<Api>(create: (_) => Api()),
+        RepositoryProvider<LocationRepository>(
+          create: (_) => LocationRepository(),
+        )
       ],
       child: MultiBlocProvider(
         providers: [

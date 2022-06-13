@@ -27,6 +27,10 @@ class Urls {
 
   static const storeDetails = '$baseUrl/api/v1/stores/details/';
 
+  static const geoCode = '$baseUrl/api/v1/config/geocode-api';
+
+  static const searchLocation = '$baseUrl/api/v1/config/place-api-autocomplete';
+
   // Image Urls
 
   static const String categoryImg =

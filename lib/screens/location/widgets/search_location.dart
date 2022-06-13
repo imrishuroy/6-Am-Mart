@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:six_am_mart/helpers/dimensions.dart';
+import 'package:six_am_mart/screens/parcel/location_search_dialog.dart';
 import 'package:six_am_mart/utils/utils.dart';
 
 class SearchLocationWidget extends StatelessWidget {
   final GoogleMapController? mapController;
   final String pickedAddress;
   final bool isEnabled;
-  final bool? isPickedUp;
+  final bool isPickedUp;
   final String? hint;
 
   const SearchLocationWidget({
@@ -16,7 +17,7 @@ class SearchLocationWidget extends StatelessWidget {
     this.mapController,
     required this.pickedAddress,
     this.isEnabled = false,
-    this.isPickedUp,
+    this.isPickedUp = false,
     this.hint,
   });
   // const SearchLocationWidget({
@@ -31,6 +32,18 @@ class SearchLocationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if (mapController != null) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return LocationSearchDialog(
+                isPickedUp: isPickedUp,
+                mapController: mapController!,
+              );
+            },
+          );
+        }
+
         // Get.dialog(LocationSearchDialog(
         //     mapController: mapController, isPickedUp: isPickedUp));
         // if (isEnabled != null) {

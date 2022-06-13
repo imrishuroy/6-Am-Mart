@@ -1,13 +1,116 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:six_am_mart/api/api.dart';
+import 'package:six_am_mart/models/prediction_model.dart';
 import '/config/shared_prefs.dart';
 import '/config/urls.dart';
 import '/models/failure.dart';
 
 import '/repositories/location/base_location_repo.dart';
 
+import 'package:geolocator/geolocator.dart';
+
 class LocationRepository extends BaseLocationRepository {
   final Dio _dio;
+
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<String> getAddressFromLatLng({
+    required double lat,
+    required double lng,
+  }) async {
+    try {
+      String address = 'Unknown Location Found';
+      final params = {
+        'lat': lat,
+        'lng': lng,
+      };
+      final response =
+          await Api.createDio().get(Urls.geoCode, queryParameters: params);
+      final data = response.data as Map?;
+      if (data != null) {
+        final results = data['results'] as List? ?? [];
+        if (results.isNotEmpty) {
+          final formattedAddress = results[0]['formatted_address'] as String?;
+          if (formattedAddress != null) {
+            address = formattedAddress;
+          }
+        }
+      }
+      print('Response - ${response.data}');
+      return address;
+    } on DioError catch (error) {
+      print('Error in getting address ${error.message}');
+      throw const Failure(message: 'Error in getting address');
+    } catch (error) {
+      print('Error in getting address ${error.toString()}');
+      throw const Failure(message: 'Error in getting address');
+    }
+  }
+
+  Future<List<PredictionModel?>> searchLocation({required String text}) async {
+    try {
+      List<PredictionModel?> predictions = [];
+
+      final params = {
+        'search_text': text,
+      };
+      final response = await Api.createDio()
+          .get(Urls.searchLocation, queryParameters: params);
+      if (response.statusCode == 200 && response.data != null) {
+        final data = response.data['predictions'] as List? ?? [];
+        for (var prediction in data) {
+          predictions.add(PredictionModel.fromJson(prediction));
+        }
+      }
+      return predictions;
+    } on DioError catch (error) {
+      print('Error getting prediction ${error.message} ');
+      throw const Failure(message: 'Error getting location');
+    } catch (error) {
+      print('Error getting prediction ${error.toString()} ');
+      throw const Failure(message: 'Error getting location');
+    }
+  }
 
   LocationRepository({Dio? dio}) : _dio = dio ?? Dio();
   final Map<String, String> _mainHeaders = {
