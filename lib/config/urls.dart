@@ -31,6 +31,8 @@ class Urls {
 
   static const searchLocation = '$baseUrl/api/v1/config/place-api-autocomplete';
 
+  static const placeDetails = '$baseUrl/api/v1/config/place-api-details';
+
   // Image Urls
 
   static const String categoryImg =

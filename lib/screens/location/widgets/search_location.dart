@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:six_am_mart/helpers/dimensions.dart';
-import 'package:six_am_mart/screens/parcel/location_search_dialog.dart';
-import 'package:six_am_mart/utils/utils.dart';
+import '/helpers/dimensions.dart';
+import '/screens/parcel/location_search_dialog.dart';
+import '/utils/utils.dart';
 
 class SearchLocationWidget extends StatelessWidget {
   final GoogleMapController? mapController;
-  final String pickedAddress;
+  final String? pickedAddress;
   final bool isEnabled;
   final bool isPickedUp;
   final String? hint;
@@ -31,9 +31,9 @@ class SearchLocationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (mapController != null) {
-          showDialog(
+          await showDialog(
             context: context,
             builder: (context) {
               return LocationSearchDialog(
@@ -55,36 +55,42 @@ class SearchLocationWidget extends StatelessWidget {
         padding:
             const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-          border: isEnabled != null
-              ? Border.all(
-                  color: isEnabled
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).disabledColor,
-                  width: isEnabled ? 2 : 1,
-                )
-              : null,
-        ),
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+            border: Border.all(
+              color: Theme.of(context).primaryColor,
+              width: 2,
+            )
+
+            // isEnabled != null
+            //     ? Border.all(
+            //         color: isEnabled
+            //             ? Theme.of(context).primaryColor
+            //             : Theme.of(context).disabledColor,
+            //         width: isEnabled ? 2 : 1,
+            //       )
+            //     : null,
+            ),
         child: Row(children: [
           Icon(
             Icons.location_on,
             size: 25,
-            color: (isEnabled == null || isEnabled)
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).disabledColor,
+            color: Theme.of(context).primaryColor,
+            // (isEnabled == null || isEnabled)
+            //     ? Theme.of(context).primaryColor
+            //     : Theme.of(context).disabledColor,
           ),
           const SizedBox(width: Dimensions.paddingSizeExtraSmall),
           Expanded(
-            child: (pickedAddress != null && pickedAddress.isNotEmpty)
+            child: (pickedAddress != null)
                 ? Text(
-                    pickedAddress,
+                    pickedAddress ?? 'Search your place',
                     style: robotoRegular.copyWith(fontSize: 16.0),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   )
                 : Text(
-                    hint ?? '',
+                    hint ?? 'Search your place',
                     style: robotoRegular.copyWith(
                         fontSize: 16.0, color: Theme.of(context).hintColor),
                     maxLines: 1,

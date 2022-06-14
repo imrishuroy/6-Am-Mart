@@ -63,6 +63,7 @@ dependencies:
   universal_ui: ^0.0.8
   url_launcher: ^6.1.2
   url_strategy: ^0.2.0
+  uuid: ^3.0.6
   webview_flutter: ^3.0.4
 
 dev_dependencies:

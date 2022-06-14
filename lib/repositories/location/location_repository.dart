@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:six_am_mart/api/api.dart';
+import 'package:six_am_mart/models/place_details_model.dart';
 import 'package:six_am_mart/models/prediction_model.dart';
 import '/config/shared_prefs.dart';
 import '/config/urls.dart';
@@ -87,21 +89,48 @@ class LocationRepository extends BaseLocationRepository {
     }
   }
 
+  Future<LatLng?> getPlaceDetails({required String placeId}) async {
+    try {
+      final params = {'placeid': placeId};
+      final response =
+          await Api.createDio().get(Urls.placeDetails, queryParameters: params);
+      if (response.statusCode == 200 && response.data != null) {
+        PlaceDetailsModel placeDetails =
+            PlaceDetailsModel.fromJson(response.data);
+        final lat = placeDetails.result?.geometry?.location?.lat;
+        final lng = placeDetails.result?.geometry?.location?.lng;
+
+        if (lat != null && lng != null) {
+          return LatLng(lat, lng);
+        }
+      }
+      return null;
+    } on DioError catch (error) {
+      print('Error in getting place details ${error.message}');
+      throw const Failure(message: 'Error in getting place details s');
+    } catch (error) {
+      print('Error in getting place details  ${error.toString()}');
+      throw const Failure(message: 'Error in getting place details ');
+    }
+  }
+
   Future<List<PredictionModel?>> searchLocation({required String text}) async {
     try {
       List<PredictionModel?> predictions = [];
-
-      final params = {
-        'search_text': text,
-      };
-      final response = await Api.createDio()
-          .get(Urls.searchLocation, queryParameters: params);
-      if (response.statusCode == 200 && response.data != null) {
-        final data = response.data['predictions'] as List? ?? [];
-        for (var prediction in data) {
-          predictions.add(PredictionModel.fromJson(prediction));
+      if (text.isNotEmpty) {
+        final params = {
+          'search_text': text,
+        };
+        final response = await Api.createDio()
+            .get(Urls.searchLocation, queryParameters: params);
+        if (response.statusCode == 200 && response.data != null) {
+          final data = response.data['predictions'] as List? ?? [];
+          for (var prediction in data) {
+            predictions.add(PredictionModel.fromJson(prediction));
+          }
         }
       }
+
       return predictions;
     } on DioError catch (error) {
       print('Error getting prediction ${error.message} ');

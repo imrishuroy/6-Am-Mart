@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class DemoMap extends StatefulWidget {
   static const String routeName = '/nearbyDetails';
@@ -64,7 +65,7 @@ class _DemoMapState extends State<DemoMap> {
     controller?.animateCamera(cameraUpdate);
   }
 
-  void _addMarker({double? lat, double? long}) {
+  void _addMarker({double? lat, double? long}) async {
     print('Market lat long - $lat , $long');
     final int markerCount = markers.length;
 
@@ -84,10 +85,12 @@ class _DemoMapState extends State<DemoMap> {
     }
 
     //LatLng(23.2486, 77.5022);
-    final id = '1221112212';
+    final id = const Uuid().v4();
     final MarkerId markerId = MarkerId(id);
     final Marker marker = Marker(
       markerId: markerId,
+      icon: await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(24, 24)), ''),
       // position: LatLng(
       //   lat ?? 23.2486 + sin(_markerIdCounter * pi / 6.0) / 20.0,
       //   lat ?? 777.5022 + cos(_markerIdCounter * pi / 6.0) / 20.0,
@@ -132,7 +135,7 @@ class _DemoMapState extends State<DemoMap> {
               Expanded(
                 child: GoogleMap(
                   onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
+                  initialCameraPosition: const CameraPosition(
                     target: LatLng(23.2486, 77.5022),
                     zoom: 16.0,
                   ),
