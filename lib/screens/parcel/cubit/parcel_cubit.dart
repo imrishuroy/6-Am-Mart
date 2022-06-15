@@ -24,4 +24,41 @@ class ParcelCubit extends Cubit<ParcelState> {
     emit(
         state.copyWith(receiverAddress: address, status: ParcelStatus.initial));
   }
+
+  void nameChanged(String name, {bool isSender = true}) {
+    if (isSender) {
+      emit(state.copyWith(senderName: name, status: ParcelStatus.initial));
+    } else {
+      emit(state.copyWith(receiverName: name, status: ParcelStatus.initial));
+    }
+  }
+
+  void mobileNumberChanged(String mobileNo, {bool isSender = false}) {
+    if (isSender) {
+      emit(state.copyWith(senderPhNo: mobileNo, status: ParcelStatus.initial));
+    } else {
+      emit(
+          state.copyWith(receiverPhNo: mobileNo, status: ParcelStatus.initial));
+    }
+  }
+
+  void selectPackageType(String? type) {
+    emit(state.copyWith(parcelType: type, status: ParcelStatus.initial));
+  }
+
+  void addContact(
+      {required bool isSender, required String? phNo, required String? name}) {
+    if (isSender) {
+      emit(state.copyWith(
+          senderName: name, senderPhNo: phNo, status: ParcelStatus.initial));
+    } else {
+      emit(
+        state.copyWith(
+          receiverName: name,
+          receiverPhNo: phNo,
+          status: ParcelStatus.initial,
+        ),
+      );
+    }
+  }
 }
