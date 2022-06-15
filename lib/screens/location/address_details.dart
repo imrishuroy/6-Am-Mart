@@ -36,10 +36,7 @@ class AddressDetails extends StatelessWidget {
                 : const SizedBox(),
             (addressDetails.house != null && addressDetails.house!.isNotEmpty)
                 ? Text(
-                    (addressDetails.streetNumber != null ? ', ' : '') +
-                        'house' +
-                        ': ' +
-                        addressDetails.house!,
+                    '${addressDetails.streetNumber != null ? ', ' : ''}house: ${addressDetails.house!}',
                     style: robotoRegular.copyWith(fontSize: 10.0),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -47,18 +44,12 @@ class AddressDetails extends StatelessWidget {
                 : const SizedBox(),
             (addressDetails.floor != null && addressDetails.floor!.isNotEmpty)
                 ? Text(
-                    ((addressDetails.streetNumber != null ||
-                                addressDetails.house != null)
-                            ? ', '
-                            : '') +
-                        'floor' +
-                        ': ' +
-                        addressDetails.floor!,
+                    '${(addressDetails.streetNumber != null || addressDetails.house != null) ? ', ' : ''}floor: ${addressDetails.floor!}',
                     style: robotoRegular.copyWith(fontSize: 10.0),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ]),
         ]);
   }

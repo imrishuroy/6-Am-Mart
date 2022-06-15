@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:uuid/uuid.dart';
 import '/repositories/location/location_repository.dart';
 import '/utils/utils.dart';
 import '/widgets/custom_button.dart';
@@ -26,53 +25,53 @@ class _PickParcelAddressState extends State<PickParcelAddress> {
   late BitmapDescriptor markerIcon;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId? selectedMarker;
-  int _markerIdCounter = 1;
+  //int _markerIdCounter = 1;
 
-  void _addMarker({double? lat, double? long}) async {
-    print('Market lat long - $lat , $long');
-    final int markerCount = markers.length;
+  // void _addMarker({double? lat, double? long}) async {
+  //   print('Market lat long - $lat , $long');
+  //   final int markerCount = markers.length;
 
-    if (markerCount == 12) {
-      return;
-    }
-    _markerIdCounter++;
-    final String markerIdVal = 'marker_id_$_markerIdCounter';
-    // _markerIdCounter++;
+  //   if (markerCount == 12) {
+  //     return;
+  //   }
+  //   _markerIdCounter++;
+  //   final String markerIdVal = 'marker_id_$_markerIdCounter';
+  //   // _markerIdCounter++;
 
-    //final MarkerId markerId = MarkerId(markerUID);
-    // const int markerCount = 1;
-    //markers.length;
+  //   //final MarkerId markerId = MarkerId(markerUID);
+  //   // const int markerCount = 1;
+  //   //markers.length;
 
-    if (markerCount == 12) {
-      return;
-    }
+  //   if (markerCount == 12) {
+  //     return;
+  //   }
 
-    //LatLng(23.2486, 77.5022);
-    final id = const Uuid().v4();
-    final MarkerId markerId = MarkerId(id);
-    final Marker marker = Marker(
-      markerId: markerId,
-      icon: await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(12, 12)), Images.pickMarker),
-      // position: LatLng(
-      //   lat ?? 23.2486 + sin(_markerIdCounter * pi / 6.0) / 20.0,
-      //   lat ?? 777.5022 + cos(_markerIdCounter * pi / 6.0) / 20.0,
-      // ),
-      position: LatLng(lat ?? 23.2486, long ?? 77.5022),
-      // center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
-      // center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
+  //   //LatLng(23.2486, 77.5022);
+  //   final id = const Uuid().v4();
+  //   final MarkerId markerId = MarkerId(id);
+  //   final Marker marker = Marker(
+  //     markerId: markerId,
+  //     icon: await BitmapDescriptor.fromAssetImage(
+  //         const ImageConfiguration(size: Size(12, 12)), Images.pickMarker),
+  //     // position: LatLng(
+  //     //   lat ?? 23.2486 + sin(_markerIdCounter * pi / 6.0) / 20.0,
+  //     //   lat ?? 777.5022 + cos(_markerIdCounter * pi / 6.0) / 20.0,
+  //     // ),
+  //     position: LatLng(lat ?? 23.2486, long ?? 77.5022),
+  //     // center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
+  //     // center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
 
-      infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
-      onTap: () {},
-      // _onMarkerTapped(markerId),
-      // onDragEnd: (LatLng position) => _onMarkerDragEnd(markerId, position),
-      // onDrag: (LatLng position) => _onMarkerDrag(markerId, position),
-    );
+  //     infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
+  //     onTap: () {},
+  //     // _onMarkerTapped(markerId),
+  //     // onDragEnd: (LatLng position) => _onMarkerDragEnd(markerId, position),
+  //     // onDrag: (LatLng position) => _onMarkerDrag(markerId, position),
+  //   );
 
-    setState(() {
-      markers[markerId] = marker;
-    });
-  }
+  //   setState(() {
+  //     markers[markerId] = marker;
+  //   });
+  //}
 
   void _onMapCreated(GoogleMapController? controller) {
     _mapController = controller;

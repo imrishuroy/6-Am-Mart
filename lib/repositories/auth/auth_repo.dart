@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:six_am_mart/models/failure.dart';
-import 'package:six_am_mart/api/dio_inceptor.dart';
+import '/models/failure.dart';
 import '/config/shared_prefs.dart';
 import '/enums/auth_status.dart';
 import '/config/urls.dart';
@@ -20,7 +19,7 @@ class AuthRepository extends BaseAuthRepository {
 
   final _dio = Dio();
 
-  // TODO: Work on this
+  // todo: Work on this
   // experted from this https://blog.logrocket.com/networking-flutter-using-dio/
 
   // final _dio = Dio(

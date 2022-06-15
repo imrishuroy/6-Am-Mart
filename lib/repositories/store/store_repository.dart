@@ -26,12 +26,12 @@ class StoreRepository extends BaseStoreRepositoy {
   Future<List<AppBanner?>> getStoreBanners({required String moduleId}) async {
     try {
       List<AppBanner?> banners = [];
-      final headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'zoneID': '[1]',
-        'moduleID': moduleId,
-        //'X-localization': 'en'
-      };
+      // final headers = {
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      //   'zoneID': '[1]',
+      //   'moduleID': moduleId,
+      //   //'X-localization': 'en'
+      // };
       print('Dio created -- ${Api.createDio()}');
 
       final response = await Api.createDio().get(Urls.banner);
@@ -238,12 +238,12 @@ class StoreRepository extends BaseStoreRepositoy {
         return [];
       }
       final List<AppCategory?> categories = [];
-      final headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'zoneID': '[1]',
-        'moduleID': '1',
-        //'X-localization': 'en'
-      };
+      // final headers = {
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      //   'zoneID': '[1]',
+      //   'moduleID': '1',
+      //   //'X-localization': 'en'
+      // };
 
       final storeDetails = await getStoreDetails(storeId: storeId);
 

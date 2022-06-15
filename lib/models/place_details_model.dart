@@ -191,7 +191,7 @@ class Viewport {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = {};
     if (northeast != null) {
       data['northeast'] = northeast?.toJson();
     }
