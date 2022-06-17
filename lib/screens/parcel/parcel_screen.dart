@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/screens/parcel/task_details_screen.dart';
-
+import '/repositories/parcel/parcel_repository.dart';
+import '/constants/colors_const.dart';
+import '/screens/parcel/task_details_screen.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repositories/location/location_repository.dart';
 import '/screens/parcel/cubit/parcel_cubit.dart';
@@ -10,6 +11,7 @@ import '/widgets/loading_indicator.dart';
 import 'pick_parsel_address.dart';
 import 'widgets/contact_form.dart';
 import 'widgets/contact_section.dart';
+import 'widgets/parcel_tile.dart';
 
 class ParcelScreen extends StatelessWidget {
   static const String routeName = '/parcel';
@@ -22,6 +24,7 @@ class ParcelScreen extends StatelessWidget {
         create: (context) => ParcelCubit(
           authBloc: context.read<AuthBloc>(),
           locationRepository: context.read<LocationRepository>(),
+          parcelRepository: context.read<ParcelRepository>(),
         ),
         child: const ParcelScreen(),
       ),
@@ -46,6 +49,7 @@ class ParcelScreen extends StatelessWidget {
           create: (context) => ParcelCubit(
             authBloc: context.read<AuthBloc>(),
             locationRepository: context.read<LocationRepository>(),
+            parcelRepository: context.read<ParcelRepository>(),
           ),
           child: ContactForm(isSender: isSender),
         );
@@ -66,10 +70,6 @@ class ParcelScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         iconTheme: const IconThemeData(color: Colors.black),
         title: const Text(
           'Send Your Parcel',
@@ -78,12 +78,150 @@ class ParcelScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: BlocConsumer<ParcelCubit, ParcelState>(
-        listener: (_, state) {},
+        listener: (_, state) async {},
         builder: (_, state) {
           if (state.status == ParcelStatus.loading) {
             return const LoadingIndicator();
           }
-          return Padding(
+          return SizedBox(
+            height: 700.0,
+            child: Stack(
+              children: [
+                Container(
+                  color: green,
+                  height: 170.0,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 10.0,
+                    ),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              'Sending high value/fragile\nitems is not recommended',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Image.asset(
+                          'assets/image/transport.png',
+                          height: 85.0,
+                          width: 85.0,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 140.0,
+                  left: 20.0,
+                  right: 20.0,
+                  child: Column(
+                    children: [
+                      ParcelTile(
+                        labelText: 'Sender Address',
+                        iconText: 'A',
+                        address: state.senderAddress,
+                        phoneNo: state.senderPhNo,
+                        name: state.senderName,
+                        isSender: true,
+                        pickAddress: () async {
+                          final address = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const PickParcelAddress(),
+                            ),
+                          );
+                          print('Address picked form maps screen $address');
+
+                          parcelCubit.addSenderAddress(address);
+                        },
+                        pickContact: () =>
+                            showAddContactBottomSheet(context, isSender: true),
+                      ),
+                      const SizedBox(height: 18.0),
+                      ParcelTile(
+                        labelText: 'Receiver Address',
+                        iconText: 'B',
+                        address: state.receiverAddress,
+                        phoneNo: state.receiverPhNo,
+                        name: state.receiverName,
+                        isSender: false,
+                        pickAddress: () async {
+                          final address = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const PickParcelAddress(),
+                            ),
+                          );
+                          print('Address picked form maps screen $address');
+
+                          parcelCubit.addReceiverAddress(address);
+                        },
+                        pickContact: () =>
+                            showAddContactBottomSheet(context, isSender: false),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                            color: Colors.grey.shade300,
+                            width: 1.2,
+                          ),
+                        ),
+                        height: 64.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/image/task.png',
+                                height: 20.0,
+                                width: 20.0,
+                              ),
+                              const SizedBox(width: 20.0),
+                              const Text(
+                                'Add task detail',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(TaskDetailsScreen.routeName),
+                                child: const CircleAvatar(
+                                  radius: 12.0,
+                                  backgroundColor: Colors.deepOrangeAccent,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                    size: 16.0,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 3.0),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+
+          Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10.0,
               vertical: 20.0,

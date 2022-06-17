@@ -33,6 +33,8 @@ class Urls {
 
   static const placeDetails = '$baseUrl/api/v1/config/place-api-details';
 
+  static const parcelCategories = '$baseUrl/api/v1/parcel-category';
+
   // Image Urls
 
   static const String categoryImg =
@@ -56,6 +58,9 @@ class Urls {
 
   static const itemImage =
       'https://6ammart-admin.6amtech.com/storage/app/public/product/';
+
+  static const String parcelCategoryImg =
+      'https://6ammart-admin.6amtech.com/storage/app/public/parcel_category/';
 }
 
 

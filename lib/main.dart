@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/repositories/parcel/parcel_repository.dart';
 import '/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
 import '/config/auth_wrapper.dart';
@@ -75,6 +76,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<LocationRepository>(
           create: (_) => LocationRepository(),
+        ),
+        RepositoryProvider<ParcelRepository>(
+          create: (_) => ParcelRepository(),
         )
       ],
       child: MultiBlocProvider(

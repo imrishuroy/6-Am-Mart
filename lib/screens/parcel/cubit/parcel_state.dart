@@ -11,7 +11,8 @@ class ParcelState extends Equatable {
   final Failure failure;
   final String? senderName;
   final String? receiverName;
-  final String? parcelType;
+  final ParcelCategoryModel? selectedCategory;
+  final List<ParcelCategoryModel?> categories;
 
   const ParcelState({
     this.senderAddress,
@@ -22,11 +23,15 @@ class ParcelState extends Equatable {
     required this.failure,
     this.senderName,
     this.receiverName,
-    this.parcelType,
+    this.selectedCategory,
+    required this.categories,
   });
 
-  factory ParcelState.initial() =>
-      const ParcelState(status: ParcelStatus.initial, failure: Failure());
+  factory ParcelState.initial() => const ParcelState(
+        status: ParcelStatus.initial,
+        failure: Failure(),
+        categories: [],
+      );
 
   @override
   List<Object?> get props {
@@ -39,13 +44,14 @@ class ParcelState extends Equatable {
       failure,
       senderName,
       receiverName,
-      parcelType,
+      selectedCategory,
+      categories,
     ];
   }
 
   @override
   String toString() {
-    return 'ParcelState(senderAddress: $senderAddress, receiverAddress: $receiverAddress, senderPhNo: $senderPhNo, receiverPhNo: $receiverPhNo, status: $status, failure: $failure, senderName: $senderName, receiverName: $receiverName, parcelType: $parcelType)';
+    return 'ParcelState(senderAddress: $senderAddress, receiverAddress: $receiverAddress, senderPhNo: $senderPhNo, receiverPhNo: $receiverPhNo, status: $status, failure: $failure, senderName: $senderName, receiverName: $receiverName, selectedCategory: $selectedCategory, categories: $categories)';
   }
 
   ParcelState copyWith({
@@ -57,7 +63,8 @@ class ParcelState extends Equatable {
     Failure? failure,
     String? senderName,
     String? receiverName,
-    String? parcelType,
+    ParcelCategoryModel? selectedCategory,
+    List<ParcelCategoryModel?>? categories,
   }) {
     return ParcelState(
       senderAddress: senderAddress ?? this.senderAddress,
@@ -68,7 +75,8 @@ class ParcelState extends Equatable {
       failure: failure ?? this.failure,
       senderName: senderName ?? this.senderName,
       receiverName: receiverName ?? this.receiverName,
-      parcelType: parcelType ?? this.parcelType,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      categories: categories ?? this.categories,
     );
   }
 }

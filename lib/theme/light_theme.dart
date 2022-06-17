@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData light({Color color = const Color(0xFF039D55)}) => ThemeData(
       fontFamily: 'Roboto',
       primaryColor: color,
+      appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
       //primarySwatch: Colors.green,
       secondaryHeaderColor: const Color(0xFF1ED7AA),
       disabledColor: const Color(0xFFBABFC4),

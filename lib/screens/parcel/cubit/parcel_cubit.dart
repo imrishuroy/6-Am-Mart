@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/models/parcel_category_model.dart';
+import 'package:six_am_mart/repositories/parcel/parcel_repository.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repositories/location/location_repository.dart';
 import '/models/failure.dart';
@@ -9,11 +11,14 @@ part 'parcel_state.dart';
 class ParcelCubit extends Cubit<ParcelState> {
   final LocationRepository _locationRepository;
   final AuthBloc _authBloc;
+  final ParcelRepository _parcelRepository;
   ParcelCubit({
     required AuthBloc authBloc,
     required LocationRepository locationRepository,
+    required ParcelRepository parcelRepository,
   })  : _authBloc = authBloc,
         _locationRepository = locationRepository,
+        _parcelRepository = parcelRepository,
         super(ParcelState.initial());
 
   void addSenderAddress(String address) {
@@ -42,8 +47,9 @@ class ParcelCubit extends Cubit<ParcelState> {
     }
   }
 
-  void selectPackageType(String? type) {
-    emit(state.copyWith(parcelType: type, status: ParcelStatus.initial));
+  void selectPackageType(ParcelCategoryModel? category) {
+    emit(state.copyWith(
+        selectedCategory: category, status: ParcelStatus.initial));
   }
 
   void addContact(
@@ -59,6 +65,18 @@ class ParcelCubit extends Cubit<ParcelState> {
           status: ParcelStatus.initial,
         ),
       );
+    }
+  }
+
+  void loadParcelCategories() async {
+    try {
+      emit(state.copyWith(status: ParcelStatus.loading));
+
+      final categories = await _parcelRepository.getParcelCategory();
+      emit(
+          state.copyWith(categories: categories, status: ParcelStatus.succuss));
+    } on Failure catch (failure) {
+      emit(state.copyWith(failure: failure, status: ParcelStatus.error));
     }
   }
 }

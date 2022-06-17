@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/constants/constants.dart';
+import '/config/urls.dart';
+import '/constants/constants.dart';
+import '/repositories/parcel/parcel_repository.dart';
+import '/widgets/display_image.dart';
+import '/widgets/loading_indicator.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repositories/location/location_repository.dart';
 import '/screens/parcel/cubit/parcel_cubit.dart';
@@ -14,9 +18,10 @@ class TaskDetailsScreen extends StatelessWidget {
       settings: const RouteSettings(name: routeName),
       builder: (_) => BlocProvider(
         create: (context) => ParcelCubit(
-          authBloc: context.read<AuthBloc>(),
-          locationRepository: context.read<LocationRepository>(),
-        ),
+            authBloc: context.read<AuthBloc>(),
+            locationRepository: context.read<LocationRepository>(),
+            parcelRepository: context.read<ParcelRepository>())
+          ..loadParcelCategories(),
         child: const TaskDetailsScreen(),
       ),
     );
@@ -38,6 +43,9 @@ class TaskDetailsScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ParcelCubit, ParcelState>(
         builder: (context, state) {
+          if (state.status == ParcelStatus.loading) {
+            return const LoadingIndicator();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -94,46 +102,81 @@ class TaskDetailsScreen extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 22.0, vertical: 20.0),
+                            horizontal: 15.0, vertical: 20.0),
                         child: SizedBox(
-                          height: size.height * 0.57,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return const Divider();
-                            },
+                          height: size.height * 0.55,
+                          child: ListView.builder(
+                            itemCount: state.categories.length,
                             itemBuilder: (context, index) {
-                              final type = packageTypes[index];
-                              bool isSelected = type == state.parcelType;
+                              final category = state.categories[index];
+                              bool isSelected =
+                                  category == state.selectedCategory;
+
+                              final iconUrl =
+                                  '${Urls.parcelCategoryImg}${category?.image}';
+
                               return GestureDetector(
                                 onTap: () {
                                   if (!isSelected) {
-                                    parcelCubit.selectPackageType(type);
+                                    parcelCubit.selectPackageType(category);
                                   }
                                 },
                                 child: Container(
-                                  color: isSelected
-                                      ? green.withOpacity(0.8)
-                                      : Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 13.0,
-                                      horizontal: 10.0,
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 7.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 17.0,
+                                    horizontal: 10.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      width: isSelected ? 1.2 : 0.9,
+                                      color: isSelected
+                                          ? green
+                                          : Colors.grey.shade400,
                                     ),
-                                    child: Text(
-                                      type,
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: isSelected
-                                            ? Colors.white
-                                            : Colors.black,
+                                  ),
+                                  // color: isSelected
+                                  //     ? green.withOpacity(0.8)
+                                  //     : Colors.white,
+                                  child: Row(
+                                    children: [
+                                      DisplayImage(
+                                        imageUrl: iconUrl,
+                                        height: 32.0,
+                                        width: 32.0,
                                       ),
-                                    ),
+                                      const SizedBox(width: 15.0),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              category?.name ?? '',
+                                              style: const TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              category?.description ?? '',
+                                              style: TextStyle(
+                                                //fontSize: 15.0,
+                                                // fontWeight: FontWeight.w500,
+                                                color: Colors.grey.shade600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );
                             },
-                            itemCount: packageTypes.length,
                           ),
                         ),
                       ),
