@@ -3,11 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/screens/sign-in/sign_in_screen.dart';
 import '/screens/dashboard/dashboard_screen.dart';
-
 import '/enums/enums.dart';
-import '/repositories/auth/auth_repo.dart';
 
-class AuthWrapper extends StatelessWidget {
+class AuthWrapper extends StatefulWidget {
   static const String routeName = '/auth';
 
   const AuthWrapper({Key? key}) : super(key: key);
@@ -20,8 +18,19 @@ class AuthWrapper extends StatelessWidget {
   }
 
   @override
+  State<AuthWrapper> createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(AuthStatusChanged());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final auth = RepositoryProvider.of<AuthRepository>(context);
+    //  final auth = RepositoryProvider.of<AuthRepository>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocListener<AuthBloc, AuthState>(
@@ -31,14 +40,15 @@ class AuthWrapper extends StatelessWidget {
             print('This runs 4');
             Navigator.of(context).pushNamed(DashBoardScreen.routeName);
           } else if (state.status == AuthenticationStatus.unauthenticated) {
-            if (await auth.isLoggedIn()) {
-              print('This runs 2');
-              Navigator.of(context).pushNamed(DashBoardScreen.routeName);
-            } else {
-              print('This runs 3');
+            Navigator.of(context).pushNamed(SignInScreen.routeName);
+            // if (await auth.isLoggedIn()) {
+            //   print('This runs 2');
+            //   Navigator.of(context).pushNamed(DashBoardScreen.routeName);
+            // } else {
+            //   print('This runs 3');
 
-              Navigator.of(context).pushNamed(SignInScreen.routeName);
-            }
+            //   Navigator.of(context).pushNamed(SignInScreen.routeName);
+            // }
           }
         },
         child: const Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/screens/menu/menu_screen.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
 import '/screens/home/cubit/home_cubit.dart';
 import '/screens/home/home_screen.dart';
@@ -33,7 +34,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     Container(color: Colors.red, height: 400, width: 200.0),
     Container(color: Colors.red, height: 400, width: 200.0),
     Container(color: Colors.red, height: 400, width: 200.0),
-    Container(color: Colors.red, height: 400, width: 200.0),
+    const SizedBox.shrink()
+    //Container(color: Colors.red, height: 400, width: 200.0),
     // FavouriteScreen(),
     // CartScreen(fromNav: true),
     // OrderScreen(),
@@ -46,7 +48,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     Icon(Icons.favorite_rounded),
     Icon(Icons.shopping_cart),
     Icon(Icons.shopping_bag),
-    Icon(Icons.person),
+    Icon(Icons.menu),
   ];
 
   @override
@@ -78,8 +80,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             animationDuration: const Duration(milliseconds: 360),
             height: 60,
             items: _naviagtionIcons,
-            onTap: (index) {
-              _setPage(index);
+            onTap: (index) async {
+              print('index -- $index');
+              if (index == 4) {
+                await showModalBottomSheet<void>(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
+                    ),
+                  ),
+                  context: context,
+                  builder: (context) => const MenuScreen(),
+                );
+              } else {
+                _setPage(index);
+              }
             }),
       ),
     );

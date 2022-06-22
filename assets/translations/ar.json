@@ -373,7 +373,7 @@
   "restaurant_wise": "مطعم وايز",
   "store_wise": "متجر الحكمة",
   "zone_wise": "المنطقة الحكيمة",
-  "default": "تقصير",
+  "defaultText": "تقصير",
   "min_purchase": "الحد الأدنى للشراء",
   "max_discount": "ماكس الخصم",
   "coupon_code_copied": "تم نسخ رمز القسيمة",
@@ -430,8 +430,6 @@
   "track_delivery": "تتبع التسليم",
   "cancel_delivery": "إلغاء التسليم",
   "delivery_id": "معرف التسليم",
-
-  "version_1.1": "Version 1.1",
   "featured_stores": "المتاجر المميزة",
   "max_size_2_mb": "أقصى حجم 2 ميغا بايت"
 }

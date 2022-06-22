@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/widgets/show_snakbar.dart';
-import '/repositories/auth/auth_repo.dart';
+import '/repositories/auth/auth_repository.dart';
+import '/widgets/show_snakbar.dart';
 import '/screens/dashboard/dashboard_screen.dart';
 import '/screens/sign-up/cubit/sign_up_cubit.dart';
 import '/widgets/custom_text_field.dart';

@@ -9,6 +9,11 @@ class AuthState extends Equatable {
     required this.user,
   });
 
+  // if user is not equal to null or user is signed In
+  //we will get true and vise versa
+  // bool isLoggedIn() => user != null && user?.userId != null;
+  bool isLoggedIn() => user != null;
+
   factory AuthState.unknown() => const AuthState(
       status: AuthenticationStatus.unknown, user: User.emptyUser);
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/models/failure.dart';
@@ -30,15 +29,13 @@ class AuthRepository extends BaseAuthRepository {
   //   ),
   // )..interceptors.add(Logging());
 
-  Future<void> registerUser() async {}
-
-  Future<bool> loginUser({
+  Future<String?> loginUser({
     required String? phoneNumber,
     required String? password,
   }) async {
     try {
       if (phoneNumber == null || password == null) {
-        return false;
+        return null;
       }
       final prefs = SharedPrefs();
       final data = {'phone': phoneNumber, 'password': password};
@@ -51,13 +48,18 @@ class AuthRepository extends BaseAuthRepository {
 
           if (token != null) {
             await prefs.setToken(token);
-            return true;
+            return token;
           }
         }
       }
       print('response ${response.data}');
-      return false;
+      return null;
     } on DioError catch (error) {
+      if (error.response?.statusCode == 401) {
+        throw const Failure(
+            message: 'Bad credential, please check email and password');
+      }
+      print('Error in login  ${error.error}');
       print('Error in login ${error.message}');
       throw Failure(message: error.message);
     } catch (error) {
@@ -78,6 +80,7 @@ class AuthRepository extends BaseAuthRepository {
       if (phoneNumber == null || password == null) {
         return;
       }
+
       final prefs = SharedPrefs();
       final data = {
         'f_name': fName,

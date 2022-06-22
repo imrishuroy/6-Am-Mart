@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:six_am_mart/screens/parcel/task_details_screen.dart';
+import 'package:six_am_mart/screens/profile/profile_screen.dart';
 import '/screens/item/item_details_screen.dart';
 import '/screens/parcel/parcel_screen.dart';
 import '/screens/store/screens/view_all_items.dart';
@@ -58,6 +59,9 @@ class CustomRouter {
 
       case TaskDetailsScreen.routeName:
         return TaskDetailsScreen.route();
+
+      case ProfileScreen.routeName:
+        return ProfileScreen.route();
 
       default:
         return _errorRoute();

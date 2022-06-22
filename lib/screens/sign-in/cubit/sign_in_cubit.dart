@@ -1,15 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/repositories/user/user_repository.dart';
+import '/repositories/auth/auth_repository.dart';
 import '/models/failure.dart';
-import '/repositories/auth/auth_repo.dart';
-
 part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
   final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
-  SignInCubit({required AuthRepository authRepository})
-      : _authRepository = authRepository,
+  SignInCubit({
+    required AuthRepository authRepository,
+    required UserRepository userRepository,
+  })  : _authRepository = authRepository,
+        _userRepository = userRepository,
         super(SignInState.initial());
 
   void phoneNumberChanged(String value) {
@@ -28,12 +32,23 @@ class SignInCubit extends Cubit<SignInState> {
   void signInWithPhoneNo() async {
     emit(state.copyWith(status: SignInStatus.submitting));
     try {
-      final result = await _authRepository.loginUser(
+      final token = await _authRepository.loginUser(
         phoneNumber: state.phoneNumber,
         password: state.password,
       );
-      if (result) {
-        emit(state.copyWith(status: SignInStatus.succuss));
+      if (token != null) {
+        final user = await _userRepository.getUserDetails();
+
+        if (user != null) {
+          emit(state.copyWith(status: SignInStatus.succuss));
+        } else {
+          emit(
+            state.copyWith(
+              status: SignInStatus.error,
+              failure: const Failure(message: 'Error login, please try again'),
+            ),
+          );
+        }
       } else {
         emit(
           state.copyWith(

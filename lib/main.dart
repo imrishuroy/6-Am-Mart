@@ -1,10 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/repositories/parcel/parcel_repository.dart';
+import '/translations/codegen_loader.g.dart';
+import '/repositories/parcel/parcel_repository.dart';
 import '/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
 import '/config/auth_wrapper.dart';
@@ -16,10 +18,11 @@ import '/repositories/user/user_repository.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/shared_prefs.dart';
-import 'repositories/auth/auth_repo.dart';
+import 'repositories/auth/auth_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   if (kIsWeb) {
     // await Firebase.initializeApp(
@@ -40,7 +43,21 @@ Future<void> main() async {
   // Bloc.observer = SimpleBlocObserver();
   BlocOverrides.runZoned(() {}, blocObserver: SimpleBlocObserver());
 
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        // Locale('en', 'US'),
+        // Locale('ar', 'DZ'),
+        Locale('en'),
+        Locale('ar'),
+      ],
+      fallbackLocale: const Locale('en'),
+      //path: 'resources/langs',
+      path: 'assets/translations',
+      // assetLoader: const CodegenLoader(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -92,6 +109,9 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           //showPerformanceOverlay: true,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           theme: light(),
           debugShowCheckedModeBanner: false,
 

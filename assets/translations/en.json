@@ -373,7 +373,7 @@
   "restaurant_wise": "Restaurant Wise",
   "store_wise": "Store Wise",
   "zone_wise": "Zone Wise",
-  "default": "Default",
+  "defaultText": "Default",
   "min_purchase": "Min Purchase",
   "max_discount": "Max Discount",
   "coupon_code_copied": "Coupon code copied",
@@ -430,8 +430,6 @@
   "track_delivery": "Track Delivery",
   "cancel_delivery": "Cancel Delivery",
   "delivery_id": "Delivery ID",
-
-  "version_1.1": "Version 1.1",
   "featured_stores": "Featured Stores",
   "max_size_2_mb": "Max size 2MB"
 }

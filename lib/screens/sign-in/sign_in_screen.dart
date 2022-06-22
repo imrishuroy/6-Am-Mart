@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/repositories/auth/auth_repo.dart';
+import 'package:six_am_mart/translations/locale_keys.g.dart';
+import '/repositories/user/user_repository.dart';
+import '/repositories/auth/auth_repository.dart';
 import '/screens/dashboard/dashboard_screen.dart';
 import '/screens/sign-in/cubit/sign_in_cubit.dart';
 import '/screens/sign-up/sign_up_screen.dart';
@@ -18,6 +21,7 @@ class SignInScreen extends StatefulWidget {
       builder: (_) => BlocProvider<SignInCubit>(
         create: (context) => SignInCubit(
           authRepository: context.read<AuthRepository>(),
+          userRepository: context.read<UserRepository>(),
         ),
         child: const SignInScreen(),
       ),
@@ -46,6 +50,8 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    //context.setLocale(Locale('en', 'US')); -- used to change local
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 243, 240, 1),
       body: BlocConsumer<SignInCubit, SignInState>(
@@ -93,9 +99,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         InkWell(
                           onTap: () => Navigator.of(context)
                               .pushNamed(SignUpScreen.routeName),
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(
+                          child: Text(
+                            LocaleKeys.sign_up.tr(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 18,
                               letterSpacing: -1,
