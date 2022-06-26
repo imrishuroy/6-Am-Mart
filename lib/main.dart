@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/translations/codegen_loader.g.dart';
 import '/repositories/parcel/parcel_repository.dart';
 import '/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
