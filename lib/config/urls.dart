@@ -9,6 +9,8 @@ class Urls {
 
   static const String login = '$baseUrl/api/v1/auth/login';
 
+  static const String config = '$baseUrl/api/v1/config';
+
   static const String customerInfo = '$baseUrl/api/v1/customer/info';
 
   static const String catagory = '$baseUrl/api/v1/categories';

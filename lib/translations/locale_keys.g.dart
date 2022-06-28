@@ -461,4 +461,68 @@ abstract class LocaleKeys {
   static const delivery_id = 'delivery_id';
   static const featured_stores = 'featured_stores';
   static const max_size_2_mb = 'max_size_2_mb';
+  static const no_parcel_category_data_found = 'no_parcel_category_data_found';
+  static const search_item_in_store = 'search_item_in_store';
+  static const write_item_name = 'write_item_name';
+  static const view_more = 'view_more';
+  static const news_letter = 'news_letter';
+  static const subscribe_to_out_new_channel_to_get_latest_updates =
+      'subscribe_to_out_new_channel_to_get_latest_updates';
+  static const your_email_address = 'your_email_address';
+  static const subscribe = 'subscribe';
+  static const follow_us_on = 'follow_us_on';
+  static const download_our_app = 'download_our_app';
+  static const download_our_apps = 'download_our_apps';
+  static const quick_links = 'quick_links';
+  static const my_account = 'my_account';
+  static const contact_us = 'contact_us';
+  static const copyright = 'copyright';
+  static const terms_and_condition = 'terms_and_condition';
+  static const add_address = 'add_address';
+  static const subscribed_successfully = 'subscribed_successfully';
+  static const landing_page_texts = 'landing_page_texts';
+  static const more_than_just_a_reliable_ecommerce_platform =
+      'more_than_just_a_reliable_ecommerce_platform';
+  static const choose_your_location_to_start_shopping =
+      'choose_your_location_to_start_shopping';
+  static const your_ecommerce_venture_starts_here =
+      'your_ecommerce_venture_starts_here';
+  static const enjoy_all_services_in_one_platform =
+      'enjoy_all_services_in_one_platform';
+  static const download_app_to_enjoy_more = 'download_app_to_enjoy_more';
+  static const download_our_app_from = 'download_our_app_from';
+  static const trusted_by_customers_and_store_owners =
+      'trusted_by_customers_and_store_owners';
+  static const thousands_of_stores = 'thousands_of_stores';
+  static const excellent_shopping_experience = 'excellent_shopping_experience';
+  static const easy_checkout_and_payment_system =
+      'easy_checkout_and_payment_system';
+  static const become_a_seller = 'become_a_seller';
+  static const become_a_delivery_man = 'become_a_delivery_man';
+  static const register_as_seller_and_open_shop_in =
+      'register_as_seller_and_open_shop_in';
+  static const to_start_your_business = 'to_start_your_business';
+  static const explore_more = 'explore_more';
+  static const pick_from_map = 'pick_from_map';
+  static const register = 'register';
+  static const register_as_delivery_man_and_earn_money =
+      'register_as_delivery_man_and_earn_money';
+  // static const version_1.4 = 'version_1.4';
+  static const street_number = 'street_number';
+  static const house = 'house';
+  static const floor = 'floor';
+  static const sender_address = 'sender_address';
+  static const optional = 'optional';
+  static const set_from_saved_address = 'set_from_saved_address';
+  static const sender_information = 'sender_information';
+  static const pickup_information = 'pickup_information';
+  static const sender_name = 'sender_name';
+  static const sender_phone_number = 'sender_phone_number';
+  static const receiver_information = 'receiver_information';
+  static const destination_information = 'destination_information';
+  // static const continue = 'continue';
+  static const not_provided = 'not_provided';
+  static const item_details = 'item_details';
+  static const enter_sender_name = 'enter_sender_name';
+  static const enter_sender_phone_number = 'enter_sender_phone_number';
 }

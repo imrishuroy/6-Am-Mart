@@ -30,6 +30,7 @@ class Images {
   static const String emptyCart = 'assets/image/empty_cart.png';
   static const String guest = 'assets/image/guest.png';
   static const String profileBg = 'assets/image/profile_bg.png';
+  static const String profile = 'assets/image/profile.png';
   static const String warning = 'assets/image/warning.png';
   static const String supportImage = 'assets/image/support_image.png';
   static const String cashOnDelivery = 'assets/image/cash_on_delivery.png';
@@ -54,4 +55,5 @@ class Images {
   static const String parcel = 'assets/image/parcel.png';
   static const String distance = 'assets/image/distance.png';
   static const String delivery = 'assets/image/delivery.png';
+  static const String orders = 'assets/image/orders.png';
 }

@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
+import 'package:six_am_mart/repositories/config/config_repository.dart';
+import 'package:six_am_mart/screens/splash/splash_screen.dart';
 import '/repositories/parcel/parcel_repository.dart';
 import '/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
@@ -95,6 +98,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<ParcelRepository>(
           create: (_) => ParcelRepository(),
+        ),
+        RepositoryProvider<ConfigRepository>(
+          create: (_) => ConfigRepository(),
         )
       ],
       child: MultiBlocProvider(
@@ -103,6 +109,11 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthBloc(
               authRepository: context.read<AuthRepository>(),
               userRepository: context.read<UserRepository>(),
+            ),
+          ),
+          BlocProvider<AppConfigBloc>(
+            create: (context) => AppConfigBloc(
+              configRepository: context.read<ConfigRepository>(),
             ),
           )
         ],
@@ -115,9 +126,11 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
 
           onGenerateRoute: CustomRouter.onGenerateRoute,
-          initialRoute: SharedPrefs().showIntro
-              ? OnBoardingScreen.routeName
-              : AuthWrapper.routeName,
+          initialRoute: SplashScreen.routeName,
+
+          // SharedPrefs().showIntro
+          //     ? OnBoardingScreen.routeName
+          //     : AuthWrapper.routeName,
           // initialRoute: StoreScreen.routeName,
         ),
       ),

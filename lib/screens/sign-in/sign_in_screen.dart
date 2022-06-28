@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
 import 'package:six_am_mart/translations/locale_keys.g.dart';
 import '/repositories/user/user_repository.dart';
 import '/repositories/auth/auth_repository.dart';
@@ -50,6 +51,8 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final config = context.read<AppConfigBloc>();
+    print('Config -- ${config.state}');
     //context.setLocale(Locale('en', 'US')); -- used to change local
 
     return Scaffold(

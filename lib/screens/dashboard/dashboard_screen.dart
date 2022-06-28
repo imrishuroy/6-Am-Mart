@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/screens/favourite/favourite_screen.dart';
 import '/screens/menu/menu_screen.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
 import '/screens/home/cubit/home_cubit.dart';
@@ -31,7 +32,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       )..load(),
       child: const HomeScreen(),
     ),
-    Container(color: Colors.red, height: 400, width: 200.0),
+    const FavouriteScreen(),
     Container(color: Colors.red, height: 400, width: 200.0),
     Container(color: Colors.red, height: 400, width: 200.0),
     const SizedBox.shrink()

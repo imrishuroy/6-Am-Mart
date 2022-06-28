@@ -1,5 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
+import 'package:six_am_mart/screens/splash/splash_logo.dart';
 import '/utils/images.dart';
 
 import 'no_interner_screen.dart';
@@ -29,14 +32,8 @@ class SplashScreen extends StatelessWidget {
             return const NoInternetScreen(child: SplashScreen());
           }
 
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(Images.logo, width: 200),
-              ],
-            ),
-          );
+          //context.read<AppConfigBloc>().add(LoadConfig());
+          return const SplashLogo();
         },
       ),
     );
