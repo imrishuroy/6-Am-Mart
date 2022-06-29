@@ -21,6 +21,23 @@ class Urls {
   static const String featuredStores =
       '$baseUrl/api/v1/stores/get-stores/all?featured=1&offset=1&limit=50';
 
+  static const String popularItemUri = '/api/v1/items/popular';
+
+  static const String reviewedItemUrl = '/api/v1/items/most-reviewed';
+
+  static const String reviewUrl = '/api/v1/items/reviews/submit';
+
+  static const String deliverManReviewUri =
+      '/api/v1/delivery-man/reviews/submit';
+
+  static const String itemDetailsUri = '/api/v1/items/details/';
+
+  static const String wishListUri = '/api/v1/customer/wish-list';
+
+  static const String addWishListUri = '/api/v1/customer/wish-list/add?';
+
+  static const String removeWishListUri = '/api/v1/customer/wish-list/remove?';
+
   static const String popularStore = '$baseUrl/api/v1/stores/popular';
 
   static const String allStore = '$baseUrl/api/v1/stores/get-stores/all';

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:six_am_mart/models/store.dart';
-import '/models/module.dart';
+import '../../../models/app_module.dart';
 import '/models/category.dart';
 import '/models/banner.dart';
 import '/models/failure.dart';

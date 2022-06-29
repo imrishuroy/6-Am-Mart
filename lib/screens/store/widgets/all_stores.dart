@@ -71,7 +71,7 @@ class AllStores extends StatelessWidget {
                       ),
                       RatingBar(
                         rating: store?.avgRating?.toDouble() ?? 0,
-                        ratingCount: store?.avgRating ?? 0,
+                        ratingCount: store?.avgRating?.toInt() ?? 0,
                         size: 14.0,
                       ),
                     ],

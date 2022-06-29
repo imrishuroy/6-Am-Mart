@@ -5,7 +5,7 @@ enum HomeStatus { initial, loading, succuss, error }
 class HomeState extends Equatable {
   final List<AppBanner?> banners;
   final List<AppCategory?> categories;
-  final List<Module?> modules;
+  final List<AppModule?> modules;
 
   final List<Store?> featuredStores;
 
@@ -33,7 +33,7 @@ class HomeState extends Equatable {
   HomeState copyWith({
     List<AppBanner?>? banners,
     List<AppCategory?>? categories,
-    List<Module?>? modules,
+    List<AppModule?>? modules,
     Failure? failure,
     HomeStatus? status,
     List<Store?>? featuredStores,

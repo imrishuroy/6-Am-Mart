@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:six_am_mart/models/module.dart';
+import '/models/app_module.dart';
+import '/models/config-model/module.dart';
 
 class ModuleConfig extends Equatable {
   final List<String?> moduleType;

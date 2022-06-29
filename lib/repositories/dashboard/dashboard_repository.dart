@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:six_am_mart/models/category.dart';
-import 'package:six_am_mart/models/module.dart';
+import 'package:six_am_mart/models/app_module.dart';
 import 'package:six_am_mart/models/store.dart';
 import '/config/urls.dart';
 import '/models/banner.dart';
@@ -48,16 +48,16 @@ class DashBoardRepository extends BaseDashBoardRepo {
     }
   }
 
-  Future<List<Module?>> getModules() async {
+  Future<List<AppModule?>> getModules() async {
     try {
-      List<Module?> modules = [];
+      List<AppModule?> modules = [];
 
       final response = await _dio.get(Urls.module);
       if (response.statusCode == 200) {
         final data = response.data as List? ?? [];
 
         for (var element in data) {
-          modules.add(Module.fromMap(element));
+          modules.add(AppModule.fromMap(element));
         }
       }
       return modules;

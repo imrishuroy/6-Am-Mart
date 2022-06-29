@@ -5,14 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
-import 'package:six_am_mart/repositories/config/config_repository.dart';
-import 'package:six_am_mart/screens/splash/splash_screen.dart';
+import 'package:six_am_mart/blocs/wishlist/wishlist_cubit.dart';
+import '/repositories/item/item_repository.dart';
+import '/blocs/config/app_config_bloc.dart';
+import '/repositories/config/config_repository.dart';
+import '/screens/splash/splash_screen.dart';
 import '/repositories/parcel/parcel_repository.dart';
 import '/repositories/location/location_repository.dart';
 import '/repositories/store/store_repository.dart';
-import '/config/auth_wrapper.dart';
-import '/screens/on-boarding/on_boarding_screen.dart';
 import '/theme/light_theme.dart';
 import '/config/custom_router.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
@@ -21,6 +21,7 @@ import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/shared_prefs.dart';
 import 'repositories/auth/auth_repository.dart';
+import 'repositories/wishlist/wishlist_repo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +102,13 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<ConfigRepository>(
           create: (_) => ConfigRepository(),
-        )
+        ),
+        RepositoryProvider<ItemRepository>(
+          create: (_) => ItemRepository(),
+        ),
+        RepositoryProvider<WishListRepository>(
+          create: (_) => WishListRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -115,7 +122,12 @@ class MyApp extends StatelessWidget {
             create: (context) => AppConfigBloc(
               configRepository: context.read<ConfigRepository>(),
             ),
-          )
+          ),
+          BlocProvider<WishlistCubit>(
+            create: (context) => WishlistCubit(
+              wishListRepo: context.read<WishListRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           //showPerformanceOverlay: true,
@@ -124,7 +136,6 @@ class MyApp extends StatelessWidget {
           locale: context.locale,
           theme: light(),
           debugShowCheckedModeBanner: false,
-
           onGenerateRoute: CustomRouter.onGenerateRoute,
           initialRoute: SplashScreen.routeName,
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '/blocs/config/app_config_bloc.dart';
 import '/widgets/not_login_screen.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/helpers/dimensions.dart';
@@ -32,50 +33,55 @@ class FavouriteScreenState extends State<FavouriteScreen>
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
+    final configBloc = context.read<AppConfigBloc>();
+
+    String text = LocaleKeys.store.tr();
+
+    bool showRestaurant =
+        configBloc.state.config?.moduleConfig?.module?.showRestaurantText ??
+            false;
+
+    if (showRestaurant) {
+      text = LocaleKeys.restaurant.tr();
+    }
+
     return Scaffold(
       appBar: CustomAppBar(title: LocaleKeys.favourite.tr(), backButton: false),
       endDrawer: const MenuDrawer(),
       body: authBloc.state.isLoggedIn()
           ? SafeArea(
-              child: Column(children: [
-              Container(
-                width: Dimensions.webMaxWidth,
-                color: Theme.of(context).cardColor,
-                child: TabBar(
-                  controller: _tabController,
-                  indicatorColor: Theme.of(context).primaryColor,
-                  indicatorWeight: 3,
-                  labelColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Theme.of(context).disabledColor,
-                  unselectedLabelStyle: robotoRegular.copyWith(
-                      color: Theme.of(context).disabledColor,
-                      fontSize: Dimensions.fontSizeSmall),
-                  labelStyle: robotoBold.copyWith(
-                      fontSize: Dimensions.fontSizeSmall,
-                      color: Theme.of(context).primaryColor),
-                  tabs: [
-                    Tab(text: LocaleKeys.item.tr()),
-                    Tab(text: 'Stores'
-                        // Get.find<SplashController>()
-                        //         .configModel
-                        //         .moduleConfig
-                        //         .module
-                        //         .showRestaurantText
-                        //     ? 'restaurants'.tr
-                        //     : 'stores'.tr,
-                        ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: TabBarView(
-                controller: _tabController,
-                children: const [
-                  FavItemView(isStore: false),
-                  FavItemView(isStore: true),
+              child: Column(
+                children: [
+                  Container(
+                    width: Dimensions.webMaxWidth,
+                    color: Theme.of(context).cardColor,
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorColor: Theme.of(context).primaryColor,
+                      indicatorWeight: 3,
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Theme.of(context).disabledColor,
+                      unselectedLabelStyle: robotoRegular.copyWith(
+                          color: Theme.of(context).disabledColor,
+                          fontSize: Dimensions.fontSizeSmall),
+                      labelStyle: robotoBold.copyWith(
+                          fontSize: Dimensions.fontSizeSmall,
+                          color: Theme.of(context).primaryColor),
+                      tabs: [Tab(text: LocaleKeys.item.tr()), Tab(text: text)],
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: const [
+                        FavItemView(isStore: false),
+                        FavItemView(isStore: true),
+                      ],
+                    ),
+                  ),
                 ],
-              )),
-            ]))
+              ),
+            )
           : const NotLoggedInScreen(),
     );
   }

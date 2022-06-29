@@ -8,7 +8,7 @@ import 'add_ons.dart';
 import 'choice_options.dart';
 
 class Item extends Equatable {
-  final int? id;
+  final int id;
   final String? name;
   final String? description;
   final String? image;
@@ -37,7 +37,7 @@ class Item extends Equatable {
   final int? stock;
   final String? availableDateStarts;
   const Item({
-    this.id,
+    required this.id,
     this.name,
     this.description,
     this.image,

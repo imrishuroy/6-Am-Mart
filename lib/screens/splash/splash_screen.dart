@@ -1,10 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
-import 'package:six_am_mart/screens/splash/splash_logo.dart';
-import '/utils/images.dart';
 
+import '/screens/splash/splash_logo.dart';
 import 'no_interner_screen.dart';
 
 class SplashScreen extends StatelessWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/widgets/loading_indicator.dart';
-import '/blocs/bloc/app_config_bloc.dart';
+import '/blocs/config/app_config_bloc.dart';
+import '/widgets/loading_indicator.dart';
+
 import '/config/auth_wrapper.dart';
 import '/config/shared_prefs.dart';
 import '/screens/on-boarding/on_boarding_screen.dart';
@@ -25,7 +26,7 @@ class _SplashLogoState extends State<SplashLogo> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppConfigBloc, AppConfigState>(
       listener: (context, state) {
-        if (state is AppConfigSuccuss) {
+        if (state.status == AppConfigStatus.succuss) {
           if (SharedPrefs().showIntro) {
             Navigator.of(context).pushNamed(OnBoardingScreen.routeName);
           } else {
@@ -40,7 +41,8 @@ class _SplashLogoState extends State<SplashLogo> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(Images.logo, width: 200),
-              if (state is AppConfigLoading) const LoadingIndicator()
+              if (state.status == AppConfigStatus.loading)
+                const LoadingIndicator()
             ],
           ),
         );

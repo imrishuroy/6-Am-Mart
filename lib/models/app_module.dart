@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class Module extends Equatable {
+class AppModule extends Equatable {
   final int? id;
   final String? moduleName;
   final String? moduleType;
@@ -16,7 +16,7 @@ class Module extends Equatable {
   final String? description;
   final List translations;
 
-  const Module({
+  const AppModule({
     this.id,
     this.moduleName,
     this.moduleType,
@@ -31,7 +31,7 @@ class Module extends Equatable {
     required this.translations,
   });
 
-  Module copyWith({
+  AppModule copyWith({
     int? id,
     String? moduleName,
     String? moduleType,
@@ -45,7 +45,7 @@ class Module extends Equatable {
     String? description,
     List? translations,
   }) {
-    return Module(
+    return AppModule(
       id: id ?? this.id,
       moduleName: moduleName ?? this.moduleName,
       moduleType: moduleType ?? this.moduleType,
@@ -78,8 +78,8 @@ class Module extends Equatable {
     };
   }
 
-  factory Module.fromMap(Map<String, dynamic> map) {
-    return Module(
+  factory AppModule.fromMap(Map<String, dynamic> map) {
+    return AppModule(
       id: map['id']?.toInt(),
       moduleName: map['module_name'],
       moduleType: map['module_type'],
@@ -98,7 +98,8 @@ class Module extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Module.fromJson(String source) => Module.fromMap(json.decode(source));
+  factory AppModule.fromJson(String source) =>
+      AppModule.fromMap(json.decode(source));
 
   @override
   String toString() {

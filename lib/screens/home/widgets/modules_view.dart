@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:six_am_mart/screens/parcel/parcel_screen.dart';
 import 'package:six_am_mart/screens/store/store_screen.dart';
 import '/screens/home/widgets/module_tile.dart';
-import '/models/module.dart';
+import '../../../models/app_module.dart';
 import '/config/urls.dart';
 
 class ModuleView extends StatelessWidget {
-  final List<Module?> modules;
+  final List<AppModule?> modules;
   const ModuleView({
     Key? key,
     required this.modules,

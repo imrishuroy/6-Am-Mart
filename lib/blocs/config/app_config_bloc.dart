@@ -11,21 +11,24 @@ class AppConfigBloc extends Bloc<AppConfigEvent, AppConfigState> {
   final ConfigRepository _configRepository;
   AppConfigBloc({required ConfigRepository configRepository})
       : _configRepository = configRepository,
-        super(AppConfigInitial()) {
+        super(AppConfigState.initial()) {
     on<LoadConfig>((event, emit) async {
       try {
-        emit(AppConfigLoading());
+        emit(state.copyWith(status: AppConfigStatus.loading));
 
         final config = await _configRepository.getConfigData();
         print('Config bloc --- $config');
         if (config != null) {
-          emit(AppConfigSuccuss(config));
+          emit(state.copyWith(status: AppConfigStatus.succuss, config: config));
         } else {
-          emit(const AppConfigError(
-              Failure(message: 'Error in getting config')));
+          emit(
+            state.copyWith(
+                failure: const Failure(message: 'Error in getting config'),
+                status: AppConfigStatus.error),
+          );
         }
       } on Failure catch (failure) {
-        emit(AppConfigError(failure));
+        emit(state.copyWith(failure: failure, status: AppConfigStatus.error));
       }
     });
   }

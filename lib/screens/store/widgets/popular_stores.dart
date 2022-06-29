@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/store/screens/store_items_screen.dart';
+import '/screens/store/screens/store_items_screen.dart';
 import '/config/urls.dart';
 import '/models/store.dart';
 import '/widgets/display_image.dart';
@@ -74,7 +74,7 @@ class PopularStores extends StatelessWidget {
                               const SizedBox(height: 4.0),
                               RatingBar(
                                 rating: store?.avgRating?.toDouble() ?? 0,
-                                ratingCount: store?.avgRating ?? 0,
+                                ratingCount: store?.avgRating?.toInt() ?? 0,
                                 size: 14.0,
                               )
                             ],

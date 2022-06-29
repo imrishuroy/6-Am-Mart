@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/bloc/app_config_bloc.dart';
-import 'package:six_am_mart/translations/locale_keys.g.dart';
+import '/blocs/config/app_config_bloc.dart';
+import '/translations/locale_keys.g.dart';
 import '/repositories/user/user_repository.dart';
 import '/repositories/auth/auth_repository.dart';
 import '/screens/dashboard/dashboard_screen.dart';
