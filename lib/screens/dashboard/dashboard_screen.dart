@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/screens/cart/cart_screen.dart';
 import '/screens/favourite/favourite_screen.dart';
 import '/screens/menu/menu_screen.dart';
 import '/repositories/dashboard/dashboard_repository.dart';
@@ -33,7 +34,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       child: const HomeScreen(),
     ),
     const FavouriteScreen(),
-    Container(color: Colors.red, height: 400, width: 200.0),
+    const CartScreen(fromNav: true),
+
     Container(color: Colors.red, height: 400, width: 200.0),
     const SizedBox.shrink()
     //Container(color: Colors.red, height: 400, width: 200.0),

@@ -19,6 +19,21 @@ class SharedPrefs {
     _sharedPrefs ??= await SharedPreferences.getInstance();
   }
 
+  bool containsKey(String value) {
+    return _sharedPrefs != null && _sharedPrefs!.containsKey(value);
+  }
+
+  List<String> getCartList(String value) {
+    return _sharedPrefs != null ? _sharedPrefs?.getStringList(value) ?? [] : [];
+  }
+
+  Future<bool> setCartList(
+      {required String value, required List<String> cart}) async {
+    return _sharedPrefs != null
+        ? await _sharedPrefs!.setStringList(value, cart)
+        : false;
+  }
+
   bool get checkPrefsNull =>
       _sharedPrefs != null && _sharedPrefs!.containsKey(keyTheme);
 

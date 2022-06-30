@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/wishlist/wishlist_cubit.dart';
+import 'package:six_am_mart/blocs/cart/cart_cubit.dart';
+import '/blocs/wishlist/wishlist_cubit.dart';
+import '/repositories/cart/cart_repositroy.dart';
 import '/repositories/item/item_repository.dart';
 import '/blocs/config/app_config_bloc.dart';
 import '/repositories/config/config_repository.dart';
@@ -106,6 +108,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<ItemRepository>(
           create: (_) => ItemRepository(),
         ),
+        RepositoryProvider<CartRepository>(
+          create: (_) => CartRepository(),
+        ),
         RepositoryProvider<WishListRepository>(
           create: (_) => WishListRepository(),
         ),
@@ -128,6 +133,11 @@ class MyApp extends StatelessWidget {
               wishListRepo: context.read<WishListRepository>(),
             ),
           ),
+          BlocProvider<CartCubit>(
+            create: (context) => CartCubit(
+              cartRepository: context.read<CartRepository>(),
+            ),
+          )
         ],
         child: MaterialApp(
           //showPerformanceOverlay: true,
