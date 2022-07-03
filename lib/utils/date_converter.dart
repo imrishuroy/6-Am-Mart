@@ -94,16 +94,16 @@ class DateConverter {
         currentTime.day, dateEnd.hour, dateEnd.minute, dateEnd.second);
     if (endTime.isBefore(startTime)) {
       if (currentTime.isBefore(startTime) && currentTime.isBefore(endTime)) {
-        startTime = startTime.add(Duration(days: -1));
+        startTime = startTime.add(const Duration(days: -1));
       } else {
-        endTime = endTime.add(Duration(days: 1));
+        endTime = endTime.add(const Duration(days: 1));
       }
     }
     return currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
   }
 
   static String _timeFormatter(BuildContext context) {
-    return context.read<AppConfigBloc>().state.config?.timeformat == '24'
+    return context.read<AppConfigBloc>().state.configModel?.timeformat == '24'
         ? 'HH:mm'
         : 'hh:mm a';
   }

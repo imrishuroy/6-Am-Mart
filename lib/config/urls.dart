@@ -54,6 +54,26 @@ class Urls {
 
   static const parcelCategories = '$baseUrl/api/v1/parcel-category';
 
+  // orders
+
+  static const runningOrderList = '/api/v1/customer/order/running-orders';
+
+  static const historyOrderList = '/api/v1/customer/order/list';
+
+  static const orderDetailsUrl = '/api/v1/customer/order/details?order_id=';
+
+  static const orderCancelUrl = '/api/v1/customer/order/cancel';
+
+  static const trackUri = '/api/v1/customer/order/track?order_id=';
+
+  static const placeOrderUri = '/api/v1/customer/order/place';
+
+  static const lastLocationUri = '/api/v1/delivery-man/last-location?order_id=';
+
+  static const codSwitchUri = '/api/v1/customer/order/payment-method';
+
+  static const distanceMatrixUri = '/api/v1/config/distance-api';
+
   // Image Urls
 
   static const String categoryImg =
@@ -81,6 +101,5 @@ class Urls {
   static const String parcelCategoryImg =
       'https://6ammart-admin.6amtech.com/storage/app/public/parcel_category/';
 }
-
 
 //

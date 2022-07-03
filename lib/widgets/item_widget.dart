@@ -42,7 +42,7 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = context.read<AppConfigBloc>();
-    BaseUrls? baseUrls = config.state.config?.baseUrls;
+    BaseUrls? baseUrls = config.state.configModel?.baseUrls;
 
     bool desktop = ResponsiveHelper.isDesktop(context);
     double? discount;

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/models/config-model/module_model.dart';
 import '/models/failure.dart';
 import '/repositories/config/config_repository.dart';
 import '/models/config-model/config_model.dart';
@@ -19,7 +20,8 @@ class AppConfigBloc extends Bloc<AppConfigEvent, AppConfigState> {
         final config = await _configRepository.getConfigData();
         print('Config bloc --- $config');
         if (config != null) {
-          emit(state.copyWith(status: AppConfigStatus.succuss, config: config));
+          emit(state.copyWith(
+              status: AppConfigStatus.succuss, configModel: config));
         } else {
           emit(
             state.copyWith(
@@ -30,6 +32,9 @@ class AppConfigBloc extends Bloc<AppConfigEvent, AppConfigState> {
       } on Failure catch (failure) {
         emit(state.copyWith(failure: failure, status: AppConfigStatus.error));
       }
+    });
+    on<SetFirstTimeConfigCheck>((event, emit) async {
+      emit(state.copyWith(firstTimeConnectionCheck: event.isChecked));
     });
   }
 }

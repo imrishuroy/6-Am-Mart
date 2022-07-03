@@ -6,7 +6,7 @@ import '/blocs/item/item_cubit.dart';
 import '/blocs/wishlist/wishlist_cubit.dart';
 import '/helpers/dimensions.dart';
 import '/helpers/responsive_helper.dart';
-import '/models/add_on.dart';
+import '../../../models/cart_on.dart';
 import '/models/add_ons.dart';
 import '/models/cart_model.dart';
 import '/models/item.dart';
@@ -134,7 +134,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                 price, discount ?? 0.0, discountType ?? 'percent');
             double priceWithQuantity = priceWithDiscount * state.quantity;
             double addonsCost = 0;
-            List<AddOn> addOnIdList = [];
+            List<CartAddOn> addOnIdList = [];
             List<AddOns> addOnsList = [];
             for (int index = 0; index < widget.item.addOns.length; index++) {
               if (state.addOnActiveList[index]) {
@@ -144,7 +144,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                           1 * state.addOnQtyList[index]);
                 }
 
-                addOnIdList.add(AddOn(
+                addOnIdList.add(CartAddOn(
                     id: widget.item.addOns[index]?.id ?? 1,
                     quantity: state.addOnQtyList[index]));
 
@@ -157,7 +157,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                 (context
                             .read<AppConfigBloc>()
                             .state
-                            .config
+                            .configModel
                             ?.moduleConfig
                             ?.module
                             ?.addOn ??
@@ -229,7 +229,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                             Dimensions.radiusSmall),
                                         child: CustomImage(
                                           image:
-                                              '${widget.isCampaign ? configBloc.state.config?.baseUrls?.campaignImageUrl : configBloc.state.config?.baseUrls?.itemImageUrl}/${widget.item.image}',
+                                              '${widget.isCampaign ? configBloc.state.configModel?.baseUrls?.campaignImageUrl : configBloc.state.configModel?.baseUrls?.itemImageUrl}/${widget.item.image}',
                                           width:
                                               ResponsiveHelper.isMobile(context)
                                                   ? 100
@@ -322,7 +322,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                                             .read<
                                                                 AppConfigBloc>()
                                                             .state
-                                                            .config
+                                                            .configModel
                                                             ?.moduleConfig
                                                             ?.module
                                                             ?.unit !=
@@ -333,7 +333,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                                             .read<
                                                                 AppConfigBloc>()
                                                             .state
-                                                            .config
+                                                            .configModel
                                                             ?.moduleConfig
                                                             ?.module
                                                             ?.vegNonVeg ==
@@ -342,7 +342,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                                             .read<
                                                                 AppConfigBloc>()
                                                             .state
-                                                            .config
+                                                            .configModel
                                                             ?.toggleVegNonVeg ==
                                                         true))
                                             ?
@@ -374,7 +374,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                                               .read<
                                                                   AppConfigBloc>()
                                                               .state
-                                                              .config
+                                                              .configModel
                                                               ?.moduleConfig
                                                               ?.module
                                                               ?.unit ==
@@ -393,7 +393,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                               )
                                             : const SizedBox.shrink(),
                                         SizedBox(
-                                            height: configBloc.state.config
+                                            height: configBloc.state.configModel
                                                         ?.toggleVegNonVeg ==
                                                     true
                                                 ? 50
@@ -639,7 +639,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                             const SizedBox(height: Dimensions.paddingSizeLarge),
 
                             // Addons
-                            configBloc.state.config?.moduleConfig?.module
+                            configBloc.state.configModel?.moduleConfig?.module
                                             ?.addOn ==
                                         true &&
                                     widget.item.addOns.isNotEmpty
@@ -962,7 +962,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                         ? 'update_in_cart'.tr : 'add_to_cart'.tr,*/
                                           buttonText: configBloc
                                                           .state
-                                                          .config
+                                                          .configModel
                                                           ?.moduleConfig
                                                           ?.module
                                                           ?.stock ==

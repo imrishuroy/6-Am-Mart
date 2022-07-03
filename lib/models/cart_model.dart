@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '/models/item.dart';
 import '/models/variation.dart';
-import 'add_on.dart';
+import 'cart_on.dart';
 import 'add_ons.dart';
 
 class CartModel extends Equatable {
@@ -13,7 +13,7 @@ class CartModel extends Equatable {
   final List<Variation?> variation;
   final double? discountAmount;
   final int? quantity;
-  final List<AddOn?> addOnIds;
+  final List<CartAddOn?> addOnIds;
   final List<AddOns?> addOns;
   final bool? isCampaign;
   final int? stock;
@@ -38,7 +38,7 @@ class CartModel extends Equatable {
     List<Variation?>? variation,
     double? discountAmount,
     int? quantity,
-    List<AddOn?>? addOnIds,
+    List<CartAddOn?>? addOnIds,
     List<AddOns?>? addOns,
     bool? isCampaign,
     int? stock,
@@ -88,9 +88,9 @@ class CartModel extends Equatable {
           ? map['discount_amount'] as double
           : null,
       quantity: map['quantity'] != null ? map['quantity'] as int : null,
-      addOnIds: List<AddOn?>.from(
-        (map['add_on_ids'] as List<int>).map<AddOn?>(
-          (x) => AddOn.fromMap(x as Map<String, dynamic>),
+      addOnIds: List<CartAddOn?>.from(
+        (map['add_on_ids'] as List<int>).map<CartAddOn?>(
+          (x) => CartAddOn.fromMap(x as Map<String, dynamic>),
         ),
       ),
       addOns: List<AddOns?>.from(

@@ -140,7 +140,7 @@ class CartItemWidget extends StatelessWidget {
                                 BorderRadius.circular(Dimensions.radiusSmall),
                             child: CustomImage(
                               image:
-                                  '${context.read<AppConfigBloc>().state.config?.baseUrls?.itemImageUrl}/${cart.item?.image}',
+                                  '${context.read<AppConfigBloc>().state.configModel?.baseUrls?.itemImageUrl}/${cart.item?.image}',
                               height: 65,
                               width: 70,
                               fit: BoxFit.cover,
@@ -203,14 +203,14 @@ class CartItemWidget extends StatelessWidget {
                       Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ((configBloc.state.config?.moduleConfig?.module
+                            ((configBloc.state.configModel?.moduleConfig?.module
                                                 ?.unit ==
                                             true &&
                                         cart.item?.unitType != null) ||
-                                    (configBloc.state.config?.moduleConfig
+                                    (configBloc.state.configModel?.moduleConfig
                                                 ?.module?.vegNonVeg ==
                                             true &&
-                                        configBloc.state.config
+                                        configBloc.state.configModel
                                                 ?.toggleVegNonVeg ==
                                             true))
                                 ? Container(
@@ -225,7 +225,7 @@ class CartItemWidget extends StatelessWidget {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     child: Text(
-                                      configBloc.state.config?.moduleConfig
+                                      configBloc.state.configModel?.moduleConfig
                                                   ?.module?.unit ==
                                               true
                                           ? cart.item?.unitType ?? ''
@@ -240,11 +240,11 @@ class CartItemWidget extends StatelessWidget {
                                   )
                                 : const SizedBox.shrink(),
                             SizedBox(
-                                height:
-                                    configBloc.state.config?.toggleVegNonVeg ==
-                                            true
-                                        ? Dimensions.paddingSizeExtraSmall
-                                        : 0),
+                                height: configBloc.state.configModel
+                                            ?.toggleVegNonVeg ==
+                                        true
+                                    ? Dimensions.paddingSizeExtraSmall
+                                    : 0),
                             Row(children: [
                               QuantityButton(
                                 onTap: () {
@@ -285,7 +285,8 @@ class CartItemWidget extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
                     ]),
-                    (configBloc.state.config?.moduleConfig?.module?.addOn ==
+                    (configBloc.state.configModel?.moduleConfig?.module
+                                    ?.addOn ==
                                 true &&
                             _addOnText.isNotEmpty)
                         ? Padding(

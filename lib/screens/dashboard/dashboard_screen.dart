@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/screens/order/order_screen.dart';
 import '/screens/cart/cart_screen.dart';
 import '/screens/favourite/favourite_screen.dart';
 import '/screens/menu/menu_screen.dart';
@@ -35,8 +36,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     ),
     const FavouriteScreen(),
     const CartScreen(fromNav: true),
+    const OrderScreen(),
 
-    Container(color: Colors.red, height: 400, width: 200.0),
     const SizedBox.shrink()
     //Container(color: Colors.red, height: 400, width: 200.0),
     // FavouriteScreen(),

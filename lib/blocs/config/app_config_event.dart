@@ -8,3 +8,12 @@ abstract class AppConfigEvent extends Equatable {
 }
 
 class LoadConfig extends AppConfigEvent {}
+
+class SetFirstTimeConfigCheck extends AppConfigEvent {
+  final bool isChecked;
+
+  const SetFirstTimeConfigCheck({required this.isChecked});
+
+  @override
+  List<Object> get props => [isChecked];
+}

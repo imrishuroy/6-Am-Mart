@@ -33,7 +33,7 @@ class StoreWidget extends StatelessWidget {
     final configBloc = context.read<AppConfigBloc>();
     final size = MediaQuery.of(context).size;
 
-    BaseUrls? baseUrls = configBloc.state.config?.baseUrls;
+    BaseUrls? baseUrls = configBloc.state.configModel?.baseUrls;
     bool desktop = ResponsiveHelper.isDesktop(context);
     return InkWell(
       onTap: () {

@@ -136,7 +136,7 @@ class _CartScreenState extends State<CartScreen> {
                                       SizedBox(
                                           height: configBloc
                                                       .state
-                                                      .config
+                                                      .configModel
                                                       ?.moduleConfig
                                                       ?.module
                                                       ?.addOn ==
@@ -144,7 +144,7 @@ class _CartScreenState extends State<CartScreen> {
                                               ? 10.0
                                               : 0),
 
-                                      configBloc.state.config?.moduleConfig
+                                      configBloc.state.configModel?.moduleConfig
                                                   ?.module?.addOn ==
                                               true
                                           ? Row(
@@ -160,7 +160,7 @@ class _CartScreenState extends State<CartScreen> {
                                               ],
                                             )
                                           : const SizedBox.shrink(),
-                                      configBloc.state.config?.moduleConfig
+                                      configBloc.state.configModel?.moduleConfig
                                                   ?.module?.addOn ==
                                               true
                                           ? Padding(
@@ -176,7 +176,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       .withOpacity(0.5)),
                                             )
                                           : const SizedBox.shrink(),
-                                      configBloc.state.config?.moduleConfig
+                                      configBloc.state.configModel?.moduleConfig
                                                   ?.module?.addOn ==
                                               true
                                           ? Row(

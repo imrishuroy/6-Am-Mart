@@ -13,11 +13,12 @@ class PriceConverter {
       }
     }
     final config = context.read<AppConfigBloc>();
-    bool isRightSide = config.state.config?.currencySymbolDirection == 'right';
+    bool isRightSide =
+        config.state.configModel?.currencySymbolDirection == 'right';
 
-    return '${isRightSide ? '' : '${config.state.config?.currencySymbol} '}'
-        '${(price).toStringAsFixed(config.state.config?.digitAfterDecimalPoint ?? 0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
-        '${isRightSide ? ' ${config.state.config?.currencySymbol}' : ''}';
+    return '${isRightSide ? '' : '${config.state.configModel?.currencySymbol} '}'
+        '${(price).toStringAsFixed(config.state.configModel?.digitAfterDecimalPoint ?? 0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
+        '${isRightSide ? ' ${config.state.configModel?.currencySymbol}' : ''}';
   }
 
   static double convertWithDiscount(
@@ -44,6 +45,6 @@ class PriceConverter {
   static String percentageCalculation(
       String price, String discount, String discountType,
       {required BuildContext context}) {
-    return '$discount${discountType == 'percent' ? '%' : context.read<AppConfigBloc>().state.config?.currencySymbol} OFF';
+    return '$discount${discountType == 'percent' ? '%' : context.read<AppConfigBloc>().state.configModel?.currencySymbol} OFF';
   }
 }

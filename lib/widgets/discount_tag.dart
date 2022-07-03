@@ -44,7 +44,7 @@ class DiscountTag extends StatelessWidget {
               ),
               child: Text(
                 discount > 0
-                    ? '$discount${discountType == 'percent' ? '%' : config.state.config?.currencySymbol} ${LocaleKeys.off.tr()}'
+                    ? '$discount${discountType == 'percent' ? '%' : config.state.configModel?.currencySymbol} ${LocaleKeys.off.tr()}'
                     : LocaleKeys.free_delivery.tr(),
                 style: robotoMedium.copyWith(
                   color: Colors.white,

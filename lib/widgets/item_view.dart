@@ -49,9 +49,9 @@ class ItemsView extends StatelessWidget {
     final configBloc = context.read<AppConfigBloc>();
     String text = LocaleKeys.no_store_available.tr();
 
-    bool showRestaurant =
-        configBloc.state.config?.moduleConfig?.module?.showRestaurantText ??
-            false;
+    bool showRestaurant = configBloc
+            .state.configModel?.moduleConfig?.module?.showRestaurantText ??
+        false;
     if (showRestaurant) {
       text = LocaleKeys.no_restaurant_available.tr();
     }

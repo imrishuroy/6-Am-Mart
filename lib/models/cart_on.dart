@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-class AddOn {
+class CartAddOn {
   final int id;
   final int quantity;
 
-  AddOn({
+  CartAddOn({
     required this.id,
     required this.quantity,
   });
 
-  AddOn copyWith({
+  CartAddOn copyWith({
     int? id,
     int? quantity,
   }) {
-    return AddOn(
+    return CartAddOn(
       id: id ?? this.id,
       quantity: quantity ?? this.quantity,
     );
@@ -26,8 +26,8 @@ class AddOn {
     };
   }
 
-  factory AddOn.fromMap(Map<String, dynamic> map) {
-    return AddOn(
+  factory CartAddOn.fromMap(Map<String, dynamic> map) {
+    return CartAddOn(
       id: map['id'] as int,
       quantity: map['quantity'] as int,
     );
@@ -35,8 +35,8 @@ class AddOn {
 
   String toJson() => json.encode(toMap());
 
-  factory AddOn.fromJson(String source) =>
-      AddOn.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CartAddOn.fromJson(String source) =>
+      CartAddOn.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'AddOn(id: $id, quantity: $quantity)';
@@ -45,7 +45,7 @@ class AddOn {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is AddOn && other.id == id && other.quantity == quantity;
+    return other is CartAddOn && other.id == id && other.quantity == quantity;
   }
 
   @override

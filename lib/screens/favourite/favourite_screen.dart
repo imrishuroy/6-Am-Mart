@@ -37,9 +37,9 @@ class FavouriteScreenState extends State<FavouriteScreen>
 
     String text = LocaleKeys.store.tr();
 
-    bool showRestaurant =
-        configBloc.state.config?.moduleConfig?.module?.showRestaurantText ??
-            false;
+    bool showRestaurant = configBloc
+            .state.configModel?.moduleConfig?.module?.showRestaurantText ??
+        false;
 
     if (showRestaurant) {
       text = LocaleKeys.restaurant.tr();
