@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class AddressModel extends Equatable {
@@ -107,11 +105,6 @@ class AddressModel extends Equatable {
       floor: map['floor'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory AddressModel.fromJson(String source) =>
-      AddressModel.fromMap(json.decode(source));
 
   @override
   String toString() {

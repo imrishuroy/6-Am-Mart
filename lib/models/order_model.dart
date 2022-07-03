@@ -302,11 +302,6 @@ class OrderModel extends Equatable {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
   @override
   bool get stringify => true;
 

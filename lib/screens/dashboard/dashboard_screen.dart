@@ -38,7 +38,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     const CartScreen(fromNav: true),
     const OrderScreen(),
 
-    const SizedBox.shrink()
+    Container()
     //Container(color: Colors.red, height: 400, width: 200.0),
     // FavouriteScreen(),
     // CartScreen(fromNav: true),

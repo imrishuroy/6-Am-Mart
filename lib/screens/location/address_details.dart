@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/utils/utils.dart';
+import '/utils/utils.dart';
 
 import '/models/address_model.dart';
 
@@ -12,7 +12,7 @@ class AddressDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('-------${addressDetails.toJson()}');
+    print('-------${addressDetails.toMap()}');
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

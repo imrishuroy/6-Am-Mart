@@ -33,14 +33,23 @@ class OrderCubit extends Cubit<OrderState> {
   Future<void> getRunningOrders(
     int offset,
   ) async {
-    if (offset == 1) {
-      emit(state.copyWith(runningOrderModel: null));
-    }
+    emit(state.copyWith(status: OrderStatus.loading));
+    // if (offset == 1) {
+    //   emit(state.copyWith(runningOrderModel: null));
+    // }
     Response response = await _orderRepo.getRunningOrderList(offset);
+    print('Order response -- ${response.data}');
+    print('Order status -- ${response.statusCode}');
     if (response.statusCode == 200) {
       if (offset == 1) {
-        emit(state.copyWith(
-            runningOrderModel: PaginatedOrderModel.fromMap(response.data)));
+        print('This runs --- $offset');
+        print(
+            'Running order model ${PaginatedOrderModel.fromMap(response.data)}');
+        emit(
+          state.copyWith(
+              runningOrderModel: PaginatedOrderModel.fromMap(response.data),
+              status: OrderStatus.succuss),
+        );
         // _runningOrderModel = PaginatedOrderModel.fromJson(response.body);
       } else {
         emit(state.copyWith(
@@ -56,7 +65,7 @@ class OrderCubit extends Cubit<OrderState> {
 
         emit(state.copyWith(
             runningOrderModel: state.runningOrderModel?.copyWith(
-                offset: PaginatedOrderModel.fromJson(response.data).offset)));
+                offset: PaginatedOrderModel.fromMap(response.data).offset)));
 
         // _runningOrderModel.offset =
         //     PaginatedOrderModel.fromJson(response.body).offset;
@@ -64,35 +73,42 @@ class OrderCubit extends Cubit<OrderState> {
         emit(state.copyWith(
             runningOrderModel: state.runningOrderModel?.copyWith(
                 totalSize:
-                    PaginatedOrderModel.fromJson(response.data).totalSize)));
+                    PaginatedOrderModel.fromMap(response.data).totalSize),
+            status: OrderStatus.succuss));
         // _runningOrderModel.totalSize =
         //     PaginatedOrderModel.fromJson(response.body).totalSize;
       }
       // update();
     } else {
+      emit(state.copyWith(
+          failure: const Failure(message: 'Something went wrong'),
+          status: OrderStatus.succuss));
       //ApiChecker?.checkApi(response, context: context);
     }
   }
 
   Future<void> getHistoryOrders(int offset) async {
-    if (offset == 1) {
-      emit(state.copyWith(historyOrderModel: null));
-    }
+    // if (offset == 1) {
+    // emit(state.copyWith(historyOrderModel: null));
+    //}
     Response response = await _orderRepo.getHistoryOrderList(offset);
+    print('History order model 1 ${response.data}');
     if (response.statusCode == 200) {
       if (offset == 1) {
+        print(
+            'History order model   ${PaginatedOrderModel.fromMap(response.data)} ');
         emit(state.copyWith(
-            historyOrderModel: PaginatedOrderModel.fromJson(response.data)));
+            historyOrderModel: PaginatedOrderModel.fromMap(response.data)));
       } else {
         emit(state.copyWith(
             historyOrderModel: state.historyOrderModel?.copyWith(
                 orders: state.historyOrderModel?.orders
                   ?..addAll(
-                      PaginatedOrderModel.fromJson(response.data).orders))));
+                      PaginatedOrderModel.fromMap(response.data).orders))));
 
         emit(state.copyWith(
             historyOrderModel: state.historyOrderModel?.copyWith(
-                offset: PaginatedOrderModel.fromJson(response.data).offset)));
+                offset: PaginatedOrderModel.fromMap(response.data).offset)));
 
         // _runningOrderModel.offset =
         //     PaginatedOrderModel.fromJson(response.body).offset;
@@ -100,7 +116,7 @@ class OrderCubit extends Cubit<OrderState> {
         emit(state.copyWith(
             historyOrderModel: state.historyOrderModel?.copyWith(
                 totalSize:
-                    PaginatedOrderModel.fromJson(response.data).totalSize)));
+                    PaginatedOrderModel.fromMap(response.data).totalSize)));
       }
     } else {
       //ApiChecker.checkApi(response);
@@ -128,7 +144,7 @@ class OrderCubit extends Cubit<OrderState> {
 
         response.data.forEach((orderDetail) => emit(state.copyWith(
             orderDetails: state.orderDetails
-              ..add(OrderDetailsModel.fromJson(orderDetail)))));
+              ..add(OrderDetailsModel.fromMap(orderDetail)))));
       } else {
         // ApiChecker.checkApi(response);
       }
@@ -159,7 +175,7 @@ class OrderCubit extends Cubit<OrderState> {
       Response response = await _orderRepo.trackOrder(orderID);
       if (response.statusCode == 200) {
         emit(state.copyWith(
-            trackModel: OrderModel.fromJson(response.data),
+            trackModel: OrderModel.fromMap(response.data),
             responseModel: ResponseModel(true, response.data.toString())));
       } else {
         emit(state.copyWith(

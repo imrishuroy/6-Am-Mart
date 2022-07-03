@@ -13,7 +13,7 @@ class OrderRepository {
 
   Future<Response> getHistoryOrderList(int offset) async {
     return await Api.createDio()
-        .get('${Urls.historyOrderList}}?offset=$offset&limit=10');
+        .get('${Urls.historyOrderList}?offset=$offset&limit=10');
   }
 
   Future<Response> getOrderDetails(String orderID) async {

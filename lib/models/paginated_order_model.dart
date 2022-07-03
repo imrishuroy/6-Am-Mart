@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import '/models/order_model.dart';
@@ -41,6 +39,7 @@ class PaginatedOrderModel extends Equatable {
   }
 
   factory PaginatedOrderModel.fromMap(Map<String, dynamic> map) {
+    print('Map of paginated map $map');
     return PaginatedOrderModel(
       totalSize: map['total_size'] as int,
       limit: map['limit'] as String,
@@ -59,11 +58,6 @@ class PaginatedOrderModel extends Equatable {
             ),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory PaginatedOrderModel.fromJson(String source) =>
-      PaginatedOrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;

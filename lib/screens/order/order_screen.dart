@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:six_am_mart/blocs/order/order_cubit.dart';
+import 'package:six_am_mart/widgets/loading_indicator.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/helpers/dimensions.dart';
 import '/helpers/responsive_helper.dart';
@@ -30,10 +31,13 @@ class OrderScreenState extends State<OrderScreen>
 
     _isLoggedIn = context.read<AuthBloc>().state.isLoggedIn();
 
+    print('Check is logged in $_isLoggedIn');
+
     // _isLoggedIn = Get.find<AuthController>().isLoggedIn();
     if (_isLoggedIn) {
       _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
       context.read<OrderCubit>().getRunningOrders(1);
+      context.read<OrderCubit>().getHistoryOrders(1);
       // Get.find<OrderController>().getRunningOrders(1);
       // Get.find<OrderController>().getHistoryOrders(1);
     }
@@ -48,43 +52,48 @@ class OrderScreenState extends State<OrderScreen>
       endDrawer: const MenuDrawer(),
       body: _isLoggedIn
           ? BlocBuilder<OrderCubit, OrderState>(builder: (context, state) {
-              return Column(children: [
-                Center(
-                  child: Container(
-                    width: Dimensions.webMaxWidth,
-                    color: Theme.of(context).cardColor,
-                    child: TabBar(
-                      controller: _tabController,
-                      indicatorColor: Theme.of(context).primaryColor,
-                      indicatorWeight: 3,
-                      labelColor: Theme.of(context).primaryColor,
-                      unselectedLabelColor: Theme.of(context).disabledColor,
-                      unselectedLabelStyle: robotoRegular.copyWith(
-                          color: Theme.of(context).disabledColor,
-                          fontSize: Dimensions.fontSizeSmall),
-                      labelStyle: robotoBold.copyWith(
-                          fontSize: Dimensions.fontSizeSmall,
-                          color: Theme.of(context).primaryColor),
-                      tabs: [
-                        Tab(
-                          text: LocaleKeys.rating.tr(),
-                        ),
-                        Tab(
-                          text: LocaleKeys.history.tr(),
-                        ),
-                      ],
+              print('Order cubit state -- ${state.toString()}');
+              if (state.status == OrderStatus.succuss) {
+                return Column(children: [
+                  Center(
+                    child: Container(
+                      width: Dimensions.webMaxWidth,
+                      color: Theme.of(context).cardColor,
+                      child: TabBar(
+                        controller: _tabController,
+                        indicatorColor: Theme.of(context).primaryColor,
+                        indicatorWeight: 3,
+                        labelColor: Theme.of(context).primaryColor,
+                        unselectedLabelColor: Theme.of(context).disabledColor,
+                        unselectedLabelStyle: robotoRegular.copyWith(
+                            color: Theme.of(context).disabledColor,
+                            fontSize: Dimensions.fontSizeSmall),
+                        labelStyle: robotoBold.copyWith(
+                            fontSize: Dimensions.fontSizeSmall,
+                            color: Theme.of(context).primaryColor),
+                        tabs: [
+                          Tab(
+                            text: LocaleKeys.rating.tr(),
+                          ),
+                          Tab(
+                            text: LocaleKeys.history.tr(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    OrderView(isRunning: true),
-                    OrderView(isRunning: false),
-                  ],
-                )),
-              ]);
+                  Expanded(
+                      child: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      OrderView(isRunning: true),
+                      OrderView(isRunning: false),
+                    ],
+                  )),
+                ]);
+              }
+
+              return const LoadingIndicator();
             })
           : const NotLoggedInScreen(),
     );
