@@ -1,4 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:six_am_mart/blocs/cart/cart_cubit.dart';
+import 'package:six_am_mart/blocs/item/item_cubit.dart';
+import 'package:six_am_mart/models/cart_model.dart';
+import 'package:six_am_mart/translations/locale_keys.g.dart';
+import 'package:six_am_mart/widgets/show_snakbar.dart';
 import '/screens/item/widgets/choose_varient.dart';
 import '/constants/constants.dart';
 import '/widgets/ratting_bar.dart';
@@ -203,7 +210,30 @@ class ItemDetailsScreen extends StatelessWidget {
                           ),
                           const Text('1'),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              print('Price -- ${item?.price}');
+                              print('DIscount -- ${item?.discount}');
+
+                              final CartModel cartModel = CartModel(
+                                price: item?.price,
+                                discountedPrice:
+                                    (item?.price ?? 0) - (item?.discount ?? 0),
+                                variation: const [],
+                                addOnIds: const [],
+                                addOns: const [],
+                                item: item,
+                                quantity: 1,
+                              );
+
+                              context.read<CartCubit>().addToCart(cartModel,
+                                  context.read<ItemCubit>().state.cartIndex);
+
+                              ShowSnackBar.showSnackBar(
+                                context,
+                                backgroundColor: Colors.green,
+                                title: LocaleKeys.item_added_to_cart.tr(),
+                              );
+                            },
                             child: const Icon(
                               Icons.add,
                               size: 18.0,

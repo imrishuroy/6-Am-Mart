@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/constants/constants.dart';
-import 'package:six_am_mart/models/item.dart';
-import 'package:six_am_mart/screens/store/screens/view_all_items.dart';
-import 'package:six_am_mart/screens/store/widgets/info_bar.dart';
-import 'package:six_am_mart/screens/store/widgets/item_tile.dart';
+import '/constants/constants.dart';
+import '/models/item.dart';
+import '/screens/store/screens/view_all_items.dart';
+import '/screens/store/widgets/info_bar.dart';
+import '/screens/store/widgets/item_tile.dart';
 import '/config/urls.dart';
 import '/repositories/store/store_repository.dart';
 import '/screens/store/cubit/store_cubit.dart';
@@ -302,6 +302,7 @@ class _CategoryItemsState extends State<CategoryItems> {
               categoryId: widget.categoryId,
             ),
         builder: (context, snapshot) {
+          print('Category Items ${snapshot.data}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox.shrink();
           }

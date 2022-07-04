@@ -1,5 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:six_am_mart/blocs/cart/cart_cubit.dart';
+import 'package:six_am_mart/blocs/item/item_cubit.dart';
+import 'package:six_am_mart/models/cart_model.dart';
+import 'package:six_am_mart/translations/locale_keys.g.dart';
+import 'package:six_am_mart/widgets/show_snakbar.dart';
 import '/constants/colors_const.dart';
 import '/screens/item/item_details_screen.dart';
 import '/config/urls.dart';
@@ -109,32 +116,58 @@ class ItemTile extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 9.0,
-                                vertical: 7.0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                border: Border.all(
-                                    color: Colors.grey.shade300, width: 0.5),
-                              ),
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.add,
-                                    color: green,
-                                    size: 20.0,
-                                  ),
-                                  SizedBox(width: 1.0),
-                                  Text(
-                                    'ADD',
-                                    style: TextStyle(
+                            GestureDetector(
+                              onTap: () {
+                                print('Price -- ${item?.price}');
+                                print('DIscount -- ${item?.discount}');
+
+                                final CartModel cartModel = CartModel(
+                                  price: item?.price,
+                                  discountedPrice: (item?.price ?? 0) -
+                                      (item?.discount ?? 0),
+                                  variation: const [],
+                                  addOnIds: const [],
+                                  addOns: const [],
+                                  item: item,
+                                  quantity: 1,
+                                );
+
+                                context.read<CartCubit>().addToCart(cartModel,
+                                    context.read<ItemCubit>().state.cartIndex);
+
+                                ShowSnackBar.showSnackBar(
+                                  context,
+                                  backgroundColor: Colors.green,
+                                  title: LocaleKeys.item_added_to_cart.tr(),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 9.0,
+                                  vertical: 7.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  border: Border.all(
+                                      color: Colors.grey.shade300, width: 0.5),
+                                ),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.add,
                                       color: green,
-                                      fontWeight: FontWeight.w600,
+                                      size: 20.0,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 1.0),
+                                    Text(
+                                      'ADD',
+                                      style: TextStyle(
+                                        color: green,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

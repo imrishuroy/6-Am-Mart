@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/api/api_checker.dart';
-import 'package:six_am_mart/models/failure.dart';
-import 'package:six_am_mart/models/item.dart';
-import 'package:six_am_mart/models/item_model.dart';
-import 'package:six_am_mart/repositories/item/item_repository.dart';
+import '/api/api_checker.dart';
+import '/models/failure.dart';
+import '/models/item.dart';
+import '/models/item_model.dart';
+import '/repositories/item/item_repository.dart';
 
 part 'item_state.dart';
 

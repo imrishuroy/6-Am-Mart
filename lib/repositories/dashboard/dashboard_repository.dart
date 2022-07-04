@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:six_am_mart/models/category.dart';
-import 'package:six_am_mart/models/app_module.dart';
-import 'package:six_am_mart/models/store.dart';
+import '/models/category.dart';
+import '/models/app_module.dart';
+import '/models/store.dart';
 import '/config/urls.dart';
 import '/models/banner.dart';
 import '/models/failure.dart';

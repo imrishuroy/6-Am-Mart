@@ -79,7 +79,9 @@ class ViewAllItems extends StatelessWidget {
                       categoryId: categoryId,
                     ),
                 builder: (context, snapshot) {
+                  print('Store data 1----- ${snapshot.data}');
                   if (snapshot.connectionState == ConnectionState.done) {
+                    print('Store data ----- ${snapshot.data}');
                     return GridView.builder(
                       itemCount: snapshot.data?.length,
                       gridDelegate:
