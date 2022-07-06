@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/cart/cart_cubit.dart';
-import 'package:six_am_mart/blocs/item/item_cubit.dart';
-import 'package:six_am_mart/models/cart_model.dart';
-import 'package:six_am_mart/translations/locale_keys.g.dart';
-import 'package:six_am_mart/widgets/show_snakbar.dart';
+import '/blocs/cart/cart_cubit.dart';
+import '/blocs/item/item_cubit.dart';
+import '/models/cart_model.dart';
+import '/translations/locale_keys.g.dart';
+import '/widgets/show_snakbar.dart';
 import '/screens/item/widgets/choose_varient.dart';
 import '/constants/constants.dart';
 import '/widgets/ratting_bar.dart';

@@ -49,6 +49,13 @@ class SharedPrefs {
 
   bool get showIntro => _sharedPrefs?.getBool(_showIntro) ?? true;
 
+  Future<String?> getStringValue({required String key}) async {
+    if (_sharedPrefs != null) {
+      return _sharedPrefs?.getString(key);
+    }
+    return null;
+  }
+
   Future<void> setToken(String value) async {
     if (_sharedPrefs != null) {
       await _sharedPrefs?.setString(_token, value);
@@ -81,6 +88,13 @@ class SharedPrefs {
       return result ?? false;
     }
     return false;
+  }
+
+  Future<void> setStringValue(
+      {required String key, required String value}) async {
+    if (_sharedPrefs != null) {
+      await _sharedPrefs?.setString(key, value);
+    }
   }
 
   Future<void> setFirstTime(bool value) async {

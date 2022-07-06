@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:six_am_mart/screens/parcel/task_details_screen.dart';
-import 'package:six_am_mart/screens/profile/profile_screen.dart';
+import 'package:six_am_mart/screens/address/add_address_screen.dart';
+import 'package:six_am_mart/screens/address/address_screen.dart';
+import '/screens/parcel/task_details_screen.dart';
+import '/screens/profile/profile_screen.dart';
 import '/screens/item/item_details_screen.dart';
 import '/screens/parcel/parcel_screen.dart';
 import '/screens/store/screens/view_all_items.dart';
@@ -62,6 +64,13 @@ class CustomRouter {
 
       case ProfileScreen.routeName:
         return ProfileScreen.route();
+
+      case AddressScreen.routeName:
+        return AddressScreen.route();
+
+      case AddAddressScreen.routeName:
+        return AddAddressScreen.route(
+            args: settings.arguments as AddAddressArgs);
 
       default:
         return _errorRoute();

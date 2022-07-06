@@ -59,6 +59,7 @@ class MenuButton extends StatelessWidget {
             launchUrlString(menu.route);
           }
         } else {
+          print('Route ${menu.route}');
           Navigator.of(context).pushNamed(menu.route);
           //Get.offNamed(menu.route);
         }

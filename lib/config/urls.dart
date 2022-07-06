@@ -18,6 +18,8 @@ class Urls {
 
   static const String module = '$baseUrl/api/v1/module';
 
+  static const String updateProfile = '/api/v1/customer/update-profile';
+
   static const String featuredStores =
       '$baseUrl/api/v1/stores/get-stores/all?featured=1&offset=1&limit=50';
 
@@ -73,6 +75,18 @@ class Urls {
   static const codSwitchUri = '/api/v1/customer/order/payment-method';
 
   static const distanceMatrixUri = '/api/v1/config/distance-api';
+
+  // Address
+  static const String addressList = '/api/v1/customer/address/list';
+
+  static const String zone = '/api/v1/config/get-zone-id';
+
+  static const String removeAddress =
+      '/api/v1/customer/address/delete?address_id=';
+
+  static const String addAddress = '/api/v1/customer/address/add';
+
+  static const String updatedAddress = '/api/v1/customer/address/update/';
 
   // Image Urls
 

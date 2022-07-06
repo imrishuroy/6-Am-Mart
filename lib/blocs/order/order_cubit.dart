@@ -176,19 +176,28 @@ class OrderCubit extends Cubit<OrderState> {
       if (response.statusCode == 200) {
         emit(state.copyWith(
             trackModel: OrderModel.fromMap(response.data),
-            responseModel: ResponseModel(true, response.data.toString())));
-      } else {
-        emit(state.copyWith(
             responseModel: ResponseModel(
-                false, response.statusMessage ?? 'Something went wrong')));
+                isSuccess: true, message: response.data.toString())));
+      } else {
+        emit(
+          state.copyWith(
+            responseModel: ResponseModel(
+                isSuccess: false,
+                message: response.statusMessage ?? 'Something went wrong'),
+          ),
+        );
+
         //_responseModel = ResponseModel(false, response.statusMessage);
         // ApiChecker.checkApi(response);
       }
       emit(state.copyWith(isLoading: false));
     } else {
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           trackModel: orderModel,
-          responseModel: ResponseModel(true, 'Successful')));
+          responseModel: ResponseModel(isSuccess: true, message: 'Successful'),
+        ),
+      );
     }
     return state.responseModel;
   }

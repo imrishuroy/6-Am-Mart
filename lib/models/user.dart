@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
@@ -15,6 +13,7 @@ class User extends Equatable {
   final String? firebaseToken;
   final int? status;
   final int? orderCount;
+  final String? password;
   final int? memberSinceDays;
 
   const User({
@@ -31,6 +30,7 @@ class User extends Equatable {
     this.status,
     this.orderCount,
     this.memberSinceDays,
+    this.password,
   });
 
   User copyWith({
@@ -47,6 +47,7 @@ class User extends Equatable {
     int? status,
     int? orderCount,
     int? memberSinceDays,
+    String? password,
   }) {
     return User(
       id: id ?? this.id,
@@ -62,6 +63,7 @@ class User extends Equatable {
       status: status ?? this.status,
       orderCount: orderCount ?? this.orderCount,
       memberSinceDays: memberSinceDays ?? this.memberSinceDays,
+      password: password ?? this.password,
     );
   }
 
@@ -82,6 +84,7 @@ class User extends Equatable {
       'status': status,
       'orderCount': orderCount,
       'member_since_days': memberSinceDays,
+      'password': password,
     };
   }
 
@@ -100,16 +103,13 @@ class User extends Equatable {
       status: map['status']?.toInt(),
       orderCount: map['order_count']?.toInt(),
       memberSinceDays: map['member_since_days']?.toInt(),
+      password: map['password'],
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
-
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, phone: $phone, email: $email, image: $image, isPhoneVerified: $isPhoneVerified, createdAt: $createdAt, updatedAt: $updatedAt, firebaseToken: $firebaseToken, status: $status, orderCount: $orderCount, memberSinceDays: $memberSinceDays)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, phone: $phone, email: $email, image: $image, isPhoneVerified: $isPhoneVerified, createdAt: $createdAt, updatedAt: $updatedAt, firebaseToken: $firebaseToken, status: $status, orderCount: $orderCount, memberSinceDays: $memberSinceDays, password: $password)';
   }
 
   @override
@@ -128,6 +128,7 @@ class User extends Equatable {
       status,
       orderCount,
       memberSinceDays,
+      password,
     ];
   }
 }

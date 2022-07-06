@@ -34,4 +34,8 @@ class UserRepository extends BaseUserRepository {
       throw const Failure(message: 'Error getting user');
     }
   }
+
+  Future<Response> getUserInfo() async {
+    return await _dio.get(Urls.customerInfo);
+  }
 }

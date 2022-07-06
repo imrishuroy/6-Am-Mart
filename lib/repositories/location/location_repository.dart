@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:six_am_mart/api/api.dart';
-import 'package:six_am_mart/models/place_details_model.dart';
-import 'package:six_am_mart/models/prediction_model.dart';
+import '/api/api.dart';
+import '/constants/app_constants.dart';
+import '/models/address_model.dart';
+import '/models/place_details_model.dart';
+import '/models/prediction_model.dart';
 import '/config/shared_prefs.dart';
 import '/config/urls.dart';
 import '/models/failure.dart';
@@ -237,4 +239,66 @@ class LocationRepository extends BaseLocationRepository {
   //   }
   //   return _response;
   // }
+
+  Future<Response> getAllAddress() async {
+    return await Api.createDio().get(Urls.addressList);
+  }
+
+  Future<Response> getZone(String lat, String lng) async {
+    return await Api.createDio().get('${Urls.zone}}?lat=$lat&lng=$lng');
+  }
+
+  Future<Response> removeAddressByID(int id) async {
+    return await Api.createDio().delete('${Urls.removeAddress}$id');
+  }
+
+  Future<Response> addAddress(AddressModel addressModel) async {
+    return await Api.createDio()
+        .post(Urls.addAddress, data: addressModel.toMap());
+  }
+
+  Future<Response> updateAddress(
+      AddressModel addressModel, int addressId) async {
+    return await Api.createDio()
+        .put(Urls.updatedAddress, data: addressModel.toMap());
+  }
+
+  Future<void> saveUserAddress({
+    required String address,
+    required List<int>? zoneIDs,
+    required int moduleId,
+    String? languageCode,
+  }) async {
+    print('---------$address/${zoneIDs.toString()}');
+
+    // Map<String, String> _header = {
+    //   'Content-Type': 'application/json; charset=UTF-8',
+    //   AppConstants.zoneID: zoneIDs != null ? jsonEncode(zoneIDs) : '',
+    //   AppConstants.localizationKey:
+    //       languageCode ?? AppConstants.languages[0].languageCode,
+    //   'Authorization': 'Bearer ${SharedPrefs().token}',
+    //   'moduleId': '$moduleId',
+    // };
+
+    await SharedPrefs()
+        .setStringValue(key: AppConstants.userAddress, value: address);
+  }
+
+  Future<Response> getAddressFromGeocode(LatLng latLng) async {
+    return await Api.createDio()
+        .get('${Urls.geoCode}?lat=${latLng.latitude}&lng=${latLng.longitude}');
+  }
+
+  Future<String?> getUserAddress() async {
+    return SharedPrefs().getStringValue(key: AppConstants.userAddress);
+  }
+
+  Future<Response?> searchLocationRepo(String text) async {
+    return await Api.createDio()
+        .get('${Urls.searchLocation}}?search_text=$text');
+  }
+
+  Future<Response?> getPlaceDetailsRepo(String placeID) async {
+    return await Api.createDio().get('${Urls.placeDetails}?placeid=$placeID');
+  }
 }
