@@ -14,7 +14,6 @@ import '/blocs/config/app_config_bloc.dart';
 import '/blocs/order/order_cubit.dart';
 import '/helpers/dimensions.dart';
 import '/helpers/responsive_helper.dart';
-
 import '/models/order_add_on.dart';
 import '/models/order_details_model.dart';
 import '/translations/locale_keys.g.dart';
@@ -25,9 +24,7 @@ import '/widgets/footer_view.dart';
 import '/widgets/loading_indicator.dart';
 import '/widgets/menu_drawer.dart';
 import '/models/order_model.dart';
-
 import 'package:url_launcher/url_launcher_string.dart';
-
 import 'widgets/cart_widget.dart';
 import 'widgets/details_widget.dart';
 import 'widgets/order_item_widget.dart';

@@ -1,17 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/config/app_config_bloc.dart';
-import 'package:six_am_mart/helpers/dimensions.dart';
-import 'package:six_am_mart/helpers/responsive_helper.dart';
-import 'package:six_am_mart/models/add_ons.dart';
-import 'package:six_am_mart/models/cart_model.dart';
-import 'package:six_am_mart/translations/locale_keys.g.dart';
-import 'package:six_am_mart/utils/price_converter.dart';
-import 'package:six_am_mart/utils/utils.dart';
-import 'package:six_am_mart/widgets/custom_image.dart';
-import 'package:six_am_mart/widgets/ratting_bar.dart';
-
+import '/blocs/config/app_config_bloc.dart';
+import '/helpers/dimensions.dart';
+import '/helpers/responsive_helper.dart';
+import '/models/add_ons.dart';
+import '/models/cart_model.dart';
+import '/translations/locale_keys.g.dart';
+import '/utils/price_converter.dart';
+import '/utils/utils.dart';
+import '/widgets/custom_image.dart';
+import '/widgets/ratting_bar.dart';
 import 'item_bottom_sheet.dart';
 import 'quantity_button.dart';
 
@@ -52,7 +51,7 @@ class CartItemWidget extends StatelessWidget {
     });
 
     String _variationText = '';
-    if (cart.variation.length > 0) {
+    if (cart.variation.isNotEmpty) {
       List<String> _variationTypes = cart.variation[0]?.type?.split('-') ?? [];
       if (_variationTypes.length == cart.item?.choiceOptions.length) {
         int _index = 0;

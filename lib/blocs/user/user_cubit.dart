@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import '/api/api.dart';
 import '/config/urls.dart';
-import '/models/response__model.dart';
+import '../../models/response_model.dart';
 import '/models/failure.dart';
 import '/models/user.dart';
 import '/repositories/user/user_repository.dart';

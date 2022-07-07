@@ -17,27 +17,72 @@ class WishlistCubit extends Cubit<WishListState> {
         // _itemRepository = itemRepository,
         super(WishListState.initial());
 
+  // item bottom sheet
+  // wishList.addToWishList(widget.item, null, false);
+
+  // from item page
+  // wishController.addToWishList(item, store,
+
+  // from store page
+  // wishController.addToWishList(null, _storeList[index], true);
+
+  // wishController.addToWishList(null, store, true);
+  // from store widget
+
+  //  wishController.addToWishList(null, _storeList[index], true);
+
+// details web view.dart
+  //wishController.addToWishList(itemController.item, null, false);
+
+  // wishController.addToWishList(item, null, false);
+
+// store description
+  //wishController.addToWishList(null, store, true);
+
   void addToWishList(Item? product, Store? store, bool isStore) async {
-    if (product?.id == null || store?.id == null) {
-      return;
+    print('Item in wishlist 3-- $product');
+    if (isStore) {
+      print('Item in wishlist 4');
+      if (store?.id == null) {
+        print('Item in wishlist 5');
+        return;
+      }
+    } else {
+      print('Item in wishlist 6');
+      if (product?.id == null) {
+        print('Item in wishlist 7');
+        return;
+      }
     }
-    Response response = await _wishListRepo.addWishList(
+
+    print('Add to wishlist called --- $product');
+    print('Wishlist 22-- $isStore $product $store');
+    print('Wishlist 22 -- $store');
+    print('Wishlist 22 aaaa-- ${isStore ? store!.id! : product!.id}');
+    print('Wishlist 22 -- product id ${product?.id}');
+    Response? response = await _wishListRepo.addWishList(
         isStore ? store!.id! : product!.id, isStore);
-    if (response.statusCode == 200) {
+
+    print('Response in wishlist daaa-- ${response?.data}');
+    print('Response in wishlist-- ${response?.statusCode}');
+
+    if (response?.statusCode == 200) {
       if (isStore) {
+        print('Item in wishlist 8');
         emit(
           state.copyWith(
-            wishStoreIdList: state.wishStoreIdList..add(store!.id!),
-            wishStoreList: state.wishStoreList..add(store),
+            wishStoreIdList: List.from(state.wishStoreIdList)..add(store!.id!),
+            wishStoreList: List.from(state.wishStoreList)..add(store),
           ),
         );
         // _wishStoreIdList.add(store.id);
         // _wishStoreList.add(store);
       } else {
+        print('Item in wishlist 2-- $product');
         emit(
           state.copyWith(
-            wishItemList: state.wishItemList..add(product),
-            wishItemIdList: state.wishItemIdList..add(product!.id),
+            wishItemList: List.from(state.wishItemList)..add(product),
+            wishItemIdList: List.from(state.wishItemIdList)..add(product!.id),
           ),
         );
 
@@ -95,6 +140,7 @@ class WishlistCubit extends Cubit<WishListState> {
     final List<int> wishStoreIdList = [];
 
     Response response = await _wishListRepo.getWishList();
+    print('Wishlis item -- ${response.data}');
     if (response.statusCode == 200) {
       final items = response.data['item'] as List? ?? [];
       for (var element in items) {
@@ -102,6 +148,15 @@ class WishlistCubit extends Cubit<WishListState> {
         wishItemList.add(item);
         wishItemIdList.add(item.id);
       }
+
+      print('Wishlist item -- qqq $wishItemList');
+
+      emit(
+        state.copyWith(
+          wishItemList: wishItemList,
+          wishItemIdList: wishItemIdList,
+        ),
+      );
 
       final store = response.data['store'] as List? ?? [];
 

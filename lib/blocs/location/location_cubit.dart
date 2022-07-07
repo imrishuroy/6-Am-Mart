@@ -1,18 +1,16 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '/models/response__model.dart';
+import '/models/response_model.dart';
 import '/blocs/config/app_config_bloc.dart';
 import '/models/zone_response.dart';
 import '/models/address_model.dart';
 import '/models/failure.dart';
 import '/models/prediction_model.dart';
 import '/repositories/location/location_repository.dart';
-
 part 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {

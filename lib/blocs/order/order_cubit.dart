@@ -19,7 +19,7 @@ import '/models/failure.dart';
 import '/models/order_details_model.dart';
 import '/models/order_model.dart';
 import '/models/paginated_order_model.dart';
-import '/models/response__model.dart';
+import '../../models/response_model.dart';
 import '/models/time_slot_model.dart';
 
 part 'order_state.dart';

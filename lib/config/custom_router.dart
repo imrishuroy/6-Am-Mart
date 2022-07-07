@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:six_am_mart/screens/address/add_address_screen.dart';
 import 'package:six_am_mart/screens/address/address_screen.dart';
+import 'package:six_am_mart/screens/language/choose_language_screen.dart';
 import '/screens/parcel/task_details_screen.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/item/item_details_screen.dart';
@@ -71,6 +72,9 @@ class CustomRouter {
       case AddAddressScreen.routeName:
         return AddAddressScreen.route(
             args: settings.arguments as AddAddressArgs);
+
+      case ChooseLanguageScreen.routeName:
+        return ChooseLanguageScreen.route();
 
       default:
         return _errorRoute();

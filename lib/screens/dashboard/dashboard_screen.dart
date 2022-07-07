@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/blocs/wishlist/wishlist_cubit.dart';
 import '/screens/order/order_screen.dart';
 import '/screens/cart/cart_screen.dart';
 import '/screens/favourite/favourite_screen.dart';
@@ -31,6 +32,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     BlocProvider<HomeCubit>(
       create: (context) => HomeCubit(
         dashBoardRepository: context.read<DashBoardRepository>(),
+        wishlistCubit: context.read<WishlistCubit>(),
       )..load(),
       child: const HomeScreen(),
     ),

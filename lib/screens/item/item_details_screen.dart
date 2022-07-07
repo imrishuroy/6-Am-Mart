@@ -1,15 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '/blocs/wishlist/wishlist_cubit.dart';
 import '/blocs/cart/cart_cubit.dart';
 import '/blocs/item/item_cubit.dart';
 import '/models/cart_model.dart';
 import '/translations/locale_keys.g.dart';
 import '/widgets/show_snakbar.dart';
 import '/screens/item/widgets/choose_varient.dart';
-import '/constants/constants.dart';
 import '/widgets/ratting_bar.dart';
 import '/models/item.dart';
+import 'widgets/item_wishlist_btn.dart';
 import 'widgets/items_images.dart';
 
 class ItemDetailsArgs {
@@ -58,8 +59,26 @@ class ItemDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wishListCubit = context.read<WishlistCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: SizedBox(
+        height: 50.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+          onPressed: () => showVarient(context),
+          child: const Text(
+            'Add to add',
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -88,7 +107,9 @@ class ItemDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: go to card navigation
+                      },
                       icon: const Icon(
                         Icons.shopping_cart,
                         color: Colors.green,
@@ -112,37 +133,52 @@ class ItemDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () => showVarient(context),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 9.0,
-                          vertical: 7.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                              color: Colors.grey.shade300, width: 0.5),
-                        ),
-                        child: Row(
-                          children: const [
-                            Icon(
-                              Icons.add,
-                              color: green,
-                              size: 20.0,
-                            ),
-                            SizedBox(width: 1.0),
-                            Text(
-                              'ADD',
-                              style: TextStyle(
-                                color: green,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    ItemWislistBtn(item: item),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     print(
+                    //         'Item in wishlist --- ${wishListCubit.state.wishItemList}');
+                    //     wishListCubit.addToWishList(item, null, false);
+                    //   },
+                    //   icon: wishListCubit.state.wishItemList.contains(item)
+                    //       ? const Icon(
+                    //           Icons.favorite,
+                    //           color: Colors.red,
+                    //         )
+                    //       : const Icon(Icons.favorite_border),
+                    // )
+
+                    // GestureDetector(
+                    //   onTap: () => showVarient(context),
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(
+                    //       horizontal: 9.0,
+                    //       vertical: 7.0,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(20.0),
+                    //       border: Border.all(
+                    //           color: Colors.grey.shade300, width: 0.5),
+                    //     ),
+                    //     child: Row(
+                    //       children: const [
+                    //         Icon(
+                    //           Icons.add,
+                    //           color: green,
+                    //           size: 20.0,
+                    //         ),
+                    //         SizedBox(width: 1.0),
+                    //         Text(
+                    //           'ADD',
+                    //           style: TextStyle(
+                    //             color: green,
+                    //             fontWeight: FontWeight.w600,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     // IconButton(
                     //   onPressed: () {},
                     //   icon: const Icon(

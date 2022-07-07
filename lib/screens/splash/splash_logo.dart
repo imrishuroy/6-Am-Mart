@@ -19,6 +19,7 @@ class _SplashLogoState extends State<SplashLogo> {
   @override
   void initState() {
     context.read<AppConfigBloc>().add(LoadConfig());
+
     super.initState();
   }
 

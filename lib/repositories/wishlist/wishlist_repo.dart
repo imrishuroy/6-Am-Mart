@@ -8,7 +8,13 @@ class WishListRepository extends BaseWishListRepo {
     return await Api.createDio().get(Urls.wishListUri);
   }
 
-  Future<Response> addWishList(int id, bool isStore) async {
+  Future<Response?> addWishList(int? id, bool isStore) async {
+    if (id == null) {
+      return null;
+    }
+
+    print(
+        'Urls --- ${Urls.addWishListUri}${isStore ? 'store_id=' : 'item_id='}$id');
     return await Api.createDio()
         .post('${Urls.addWishListUri}${isStore ? 'store_id=' : 'item_id='}$id');
   }

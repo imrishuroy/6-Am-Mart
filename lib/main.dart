@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/cart/cart_cubit.dart';
-import 'package:six_am_mart/blocs/cubit/user_cubit.dart';
-import 'package:six_am_mart/blocs/item/item_cubit.dart';
-import 'package:six_am_mart/blocs/location/location_cubit.dart';
-import 'package:six_am_mart/blocs/order/order_cubit.dart';
-import 'package:six_am_mart/repositories/order/order_repository.dart';
+import 'package:six_am_mart/blocs/localization/localization_cubit.dart';
+import '/blocs/cart/cart_cubit.dart';
+import '/blocs/item/item_cubit.dart';
+import '/blocs/location/location_cubit.dart';
+import '/blocs/order/order_cubit.dart';
+import '/repositories/order/order_repository.dart';
 import '/blocs/wishlist/wishlist_cubit.dart';
 import '/repositories/cart/cart_repositroy.dart';
 import '/repositories/item/item_repository.dart';
@@ -26,6 +26,7 @@ import '/repositories/dashboard/dashboard_repository.dart';
 import '/repositories/user/user_repository.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
+import 'blocs/user/user_cubit.dart';
 import 'config/shared_prefs.dart';
 import 'repositories/auth/auth_repository.dart';
 import 'repositories/wishlist/wishlist_repo.dart';
@@ -85,7 +86,8 @@ class MyApp extends StatelessWidget {
           ),
     );
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
 
     return MultiRepositoryProvider(
       providers: [
@@ -167,6 +169,9 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             ),
           ),
+          BlocProvider<LocalizationCubit>(
+            create: (context) => LocalizationCubit(),
+          )
         ],
         child: MaterialApp(
           //showPerformanceOverlay: true,

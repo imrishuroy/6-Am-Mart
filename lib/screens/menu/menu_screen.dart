@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:six_am_mart/screens/address/address_screen.dart';
+import 'package:six_am_mart/screens/language/choose_language_screen.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/screens/profile/profile_screen.dart';
 import '/helpers/dimensions.dart';
@@ -30,7 +31,10 @@ class _MenuScreenState extends State<MenuScreen> {
           icon: Images.location,
           title: 'My Address',
           route: AddressScreen.routeName),
-      const MenuModel(icon: Images.language, title: 'Language', route: ''),
+      const MenuModel(
+          icon: Images.language,
+          title: 'Language',
+          route: ChooseLanguageScreen.routeName),
       const MenuModel(icon: Images.coupon, title: 'Coupon', route: ''),
       const MenuModel(icon: Images.support, title: 'Help Support', route: ''),
       const MenuModel(icon: Images.policy, title: 'Privacy Policy', route: ''),
