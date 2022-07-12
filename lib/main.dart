@@ -1,194 +1,115 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:equatable/equatable.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:sixam_mart/controller/auth_controller.dart';
+import 'package:sixam_mart/controller/cart_controller.dart';
+import 'package:sixam_mart/controller/localization_controller.dart';
+import 'package:sixam_mart/controller/splash_controller.dart';
+import 'package:sixam_mart/controller/theme_controller.dart';
+import 'package:sixam_mart/controller/wishlist_controller.dart';
+import 'package:sixam_mart/helper/notification_helper.dart';
+import 'package:sixam_mart/helper/responsive_helper.dart';
+import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/theme/dark_theme.dart';
+import 'package:sixam_mart/theme/light_theme.dart';
+import 'package:sixam_mart/util/app_constants.dart';
+import 'package:sixam_mart/util/messages.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:six_am_mart/blocs/localization/localization_cubit.dart';
-import '/blocs/cart/cart_cubit.dart';
-import '/blocs/item/item_cubit.dart';
-import '/blocs/location/location_cubit.dart';
-import '/blocs/order/order_cubit.dart';
-import '/repositories/order/order_repository.dart';
-import '/blocs/wishlist/wishlist_cubit.dart';
-import '/repositories/cart/cart_repositroy.dart';
-import '/repositories/item/item_repository.dart';
-import '/blocs/config/app_config_bloc.dart';
-import '/repositories/config/config_repository.dart';
-import '/screens/splash/splash_screen.dart';
-import '/repositories/parcel/parcel_repository.dart';
-import '/repositories/location/location_repository.dart';
-import '/repositories/store/store_repository.dart';
-import '/theme/light_theme.dart';
-import '/config/custom_router.dart';
-import '/repositories/dashboard/dashboard_repository.dart';
-import '/repositories/user/user_repository.dart';
-import 'blocs/auth/auth_bloc.dart';
-import 'blocs/simple_bloc_observer.dart';
-import 'blocs/user/user_cubit.dart';
-import 'config/shared_prefs.dart';
-import 'repositories/auth/auth_repository.dart';
-import 'repositories/wishlist/wishlist_repo.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:url_strategy/url_strategy.dart';
+import 'helper/get_di.dart' as di;
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
-  if (kIsWeb) {
-    // await Firebase.initializeApp(
-    //   options: const FirebaseOptions(
-    //     apiKey: 'AIzaSyAog5tvJGNb63Hjbe6TpPVPW_Qp_D9iKRs',
-    //     appId: '1:526121573343:web:b0caef970924f065c6c26a',
-    //     messagingSenderId: '526121573343',
-    //     projectId: 'viewyourstories-4bf4d',
-    //     storageBucket: 'viewyourstories-4bf4d.appspot.com',
-    //   ),
-    // );
-  } else {
-    await Firebase.initializeApp();
+  if(ResponsiveHelper.isMobilePhone()) {
+    HttpOverrides.global = new MyHttpOverrides();
   }
+  setPathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  Map<String, Map<String, String>> _languages = await di.init();
 
-  await SharedPrefs().init();
-  EquatableConfig.stringify = kDebugMode;
-  // Bloc.observer = SimpleBlocObserver();
-  BlocOverrides.runZoned(() {}, blocObserver: SimpleBlocObserver());
+  int _orderID;
+  try {
+    if (GetPlatform.isMobile) {
+      final RemoteMessage remoteMessage = await FirebaseMessaging.instance.getInitialMessage();
+      if (remoteMessage != null) {
+        _orderID = remoteMessage.notification.titleLocKey != null ? int.parse(remoteMessage.notification.titleLocKey) : null;
+      }
+      await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
+      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+    }
+  }catch(e) {}
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        // Locale('en', 'US'),
-        // Locale('ar', 'DZ'),
-        Locale('en'),
-        Locale('ar'),
-      ],
-      fallbackLocale: const Locale('en'),
-      //path: 'resources/langs',
-      path: 'assets/translations',
-      // assetLoader: const CodegenLoader(),
-      child: const MyApp(),
-    ),
-  );
+  // if (ResponsiveHelper.isWeb()) {
+  //   FacebookAuth.i.webInitialize(
+  //     appId: "452131619626499",
+  //     cookie: true,
+  //     xfbml: true,
+  //     version: "v9.0",
+  //   );
+  // }
+  runApp(MyApp(languages: _languages, orderID: _orderID));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Map<String, Map<String, String>> languages;
+  final int orderID;
+  MyApp({@required this.languages, @required this.orderID});
+
+  void _route() {
+    Get.find<SplashController>().getConfigData().then((bool isSuccess) async {
+      if (isSuccess) {
+        if (Get.find<AuthController>().isLoggedIn()) {
+          Get.find<AuthController>().updateToken();
+          await Get.find<WishListController>().getWishList();
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('Onboarding  ${SharedPrefs().showIntro}');
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+    if(GetPlatform.isWeb) {
+      Get.find<SplashController>().initSharedData();
+      Get.find<CartController>().getCartData();
+      _route();
+    }
 
-          /// systemNavigationBarColor: Colors.blue, // navigation bar color
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark // status bar color
-          ),
-    );
-    SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
-    );
+    return GetBuilder<ThemeController>(builder: (themeController) {
+      return GetBuilder<LocalizationController>(builder: (localizeController) {
+        return GetBuilder<SplashController>(builder: (splashController) {
+          return (GetPlatform.isWeb && splashController.configModel == null) ? SizedBox() : GetMaterialApp(
+            title: AppConstants.APP_NAME,
+            debugShowCheckedModeBanner: false,
+            navigatorKey: Get.key,
+            scrollBehavior: MaterialScrollBehavior().copyWith(
+              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+            ),
+            theme: themeController.darkTheme ? themeController.darkColor == null ? dark() : dark(color
+                : themeController.darkColor) : themeController.lightColor == null ? light()
+                : light(color: themeController.lightColor),
+            locale: localizeController.locale,
+            translations: Messages(languages: languages),
+            fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
+            initialRoute: GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(orderID),
+            getPages: RouteHelper.routes,
+            defaultTransition: Transition.topLevel,
+            transitionDuration: Duration(milliseconds: 500),
+          );
+        });
+      });
+    });
+  }
+}
 
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AuthRepository>(
-          create: (_) => AuthRepository(),
-        ),
-        RepositoryProvider<UserRepository>(
-          create: (_) => UserRepository(),
-        ),
-        RepositoryProvider<DashBoardRepository>(
-          create: (_) => DashBoardRepository(),
-        ),
-        RepositoryProvider<StoreRepository>(
-          create: (_) => StoreRepository(),
-        ),
-        RepositoryProvider<LocationRepository>(
-          create: (_) => LocationRepository(),
-        ),
-        RepositoryProvider<ParcelRepository>(
-          create: (_) => ParcelRepository(),
-        ),
-        RepositoryProvider<ConfigRepository>(
-          create: (_) => ConfigRepository(),
-        ),
-        RepositoryProvider<ItemRepository>(
-          create: (_) => ItemRepository(),
-        ),
-        RepositoryProvider<CartRepository>(
-          create: (_) => CartRepository(),
-        ),
-        RepositoryProvider<WishListRepository>(
-          create: (_) => WishListRepository(),
-        ),
-        RepositoryProvider<OrderRepository>(
-          create: (_) => OrderRepository(),
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(
-              authRepository: context.read<AuthRepository>(),
-              userRepository: context.read<UserRepository>(),
-            ),
-          ),
-          BlocProvider<AppConfigBloc>(
-            create: (context) => AppConfigBloc(
-              configRepository: context.read<ConfigRepository>(),
-            ),
-          ),
-          BlocProvider<WishlistCubit>(
-            create: (context) => WishlistCubit(
-              wishListRepo: context.read<WishListRepository>(),
-            ),
-          ),
-          BlocProvider<CartCubit>(
-            create: (context) => CartCubit(
-              cartRepository: context.read<CartRepository>(),
-            ),
-          ),
-          BlocProvider<OrderCubit>(
-            create: (context) => OrderCubit(
-              orderRepo: context.read<OrderRepository>(),
-            ),
-          ),
-          BlocProvider<ItemCubit>(
-            create: (context) => ItemCubit(
-              itemRepository: context.read<ItemRepository>(),
-            ),
-          ),
-          BlocProvider<LocationCubit>(
-            create: (context) => LocationCubit(
-              locationRepository: context.read(),
-              configBloc: context.read<AppConfigBloc>(),
-            ),
-          ),
-          BlocProvider<UserCubit>(
-            create: (context) => UserCubit(
-              userRepository: context.read<UserRepository>(),
-            ),
-          ),
-          BlocProvider<LocalizationCubit>(
-            create: (context) => LocalizationCubit(),
-          )
-        ],
-        child: MaterialApp(
-          //showPerformanceOverlay: true,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: light(),
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: CustomRouter.onGenerateRoute,
-          initialRoute: SplashScreen.routeName,
-
-          // SharedPrefs().showIntro
-          //     ? OnBoardingScreen.routeName
-          //     : AuthWrapper.routeName,
-          // initialRoute: StoreScreen.routeName,
-        ),
-      ),
-    );
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
