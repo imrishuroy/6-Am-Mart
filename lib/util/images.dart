@@ -78,4 +78,6 @@ class Images {
   static const String orders = 'assets/image/orders.png';
   static const String sender = 'assets/image/sender.png';
   static const String signInLogo = 'assets/image/image9.png';
+
+  static const String moveItMoveIt = 'assets/image/send-packages.png';
 }
