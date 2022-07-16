@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:phone_number/phone_number.dart';
-import 'package:sixam_mart/view/screens/auth/widget/sign_in_button.dart';
+import 'package:sixam_mart/view/screens/auth/widget/auth_button.dart';
 import 'package:sixam_mart/widgets/loading_indicator.dart';
 
 import '/controller/auth_controller.dart';
@@ -327,8 +327,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                       height: Dimensions.PADDING_SIZE_LARGE),
                                   !authController.isLoading
                                       ? Center(
-                                          child: SignInButton(
-                                            title: 'sign_up'.tr,
+                                          child: AuthButton(
+                                            title: 'sign_in'.tr,
                                             onClick: () {
                                               if (authController.acceptTerms) {
                                                 _login(authController,

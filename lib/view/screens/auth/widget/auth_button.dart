@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SignInButton extends StatelessWidget {
+class AuthButton extends StatelessWidget {
   final String title;
   final Function() onClick;
   final bool loading;
 
-  const SignInButton(
+  const AuthButton(
       {@required this.title, @required this.onClick, this.loading = false})
       : super();
 
