@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -59,6 +60,14 @@ Future<void> main() async {
   //     version: "v9.0",
   //   );
   // }
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: Color(0xff171E30),
+      statusBarBrightness: Brightness.light,
+    ),
+  );
+
   runApp(MyApp(languages: _languages, orderID: _orderID));
 }
 

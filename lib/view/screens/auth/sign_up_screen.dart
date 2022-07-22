@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () => Get.back(),
                                 child: Text(
                                   'Sign In',
                                   style: TextStyle(

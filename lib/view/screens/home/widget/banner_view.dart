@@ -46,9 +46,9 @@ class BannerView extends StatelessWidget {
                           child: CarouselSlider.builder(
                             options: CarouselOptions(
                               autoPlay: true,
-                              enlargeCenterPage: true,
-                              disableCenter: true,
-                              viewportFraction: 0.8,
+                              // enlargeCenterPage: true,
+                              //disableCenter: true,
+                              viewportFraction: 1,
                               autoPlayInterval: Duration(seconds: 7),
                               onPageChanged: (index, reason) {
                                 bannerController.setCurrentIndex(index, true);
@@ -110,18 +110,18 @@ class BannerView extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).cardColor,
                                     borderRadius: BorderRadius.circular(
-                                        Dimensions.RADIUS_SMALL),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors
-                                              .grey[Get.isDarkMode ? 800 : 200],
-                                          spreadRadius: 1,
-                                          blurRadius: 5)
-                                    ],
+                                        Dimensions.RADIUS_DEFAULT),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //       color: Colors
+                                    //           .grey[Get.isDarkMode ? 800 : 200],
+                                    //       spreadRadius: 1,
+                                    //       blurRadius: 5)
+                                    // ],
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
-                                        Dimensions.RADIUS_SMALL),
+                                        Dimensions.RADIUS_DEFAULT),
                                     child: GetBuilder<SplashController>(
                                         builder: (splashController) {
                                       return CustomImage(
@@ -136,24 +136,24 @@ class BannerView extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: bannerList.map((bnr) {
-                            int index = bannerList.indexOf(bnr);
-                            return TabPageSelectorIndicator(
-                              backgroundColor:
-                                  index == bannerController.currentIndex
-                                      ? Theme.of(context).primaryColor
-                                      : Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.5),
-                              borderColor: Theme.of(context).backgroundColor,
-                              size: index == bannerController.currentIndex
-                                  ? 10
-                                  : 7,
-                            );
-                          }).toList(),
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: bannerList.map((bnr) {
+                        //     int index = bannerList.indexOf(bnr);
+                        //     return TabPageSelectorIndicator(
+                        //       backgroundColor:
+                        //           index == bannerController.currentIndex
+                        //               ? Theme.of(context).primaryColor
+                        //               : Theme.of(context)
+                        //                   .primaryColor
+                        //                   .withOpacity(0.5),
+                        //       borderColor: Theme.of(context).backgroundColor,
+                        //       size: index == bannerController.currentIndex
+                        //           ? 10
+                        //           : 7,
+                        //     );
+                        //   }).toList(),
+                        // ),
                       ],
                     )
                   : Shimmer(

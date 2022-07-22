@@ -20,7 +20,6 @@ import '/util/images.dart';
 import '/util/styles.dart';
 import '/view/base/custom_snackbar.dart';
 import '/view/base/custom_text_field.dart';
-import '/view/base/footer_view.dart';
 import '/view/base/menu_drawer.dart';
 import '/view/base/web_menu_bar.dart';
 import '/view/screens/auth/widget/code_picker_widget.dart';
@@ -106,255 +105,240 @@ class _SignInScreenState extends State<SignInScreen> {
                     backgroundColor: Colors.transparent)
                 : null,
         endDrawer: MenuDrawer(),
-        body: SafeArea(
-          child: Scrollbar(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: FooterView(
-                  child: Center(
-                child: Container(
-                  width: context.width > 700 ? 700 : context.width,
-                  // padding: context.width > 700
-                  // ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
-                  // : EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  margin: context.width > 700
-                      ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
-                      : EdgeInsets.zero,
-                  decoration: context.width > 700
-                      ? BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.RADIUS_SMALL),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey[Get.isDarkMode ? 700 : 300],
-                                blurRadius: 5,
-                                spreadRadius: 1)
-                          ],
-                        )
-                      : null,
-                  child: GetBuilder<AuthController>(
-                    builder: (authController) {
-                      return Column(
-                        children: [
-                          Container(
-                            width: size.width,
-                            height: 22,
-                            margin: EdgeInsets.only(
-                              right: 16,
-                              left: 30,
-                              top: size.height * 0.035,
-                            ),
-                            alignment: Alignment.centerRight,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'WEBKOON',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18,
-                                      letterSpacing: -1,
-                                      color: Color.fromRGBO(0, 0, 0, 1)),
-                                ),
-                                InkWell(
-                                  onTap: () =>
-                                      Get.toNamed(RouteHelper.getSignUpRoute()),
-                                  child: Text(
-                                    'sign_up'.tr,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
-                                      letterSpacing: -1,
-                                      color: Color.fromRGBO(69, 165, 36, 1),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+        body: GetBuilder<AuthController>(
+          builder: (authController) {
+            return ListView(
+              children: [
+                Container(
+                  width: size.width,
+                  height: 24,
+                  margin: EdgeInsets.only(
+                    right: 16,
+                    left: 30,
+                    top: size.height * 0.035,
+                  ),
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'WEBKOON',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                            letterSpacing: -1,
+                            color: Color.fromRGBO(0, 0, 0, 1)),
+                      ),
+                      InkWell(
+                        onTap: () => Get.toNamed(RouteHelper.getSignUpRoute()),
+                        child: Text(
+                          'sign_up'.tr,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            letterSpacing: -1,
+                            color: Color.fromRGBO(69, 165, 36, 1),
                           ),
-                          Container(
-                            // margin: EdgeInsets.only(top: size.height * 0.05),
-                            child: Image(
-                              image:
-                                  const AssetImage('assets/image/image9.png'),
-                              height: size.height * 0.32,
-                              width: size.width,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Container(
-                            height: size.height * 0.58,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(
-                                    Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                                topRight: Radius.circular(
-                                    Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: Dimensions.PADDING_SIZE_LARGE),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_DEFAULT),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: Dimensions.PADDING_SIZE_SMALL,
-                                    ),
-                                    child: Text(
-                                      'sign_in'.tr,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 30,
-                                        letterSpacing: -2,
-                                        color: Color.fromRGBO(0, 0, 0, 1),
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                      height:
-                                          Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                                  Row(
-                                    children: [
-                                      CodePickerWidget(
-                                        onChanged: (CountryCode countryCode) {
-                                          _countryDialCode =
-                                              countryCode.dialCode;
-                                        },
-                                        initialSelection: _countryDialCode !=
-                                                null
-                                            ? CountryCode.fromCountryCode(
-                                                    Get.find<SplashController>()
-                                                        .configModel
-                                                        .country)
-                                                .code
-                                            : Get.find<LocalizationController>()
-                                                .locale
-                                                .countryCode,
-                                        favorite: [
-                                          CountryCode.fromCountryCode(
-                                                  Get.find<SplashController>()
-                                                      .configModel
-                                                      .country)
-                                              .code
-                                        ],
-                                        showDropDownButton: true,
-                                        padding: EdgeInsets.zero,
-                                        showFlagMain: true,
-                                        flagWidth: 30,
-                                        dialogBackgroundColor:
-                                            Theme.of(context).cardColor,
-                                        textStyle: robotoRegular.copyWith(
-                                          fontSize: Dimensions.fontSizeLarge,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .color,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: CustomTextField(
-                                          hintText: 'phone'.tr,
-                                          controller: _phoneController,
-                                          focusNode: _phoneFocus,
-                                          nextFocus: _passwordFocus,
-                                          inputType: TextInputType.phone,
-                                          divider: false,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 10.0),
-                                  Divider(height: 1),
-                                  SizedBox(height: 10.0),
-                                  CustomTextField(
-                                    hintText: 'password'.tr,
-                                    controller: _passwordController,
-                                    focusNode: _passwordFocus,
-                                    inputAction: TextInputAction.done,
-                                    inputType: TextInputType.visiblePassword,
-                                    prefixIcon: Images.lock,
-                                    isPassword: true,
-                                    onSubmit: (text) => (GetPlatform.isWeb &&
-                                            authController.acceptTerms)
-                                        ? _login(
-                                            authController, _countryDialCode)
-                                        : null,
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Divider(height: 1),
-                                  const SizedBox(height: 10.0),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ListTile(
-                                          onTap: () =>
-                                              authController.toggleRememberMe(),
-                                          leading: Checkbox(
-                                            activeColor:
-                                                Theme.of(context).primaryColor,
-                                            value: authController
-                                                .isActiveRememberMe,
-                                            onChanged: (bool isChecked) =>
-                                                authController
-                                                    .toggleRememberMe(),
-                                          ),
-                                          title: Text('remember_me'.tr),
-                                          contentPadding: EdgeInsets.zero,
-                                          dense: true,
-                                          horizontalTitleGap: 0,
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Get.toNamed(
-                                            RouteHelper.getForgotPassRoute(
-                                                false, null)),
-                                        child: Text('${'forgot_password'.tr}?'),
-                                      ),
-                                    ],
-                                  ),
-                                  ConditionCheckBox(
-                                      authController: authController),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                  !authController.isLoading
-                                      ? Center(
-                                          child: AuthButton(
-                                            title: 'sign_in'.tr,
-                                            onClick: () {
-                                              if (authController.acceptTerms) {
-                                                _login(authController,
-                                                    _countryDialCode);
-                                              }
-                                            },
-                                          ),
-                                        )
-                                      : LoadingIndicator(),
-                                  const SizedBox(height: 10.0),
-                                  Center(child: GuestButton()),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              )),
-            ),
-          ),
+
+                /// SizedBox(height: 5.0),
+                Container(
+                  // margin: EdgeInsets.only(top: size.height * 0.05),
+                  child: Image(
+                    image: const AssetImage('assets/image/image9.png'),
+                    height: size.height * 0.30,
+                    width: size.width,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  height: size.height * 0.58,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft:
+                          Radius.circular(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                      topRight:
+                          Radius.circular(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_LARGE),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_SMALL,
+                          ),
+                          child: Text(
+                            'sign_in'.tr,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                              letterSpacing: -2,
+                              color: Color.fromRGBO(0, 0, 0, 1),
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        const SizedBox(
+                            height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                        Row(
+                          children: [
+                            CodePickerWidget(
+                              onChanged: (CountryCode countryCode) {
+                                _countryDialCode = countryCode.dialCode;
+                              },
+                              initialSelection: _countryDialCode != null
+                                  ? CountryCode.fromCountryCode(
+                                          Get.find<SplashController>()
+                                              .configModel
+                                              .country)
+                                      .code
+                                  : Get.find<LocalizationController>()
+                                      .locale
+                                      .countryCode,
+                              favorite: [
+                                CountryCode.fromCountryCode(
+                                        Get.find<SplashController>()
+                                            .configModel
+                                            .country)
+                                    .code
+                              ],
+                              showDropDownButton: true,
+                              padding: EdgeInsets.zero,
+                              showFlagMain: true,
+                              flagWidth: 30,
+                              dialogBackgroundColor:
+                                  Theme.of(context).cardColor,
+                              textStyle: robotoRegular.copyWith(
+                                fontSize: Dimensions.fontSizeLarge,
+                                color:
+                                    Theme.of(context).textTheme.bodyText1.color,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: CustomTextField(
+                                hintText: 'phone'.tr,
+                                controller: _phoneController,
+                                focusNode: _phoneFocus,
+                                nextFocus: _passwordFocus,
+                                inputType: TextInputType.phone,
+                                divider: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0),
+                        Divider(height: 1),
+                        SizedBox(height: 10.0),
+                        CustomTextField(
+                          hintText: 'password'.tr,
+                          controller: _passwordController,
+                          focusNode: _passwordFocus,
+                          inputAction: TextInputAction.done,
+                          inputType: TextInputType.visiblePassword,
+                          prefixIcon: Images.lock,
+                          isPassword: true,
+                          onSubmit: (text) =>
+                              (GetPlatform.isWeb && authController.acceptTerms)
+                                  ? _login(authController, _countryDialCode)
+                                  : null,
+                        ),
+                        const SizedBox(height: 10.0),
+                        Divider(height: 1),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                onTap: () => authController.toggleRememberMe(),
+                                leading: Checkbox(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: authController.isActiveRememberMe,
+                                  onChanged: (bool isChecked) =>
+                                      authController.toggleRememberMe(),
+                                ),
+                                title: Text('remember_me'.tr),
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                horizontalTitleGap: 0,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Get.toNamed(
+                                  RouteHelper.getForgotPassRoute(false, null)),
+                              child: Text('${'forgot_password'.tr}?'),
+                            ),
+                          ],
+                        ),
+                        ConditionCheckBox(authController: authController),
+                        SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                        !authController.isLoading
+                            ? Center(
+                                child: AuthButton(
+                                  title: 'sign_in'.tr,
+                                  onClick: () {
+                                    if (authController.acceptTerms) {
+                                      _login(authController, _countryDialCode);
+                                    }
+                                  },
+                                ),
+                              )
+                            : LoadingIndicator(),
+                        //  const SizedBox(height: 10.0),
+
+                        Center(child: GuestButton()),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
+
+    //  SafeArea(
+    //   child: FooterView(
+    //       child: Center(
+    //     child: Container(
+    //       width: context.width > 700 ? 700 : context.width,
+    //       // padding: context.width > 700
+    //       // ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
+    //       // : EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+    //       margin: context.width > 700
+    //           ? EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT)
+    //           : EdgeInsets.zero,
+    //       decoration: context.width > 700
+    //           ? BoxDecoration(
+    //               color: Theme.of(context).cardColor,
+    //               borderRadius:
+    //                   BorderRadius.circular(Dimensions.RADIUS_SMALL),
+    //               boxShadow: [
+    //                 BoxShadow(
+    //                     color: Colors.grey[Get.isDarkMode ? 700 : 300],
+    //                     blurRadius: 5,
+    //                     spreadRadius: 1)
+    //               ],
+    //             )
+    //           : null,
+    //       child:
+    ///     ),
+    // )),
+    // ),
+    // ),
+    // );
   }
 
   void _login(AuthController authController, String countryDialCode) async {

@@ -35,7 +35,8 @@ class PopularStoreView extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(10, isPopular ? 2 : 15, 10, 10),
                   child: TitleWidget(
                     title: isFeatured
-                        ? 'featured_stores'.tr
+                        // ? 'featured_stores'.tr
+                        ? 'Top Picks For You'
                         : isPopular
                             ? Get.find<SplashController>()
                                     .configModel

@@ -55,13 +55,45 @@ flutter:
     - assets/language/
 
   fonts:
-    - family: Roboto
+    - family: Poppins
       fonts:
-        - asset: assets/font/Roboto-Regular.ttf
+        - asset: assets/font/Poppins-Regular.ttf
           weight: 400
-        - asset: assets/font/Roboto-Medium.ttf
-          weight: 500
-        - asset: assets/font/Roboto-Bold.ttf
-          weight: 700
-        - asset: assets/font/Roboto-Black.ttf
+
+        - asset: assets/font/Poppins-Medium.ttf
+          weight: 500  
+        
+        - asset: assets/font/Poppins-Bold.ttf
+          weight: 700    
+
+        - asset: assets/font/Poppins-Black.ttf
           weight: 900
+
+    - family: Outfit
+      fonts:
+
+        - asset: assets/font/Outfit-Black.ttf
+          weight: 900
+
+        - asset: assets/font/Outfit-Bold.ttf
+          weight: 700  
+
+        - asset: assets/font/Outfit-Regular.ttf
+          weight: 400
+
+        - asset: assets/font/Outfit-Medium.ttf
+          weight: 500  
+
+
+
+
+
+
+        # - asset: assets/font/Roboto-Regular.ttf
+        #   weight: 400
+        # - asset: assets/font/Roboto-Medium.ttf
+        #   weight: 500
+        # - asset: assets/font/Roboto-Bold.ttf
+        #   weight: 700
+        # - asset: assets/font/Roboto-Black.ttf
+        #   weight: 900
