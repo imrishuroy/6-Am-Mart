@@ -6,10 +6,11 @@ import 'package:sixam_mart/data/model/response/store_model.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/view/base/item_shimmer.dart';
-import 'package:sixam_mart/view/base/item_widget.dart';
 import 'package:sixam_mart/view/base/no_data_screen.dart';
 import 'package:sixam_mart/view/base/veg_filter_widget.dart';
 import 'package:sixam_mart/view/screens/home/theme1/store_widget.dart';
+
+import 'item_widget.dart';
 
 class ItemsView extends StatelessWidget {
   final List<Item> items;
@@ -64,11 +65,12 @@ class ItemsView extends StatelessWidget {
         !_isNull
             ? _length > 0
                 ? ListView.builder(
+                    // scrollDirection: Axis.horizontal,
                     key: UniqueKey(),
                     itemCount: _length,
-                    physics: isScrollable
-                        ? BouncingScrollPhysics()
-                        : NeverScrollableScrollPhysics(),
+                    // physics: isScrollable
+                    //     ? BouncingScrollPhysics()
+                    //     : NeverScrollableScrollPhysics(),
                     shrinkWrap: isScrollable ? false : true,
                     padding: padding,
                     itemBuilder: (context, index) {
@@ -78,6 +80,8 @@ class ItemsView extends StatelessWidget {
                               index: index,
                               inStore: inStorePage,
                             )
+                          //  : SizedBox();
+
                           : ItemWidget(
                               isStore: isStore,
                               item: isStore ? null : items[index],

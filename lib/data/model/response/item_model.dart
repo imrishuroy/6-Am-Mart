@@ -1,3 +1,5 @@
+import 'unit.dart';
+
 class ItemModel {
   int totalSize;
   String limit;
@@ -9,7 +11,10 @@ class ItemModel {
   ItemModel.fromJson(Map<String, dynamic> json) {
     totalSize = json['total_size'];
     limit = json['limit'].toString();
-    offset = (json['offset'] != null && json['offset'].toString().trim().isNotEmpty) ? int.parse(json['offset'].toString()) : null;
+    offset =
+        (json['offset'] != null && json['offset'].toString().trim().isNotEmpty)
+            ? int.parse(json['offset'].toString())
+            : null;
     if (json['products'] != null) {
       items = [];
       json['products'].forEach((v) {
@@ -55,38 +60,41 @@ class Item {
   int ratingCount;
   int veg;
   int moduleId;
+  Unit unit;
   String unitType;
   int stock;
+
   String availableDateStarts;
 
-  Item(
-      {this.id,
-        this.name,
-        this.description,
-        this.image,
-        this.images,
-        this.categoryId,
-        this.categoryIds,
-        this.variations,
-        this.addOns,
-        this.choiceOptions,
-        this.price,
-        this.tax,
-        this.discount,
-        this.discountType,
-        this.availableTimeStarts,
-        this.availableTimeEnds,
-        this.storeId,
-        this.storeName,
-        this.storeDiscount,
-        this.scheduleOrder,
-        this.avgRating,
-        this.ratingCount,
-        this.veg,
-        this.moduleId,
-        this.unitType,
-        this.stock,
-      });
+  Item({
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.images,
+    this.categoryId,
+    this.categoryIds,
+    this.variations,
+    this.addOns,
+    this.choiceOptions,
+    this.price,
+    this.tax,
+    this.discount,
+    this.discountType,
+    this.availableTimeStarts,
+    this.availableTimeEnds,
+    this.storeId,
+    this.storeName,
+    this.storeDiscount,
+    this.scheduleOrder,
+    this.avgRating,
+    this.ratingCount,
+    this.veg,
+    this.moduleId,
+    this.unitType,
+    this.unit,
+    this.stock,
+  });
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -135,6 +143,7 @@ class Item {
     veg = json['veg'] != null ? int.parse(json['veg'].toString()) : 0;
     stock = json['stock'];
     unitType = json['unit_type'];
+    unit = json['unit'] != null ? new Unit.fromMap(json['unit']) : null;
     availableDateStarts = json['available_date_starts'];
   }
 
@@ -176,6 +185,7 @@ class Item {
     data['stock'] = this.stock;
     data['unit_type'] = this.unitType;
     data['available_date_starts'] = this.availableDateStarts;
+    data['unit'] = this.unit.toMap();
     return data;
   }
 }
@@ -223,10 +233,7 @@ class AddOns {
   String name;
   double price;
 
-  AddOns(
-      {this.id,
-        this.name,
-        this.price});
+  AddOns({this.id, this.name, this.price});
 
   AddOns.fromJson(Map<String, dynamic> json) {
     id = json['id'];
