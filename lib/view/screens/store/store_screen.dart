@@ -60,7 +60,8 @@ class _StoreScreenState extends State<StoreScreen> {
     return Scaffold(
       appBar: ResponsiveHelper.isDesktop(context) ? WebMenuBar() : null,
       endDrawer: MenuDrawer(),
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: Color(0xfffafafa),
+      // backgroundColor: Theme.of(context).cardColor,
       body: GetBuilder<StoreController>(builder: (storeController) {
         return GetBuilder<CategoryController>(builder: (categoryController) {
           Store _store;
@@ -86,34 +87,34 @@ class _StoreScreenState extends State<StoreScreen> {
                                   EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
                               alignment: Alignment.center,
                               child: Center(
-                                  child: SizedBox(
-                                      width: Dimensions.WEB_MAX_WIDTH,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                Dimensions.PADDING_SIZE_SMALL),
-                                        child: Row(children: [
-                                          Expanded(
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions.RADIUS_SMALL),
-                                              child: CustomImage(
-                                                fit: BoxFit.cover,
-                                                height: 220,
-                                                image:
-                                                    '${Get.find<SplashController>().configModel.baseUrls.storeCoverPhotoUrl}/${_store.coverPhoto}',
-                                              ),
-                                            ),
+                                child: SizedBox(
+                                  width: Dimensions.WEB_MAX_WIDTH,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            Dimensions.PADDING_SIZE_SMALL),
+                                    child: Row(children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                              Dimensions.RADIUS_SMALL),
+                                          child: CustomImage(
+                                            fit: BoxFit.cover,
+                                            height: 220,
+                                            image:
+                                                '${Get.find<SplashController>().configModel.baseUrls.storeCoverPhotoUrl}/${_store.coverPhoto}',
                                           ),
-                                          SizedBox(
-                                              width: Dimensions
-                                                  .PADDING_SIZE_LARGE),
-                                          Expanded(
-                                              child: StoreDescriptionView(
-                                                  store: _store)),
-                                        ]),
-                                      ))),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                          width: Dimensions.PADDING_SIZE_LARGE),
+                                      Expanded(
+                                          child: StoreDescriptionView(
+                                              store: _store)),
+                                    ]),
+                                  ),
+                                ),
+                              ),
                             ),
                           )
                         : SliverAppBar(
@@ -245,26 +246,312 @@ class _StoreScreenState extends State<StoreScreen> {
                             : SizedBox(),
                       ]),
                     ))),
-                    (storeController.categoryList.length > 0)
+
+                    // SliverList(delegate: SliverChildDelegate())
+                    // I/flutter ( 2731): Checking store item list StoreID -  3 | Offset 1 | type all, | notify false
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 500.0,
+                        child: ListView.builder(
+                            itemCount: storeController.categoryList.length,
+                            itemBuilder: (context, index) {
+                              final store = storeController.categoryList[index];
+
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                  vertical: 10.0,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          store.name,
+                                          style: TextStyle(
+                                            fontSize: 16.5,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Text(
+                                          'VIEW ALL',
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 10.0),
+                                    SizedBox(
+                                      height: 250.0,
+                                      child: FutureBuilder<List<Item>>(
+                                          future: storeController
+                                              .getStoreItemCategoryWise(
+                                                  categoryIndex: index,
+                                                  offset: 1,
+                                                  storeID: _store.id,
+                                                  type: store.name),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            }
+                                            final items = snapshot.data;
+
+                                            print(
+                                                'Snapshot data --- ${snapshot.data}');
+
+                                            return ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: items.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 10.0),
+                                                  child: StoreItemWidget(
+                                                    index: index,
+                                                    isStore: false,
+                                                    length: items.length,
+                                                    item: items[index],
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            return SizedBox(
+                                              height: 200.0,
+                                              child: StoreGridTile(
+                                                isStore: false,
+                                                stores: null,
+                                                items: snapshot.data,
+
+                                                //  (storeController.categoryList
+                                                //                 .length >
+                                                //             0 &&
+                                                //         storeController
+                                                //                 .storeItemModel !=
+                                                //             null)
+                                                //     ? storeController
+                                                //         .storeItemModel.items
+                                                //     : null,
+                                                inStorePage: true,
+                                                type: store.name,
+                                                //storeController.type,
+                                                onVegFilterTap: (String type) {
+                                                  storeController
+                                                      .getStoreItemList(
+                                                          storeController
+                                                              .store.id,
+                                                          1,
+                                                          type,
+                                                          true);
+                                                },
+                                                // padding: EdgeInsets.symmetric(
+                                                //   horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                                //   vertical: ResponsiveHelper.isDesktop(context)
+                                                //       ? Dimensions.PADDING_SIZE_SMALL
+                                                //       : 0,
+                                                //),
+                                              ),
+                                            );
+                                            //   ),
+                                            // ),
+
+                                            return SizedBox(
+                                              height: 100.0,
+                                              child: ListView.builder(
+                                                  itemCount: items.length,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 20.0),
+                                                      height: 100.0,
+                                                      width: 100.0,
+                                                      color: Colors.red,
+                                                    );
+                                                  }),
+                                            );
+
+                                            // ListView.builder()
+
+                                            return StoreGridTile(
+                                              isStore: false,
+                                              stores: null,
+                                              items: snapshot.data,
+
+                                              //  (storeController
+                                              //                 .categoryList.length >
+                                              //             0 &&
+                                              //         storeController
+                                              //                 .storeItemModel !=
+                                              //             null)
+                                              //     ? storeController
+                                              //         .storeItemModel.items
+                                              //     : null,
+                                              inStorePage: true,
+                                              type: store.name,
+                                              onVegFilterTap: (String type) {
+                                                storeController
+                                                    .getStoreItemList(
+                                                        storeController
+                                                            .store.id,
+                                                        1,
+                                                        type,
+                                                        true);
+                                              },
+                                              // padding: EdgeInsets.symmetric(
+                                              //   horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                              //   vertical: ResponsiveHelper.isDesktop(context)
+                                              //       ? Dimensions.PADDING_SIZE_SMALL
+                                              //       : 0,
+                                              //),
+                                            );
+
+                                            return Container(
+                                              height: 200.0,
+                                              width: 100.0,
+                                              color: Colors.red,
+                                            );
+                                          }),
+                                    )
+                                  ],
+                                ),
+                              );
+
+                              //storeController.setCategoryIndex(index);
+
+                              // return Column(
+                              //   children: [
+                              //     Text(
+                              //       store.name,
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       height: canvas.height * 0.5,
+                              //       child: Padding(
+                              //         padding:
+                              //             const EdgeInsets.only(left: 15.0),
+                              //         child: StoreGridTile(
+                              //           isStore: false,
+                              //           stores: null,
+                              //           items: (storeController
+                              //                           .categoryList.length >
+                              //                       0 &&
+                              //                   storeController
+                              //                           .storeItemModel !=
+                              //                       null)
+                              //               ? storeController
+                              //                   .storeItemModel.items
+                              //               : null,
+                              //           inStorePage: true,
+                              //           type: storeController.type,
+                              //           onVegFilterTap: (String type) {
+                              //             storeController.getStoreItemList(
+                              //                 storeController.store.id,
+                              //                 1,
+                              //                 type,
+                              //                 true);
+                              //           },
+
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // );
+                            }),
+                      ),
+                    ),
+
+                    // (storeController.categoryList.length > 0)
+                    (storeController.categoryList.length < 0)
                         ? SliverPersistentHeader(
                             pinned: true,
                             delegate: SliverDelegate(
                                 child: Center(
                                     child: Container(
-                              height: 50,
+                              height: 500,
                               width: Dimensions.WEB_MAX_WIDTH,
                               color: Theme.of(context).cardColor,
                               padding: EdgeInsets.symmetric(
                                   vertical:
                                       Dimensions.PADDING_SIZE_EXTRA_SMALL),
                               child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
+                                // scrollDirection: Axis.horizontal,
                                 itemCount: storeController.categoryList.length,
                                 padding: EdgeInsets.only(
                                     left: Dimensions.PADDING_SIZE_SMALL),
                                 physics: BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  return InkWell(
+                                  final store =
+                                      storeController.categoryList[index];
+
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        store.name,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: canvas.height * 0.5,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15.0),
+                                          child: SizedBox(
+                                            height: 200.0,
+                                            child: StoreGridTile(
+                                              isStore: false,
+                                              stores: null,
+                                              items: (storeController
+                                                              .categoryList
+                                                              .length >
+                                                          0 &&
+                                                      storeController
+                                                              .storeItemModel !=
+                                                          null)
+                                                  ? storeController
+                                                      .storeItemModel.items
+                                                  : null,
+                                              inStorePage: true,
+                                              type: storeController.type,
+                                              onVegFilterTap: (String type) {
+                                                storeController
+                                                    .getStoreItemList(
+                                                        storeController
+                                                            .store.id,
+                                                        1,
+                                                        type,
+                                                        true);
+                                              },
+                                              // padding: EdgeInsets.symmetric(
+                                              //   horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                              //   vertical: ResponsiveHelper.isDesktop(context)
+                                              //       ? Dimensions.PADDING_SIZE_SMALL
+                                              //       : 0,
+                                              //),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+
+                                  InkWell(
                                     onTap: () =>
                                         storeController.setCategoryIndex(index),
                                     child: Container(
@@ -414,56 +701,56 @@ class _StoreScreenState extends State<StoreScreen> {
                     //   ),
                     // ),
 
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: canvas.height * 0.5,
+                    // SliverToBoxAdapter(
+                    //   child: SizedBox(
+                    //     height: canvas.height * 0.5,
 
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: StoreGridTile(
-                            isStore: false,
-                            stores: null,
-                            items: (storeController.categoryList.length > 0 &&
-                                    storeController.storeItemModel != null)
-                                ? storeController.storeItemModel.items
-                                : null,
-                            inStorePage: true,
-                            type: storeController.type,
-                            onVegFilterTap: (String type) {
-                              storeController.getStoreItemList(
-                                  storeController.store.id, 1, type, true);
-                            },
-                            // padding: EdgeInsets.symmetric(
-                            //   horizontal: Dimensions.PADDING_SIZE_SMALL,
-                            //   vertical: ResponsiveHelper.isDesktop(context)
-                            //       ? Dimensions.PADDING_SIZE_SMALL
-                            //       : 0,
-                            //),
-                          ),
-                        ),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.only(left: 15.0),
+                    //       child: StoreGridTile(
+                    //         isStore: false,
+                    //         stores: null,
+                    //         items: (storeController.categoryList.length > 0 &&
+                    //                 storeController.storeItemModel != null)
+                    //             ? storeController.storeItemModel.items
+                    //             : null,
+                    //         inStorePage: true,
+                    //         type: storeController.type,
+                    //         onVegFilterTap: (String type) {
+                    //           storeController.getStoreItemList(
+                    //               storeController.store.id, 1, type, true);
+                    //         },
+                    //         // padding: EdgeInsets.symmetric(
+                    //         //   horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    //         //   vertical: ResponsiveHelper.isDesktop(context)
+                    //         //       ? Dimensions.PADDING_SIZE_SMALL
+                    //         //       : 0,
+                    //         //),
+                    //       ),
+                    //     ),
 
-                        // ItemsView(
-                        //   isStore: false,
-                        //   stores: null,
-                        //   items: (storeController.categoryList.length > 0 &&
-                        //           storeController.storeItemModel != null)
-                        //       ? storeController.storeItemModel.items
-                        //       : null,
-                        //   inStorePage: true,
-                        //   type: storeController.type,
-                        //   onVegFilterTap: (String type) {
-                        //     storeController.getStoreItemList(
-                        //         storeController.store.id, 1, type, true);
-                        //   },
-                        //   padding: EdgeInsets.symmetric(
-                        //     horizontal: Dimensions.PADDING_SIZE_SMALL,
-                        //     vertical: ResponsiveHelper.isDesktop(context)
-                        //         ? Dimensions.PADDING_SIZE_SMALL
-                        //         : 0,
-                        //   ),
-                        // ),
-                      ),
-                    ),
+                    // ItemsView(
+                    //   isStore: false,
+                    //   stores: null,
+                    //   items: (storeController.categoryList.length > 0 &&
+                    //           storeController.storeItemModel != null)
+                    //       ? storeController.storeItemModel.items
+                    //       : null,
+                    //   inStorePage: true,
+                    //   type: storeController.type,
+                    //   onVegFilterTap: (String type) {
+                    //     storeController.getStoreItemList(
+                    //         storeController.store.id, 1, type, true);
+                    //   },
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    //     vertical: ResponsiveHelper.isDesktop(context)
+                    //         ? Dimensions.PADDING_SIZE_SMALL
+                    //         : 0,
+                    //   ),
+                    // ),
+                    //   ),
+                    // ),
 
                     // SliverGrid.count(
                     //   crossAxisCount: 1,

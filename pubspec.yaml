@@ -1,6 +1,6 @@
 name: sixam_mart
 description: A Multi-vendor Food. Grocery, eCommerce, Pharmacy & Parcel service.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -20,6 +20,7 @@ dependencies:
   flutter_local_notifications: ^9.5.3+1
   flutter_localizations:
     sdk: flutter
+  flutter_svg: any
   flutter_typeahead: ^4.0.0
   flutter_widget_from_html: ^0.8.5
   font_awesome_flutter: ^10.1.0
@@ -54,6 +55,7 @@ flutter:
   assets:
     - assets/image/
     - assets/language/
+    - assets/svgs/
 
   fonts:
     - family: Poppins
@@ -72,7 +74,6 @@ flutter:
 
     - family: Outfit
       fonts:
-
         - asset: assets/font/Outfit-Black.ttf
           weight: 900
 

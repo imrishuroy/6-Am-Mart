@@ -33,6 +33,11 @@ class ItemModel {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'ItemModel(totalSize: $totalSize, limit: $limit, offset: $offset, items: $items)';
+  }
 }
 
 class Item {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/controller/auth_controller.dart';
 import 'package:sixam_mart/controller/item_controller.dart';
@@ -205,8 +206,8 @@ class StoreItemWidget extends StatelessWidget {
                           image:
                               '${isCampaign ? _baseUrls.campaignImageUrl : isStore ? _baseUrls.storeImageUrl : _baseUrls.itemImageUrl}'
                               '/${isStore ? store.logo : item.image}',
-                          height: _desktop ? 120 : 65,
-                          width: _desktop ? 120 : 80,
+                          height: _desktop ? 120 : 100,
+                          width: _desktop ? 120 : 100,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -379,6 +380,7 @@ class StoreItemWidget extends StatelessWidget {
             //   alignment: Alignment.topRight,
             //   child: Icon(Icons.star),
             // )
+
             if (item?.discount != null && item?.discount != 0.0)
               Positioned(
                 //alignment: Alignment.topRight,
@@ -387,12 +389,12 @@ class StoreItemWidget extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    // SvgPicture.asset(
-                    //   'assets/svgs/hexagon.svg',
-                    //   color: green,
-                    //   height: 40.0,
-                    //   width: 40.0,
-                    // ),
+                    SvgPicture.asset(
+                      'assets/svgs/hexagon.svg',
+                      color: Colors.green,
+                      height: 40.0,
+                      width: 40.0,
+                    ),
 
                     Text(
                       '${item?.discount?.toInt()}%\nOff',
@@ -405,7 +407,61 @@ class StoreItemWidget extends StatelessWidget {
                     // ),
                   ],
                 ),
+
+                // Container(
+                //   // alignment: Alignment.topRight,
+                //   padding: const EdgeInsets.all(3.2),
+                //   decoration: const BoxDecoration(
+                //     color: green,
+                //     borderRadius: BorderRadius.only(
+                //       topLeft: Radius.circular(8.0),
+                //       bottomLeft: Radius.circular(8.0),
+                //     ),
+                //   ),
+                //   child: Text(
+                //     '${item?.discount}% OFF',
+                //     style: const TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 10.0,
+                //     ),
+                //   ),
+                // ),
               )
+
+            // if (item?.discount != null && item?.discount != 0.0)
+            //   Positioned(
+            //     //alignment: Alignment.topRight,
+            //     top: 0.0,
+            //     right: 0.0,
+            //     child: Stack(
+            //       alignment: Alignment.center,
+            //       children: [
+            //         // SvgPicture.asset(
+            //         //   'assets/svgs/hexagon.svg',
+            //         //   color: green,
+            //         //   height: 40.0,
+            //         //   width: 40.0,
+            //         // ),
+
+            //          SvgPicture.asset(
+            //           'assets/svgs/hexagon.svg',
+            //           color: green,
+            //           height: 40.0,
+            //           width: 40.0,
+            //         ),
+
+            //         Text(
+            //           '${item?.discount?.toInt()}%\nOff',
+            //           style: const TextStyle(
+            //             color: Colors.white,
+            //             fontSize: 10.0,
+            //           ),
+            //           textAlign: TextAlign.center,
+            //         ),
+            //         // ),
+            //       ],
+            //     ),
+            //   )
           ],
         ),
       ),
