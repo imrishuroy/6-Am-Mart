@@ -288,7 +288,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                     ),
                                     SizedBox(height: 10.0),
                                     SizedBox(
-                                      height: 250.0,
+                                      height: 260.0,
                                       child: FutureBuilder<List<Item>>(
                                           future: storeController
                                               .getStoreItemCategoryWise(

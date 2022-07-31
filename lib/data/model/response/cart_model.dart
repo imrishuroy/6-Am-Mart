@@ -99,6 +99,11 @@ class CartModel {
     data['item'] = this._item.toJson();
     return data;
   }
+
+  @override
+  String toString() {
+    return 'CartModel(_price: $_price, _discountedPrice: $_discountedPrice, _variation: $_variation, _discountAmount: $_discountAmount, _quantity: $_quantity, _addOnIds: $_addOnIds, _addOns: $_addOns, _isCampaign: $_isCampaign, _stock: $_stock, _item: $_item)';
+  }
 }
 
 class AddOn {

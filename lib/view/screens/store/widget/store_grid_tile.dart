@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart/controller/auth_controller.dart';
 import 'package:sixam_mart/controller/item_controller.dart';
 import 'package:sixam_mart/controller/splash_controller.dart';
-import 'package:sixam_mart/controller/wishlist_controller.dart';
 import 'package:sixam_mart/data/model/response/config_model.dart';
 import 'package:sixam_mart/data/model/response/item_model.dart';
 import 'package:sixam_mart/data/model/response/store_model.dart';
@@ -15,8 +13,9 @@ import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:sixam_mart/view/base/custom_image.dart';
-import 'package:sixam_mart/view/base/custom_snackbar.dart';
 import 'package:sixam_mart/view/screens/store/store_screen.dart';
+
+import 'add_to_cart.dart';
 
 class StoreGridTile extends StatelessWidget {
   final List<Item> items;
@@ -117,6 +116,7 @@ class StoreItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BaseUrls _baseUrls = Get.find<SplashController>().configModel.baseUrls;
+    final itemController = Get.find<ItemController>();
     bool _desktop = ResponsiveHelper.isDesktop(context);
     double _discount;
     String _discountType;
@@ -189,7 +189,7 @@ class StoreItemWidget extends StatelessWidget {
           fit: StackFit.loose,
           children: [
             SizedBox(
-              width: 168.0,
+              width: 180.0,
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -280,37 +280,39 @@ class StoreItemWidget extends StatelessWidget {
                             ),
                           ),
 
-                          GetBuilder<WishListController>(
-                              builder: (wishController) {
-                            bool _isWished = isStore
-                                ? wishController.wishStoreIdList
-                                    .contains(store.id)
-                                : wishController.wishItemIdList
-                                    .contains(item.id);
-                            return InkWell(
-                              onTap: () {
-                                if (Get.find<AuthController>().isLoggedIn()) {
-                                  _isWished
-                                      ? wishController.removeFromWishList(
-                                          isStore ? store.id : item.id, isStore)
-                                      : wishController.addToWishList(
-                                          item, store, isStore);
-                                } else {
-                                  showCustomSnackBar(
-                                      'you_are_not_logged_in'.tr);
-                                }
-                              },
-                              child: Icon(
-                                _isWished
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                size: _desktop ? 30 : 25,
-                                color: _isWished
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).disabledColor,
-                              ),
-                            );
-                          }),
+                          AddToCard(item: item),
+
+                          // GetBuilder<WishListController>(
+                          //     builder: (wishController) {
+                          //   bool _isWished = isStore
+                          //       ? wishController.wishStoreIdList
+                          //           .contains(store.id)
+                          //       : wishController.wishItemIdList
+                          //           .contains(item.id);
+                          //   return InkWell(
+                          //     onTap: () {
+                          //       if (Get.find<AuthController>().isLoggedIn()) {
+                          //         _isWished
+                          //             ? wishController.removeFromWishList(
+                          //                 isStore ? store.id : item.id, isStore)
+                          //             : wishController.addToWishList(
+                          //                 item, store, isStore);
+                          //       } else {
+                          //         showCustomSnackBar(
+                          //             'you_are_not_logged_in'.tr);
+                          //       }
+                          //     },
+                          //     child: Icon(
+                          //       _isWished
+                          //           ? Icons.favorite
+                          //           : Icons.favorite_border,
+                          //       size: _desktop ? 30 : 25,
+                          //       color: _isWished
+                          //           ? Theme.of(context).primaryColor
+                          //           : Theme.of(context).disabledColor,
+                          //     ),
+                          //   );
+                          // }),
                           // GestureDetector(
                           //   onTap: () {
                           //     print('Price -- ${item?.price}');
@@ -727,3 +729,7 @@ class StoreItemWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+//

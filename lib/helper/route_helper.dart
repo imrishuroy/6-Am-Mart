@@ -39,6 +39,7 @@ import 'package:sixam_mart/view/screens/language/language_screen.dart';
 import 'package:sixam_mart/view/screens/location/access_location_screen.dart';
 import 'package:sixam_mart/view/screens/location/map_screen.dart';
 import 'package:sixam_mart/view/screens/location/pick_map_screen.dart';
+import 'package:sixam_mart/view/screens/menu/new_menu_screen.dart';
 import 'package:sixam_mart/view/screens/notification/notification_screen.dart';
 import 'package:sixam_mart/view/screens/onboard/onboarding_screen.dart';
 import 'package:sixam_mart/view/screens/order/order_details_screen.dart';
@@ -108,6 +109,8 @@ class RouteHelper {
   static const String order = '/order';
   static const String itemDetails = '/item-details';
 
+  static const menuScreen = '/menu-screen';
+
   static String getInitialRoute() => '$initial';
   static String getSplashRoute(int orderID) => '$splash?id=$orderID';
   static String getLanguageRoute(String page) => '$language?page=$page';
@@ -118,6 +121,8 @@ class RouteHelper {
       String number, String token, String page, String pass) {
     return '$verification?page=$page&number=$number&token=$token&pass=$pass';
   }
+
+  static String getMenuScreenRoute() => '$menuScreen';
 
   static String getAccessLocationRoute(String page) =>
       '$accessLocation?page=$page';
@@ -224,6 +229,7 @@ class RouteHelper {
   static String getItemDetailsRoute(int itemID) => '$itemDetails?id=$itemID';
 
   static List<GetPage> routes = [
+    GetPage(name: menuScreen, page: () => NewMenuScreen()),
     GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0))),
     GetPage(
         name: splash,

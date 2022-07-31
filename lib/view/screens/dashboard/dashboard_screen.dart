@@ -8,7 +8,7 @@ import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/view/screens/cart/cart_screen.dart';
 import 'package:sixam_mart/view/screens/favourite/favourite_screen.dart';
 import 'package:sixam_mart/view/screens/home/home_screen.dart';
-import 'package:sixam_mart/view/screens/menu/menu_screen.dart';
+import 'package:sixam_mart/view/screens/menu/new_menu_screen.dart';
 import 'package:sixam_mart/view/screens/order/order_screen.dart';
 import 'package:sixam_mart/widgets/curved_nav_bar.dart';
 
@@ -40,7 +40,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       FavouriteScreen(),
       CartScreen(fromNav: true),
       OrderScreen(),
-      Container(),
+      // Container(),
+      NewMenuScreen()
     ];
 
     Future.delayed(Duration(seconds: 1), () {
@@ -147,20 +148,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     items: _naviagtionIcons,
                     onTap: (index) async {
                       print('index -- $index');
-                      if (index == 4) {
-                        await showModalBottomSheet<void>(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0),
-                            ),
-                          ),
-                          context: context,
-                          builder: (context) => MenuScreen(),
-                        );
-                      } else {
-                        _setPage(index);
-                      }
+                      _setPage(index);
+                      // if (index == 4) {
+                      //   await showModalBottomSheet<void>(
+                      //     shape: const RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(20.0),
+                      //         topRight: Radius.circular(20.0),
+                      //       ),
+                      //     ),
+                      //     context: context,
+                      //     builder: (context) => MenuScreen(),
+                      //   );
+                      // } else {
+                      //   _setPage(index);
+                      // }
                     }),
               ),
 
