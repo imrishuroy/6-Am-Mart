@@ -26,11 +26,8 @@ import 'package:sixam_mart/view/screens/parcel/parcel_category_screen.dart';
 
 import 'theme1/theme1_home_screen.dart';
 import 'widget/banner_view.dart';
-import 'widget/category_view.dart';
 import 'widget/filter_view.dart';
-import 'widget/item_campaign_view.dart';
 import 'widget/module_view.dart';
-import 'widget/popular_item_view.dart';
 import 'widget/popular_store_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -92,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userController = Get.find<UserController>();
+    final authController = Get.find<AuthController>();
     return GetBuilder<SplashController>(
       builder: (splashController) {
         bool _showMobileModule = !ResponsiveHelper.isDesktop(context) &&
@@ -188,12 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Images.module_icon,
                                                           height: 22,
                                                           width: 22,
-                                                          //  color: Colors.white,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyText1
-                                                                  .color,
+                                                          color: Colors.white,
+                                                          // color:
+                                                          //     Theme.of(context)
+                                                          //         .textTheme
+                                                          //         .bodyText1
+                                                          //         .color,
                                                         ),
                                                       )
                                                     : SizedBox(),
@@ -373,7 +372,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             Text(
-                                              'Dinesh Saragadam',
+                                              authController.isLoggedIn()
+                                                  ? userController.userInfoModel
+                                                          .fName ??
+                                                      'N/A'
+                                                  : 'Guest',
                                               style: TextStyle(
                                                 color: Color(0xff00b2d5),
                                                 fontSize: 16.0,
@@ -602,85 +605,85 @@ class _HomeScreenState extends State<HomeScreen> {
                                             }),
                                           ),
                                           const SizedBox(height: 8.0),
-                                          !_showMobileModule
-                                              ? Center(
-                                                  child: Container(
-                                                    height: 50,
-                                                    width: Dimensions
-                                                        .WEB_MAX_WIDTH,
-                                                    color: Theme.of(context)
-                                                        .backgroundColor,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: Dimensions
-                                                          .PADDING_SIZE_SMALL,
-                                                    ),
-                                                    child: InkWell(
-                                                      onTap: () => Get.toNamed(
-                                                          RouteHelper
-                                                              .getSearchRoute()),
-                                                      child: Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal: Dimensions
-                                                              .PADDING_SIZE_SMALL,
-                                                        ),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .cardColor,
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
-                                                                  .RADIUS_SMALL),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                                color: Colors
-                                                                        .grey[
-                                                                    Get.isDarkMode
-                                                                        ? 800
-                                                                        : 200],
-                                                                spreadRadius: 1,
-                                                                blurRadius: 5)
-                                                          ],
-                                                        ),
-                                                        child: Row(children: [
-                                                          Icon(
-                                                            Icons.search,
-                                                            size: 25,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          ),
-                                                          SizedBox(
-                                                              width: Dimensions
-                                                                  .PADDING_SIZE_EXTRA_SMALL),
-                                                          Expanded(
-                                                              child: Text(
-                                                            Get.find<SplashController>()
-                                                                    .configModel
-                                                                    .moduleConfig
-                                                                    .module
-                                                                    .showRestaurantText
-                                                                ? 'search_food_or_restaurant'
-                                                                    .tr
-                                                                : 'search_item_or_store'
-                                                                    .tr,
-                                                            style: robotoRegular
-                                                                .copyWith(
-                                                              fontSize: Dimensions
-                                                                  .fontSizeSmall,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .hintColor,
-                                                            ),
-                                                          )),
-                                                        ]),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              : SizedBox.shrink(),
+                                          // !_showMobileModule
+                                          //     ? Center(
+                                          //         child: Container(
+                                          //           height: 50,
+                                          //           width: Dimensions
+                                          //               .WEB_MAX_WIDTH,
+                                          //           color: Theme.of(context)
+                                          //               .backgroundColor,
+                                          //           padding:
+                                          //               EdgeInsets.symmetric(
+                                          //             horizontal: Dimensions
+                                          //                 .PADDING_SIZE_SMALL,
+                                          //           ),
+                                          //           child: InkWell(
+                                          //             onTap: () => Get.toNamed(
+                                          //                 RouteHelper
+                                          //                     .getSearchRoute()),
+                                          //             child: Container(
+                                          //               padding: EdgeInsets
+                                          //                   .symmetric(
+                                          //                 horizontal: Dimensions
+                                          //                     .PADDING_SIZE_SMALL,
+                                          //               ),
+                                          //               decoration:
+                                          //                   BoxDecoration(
+                                          //                 color:
+                                          //                     Theme.of(context)
+                                          //                         .cardColor,
+                                          //                 borderRadius: BorderRadius
+                                          //                     .circular(Dimensions
+                                          //                         .RADIUS_SMALL),
+                                          //                 boxShadow: [
+                                          //                   BoxShadow(
+                                          //                       color: Colors
+                                          //                               .grey[
+                                          //                           Get.isDarkMode
+                                          //                               ? 800
+                                          //                               : 200],
+                                          //                       spreadRadius: 1,
+                                          //                       blurRadius: 5)
+                                          //                 ],
+                                          //               ),
+                                          //               child: Row(children: [
+                                          //                 Icon(
+                                          //                   Icons.search,
+                                          //                   size: 25,
+                                          //                   color: Theme.of(
+                                          //                           context)
+                                          //                       .primaryColor,
+                                          //                 ),
+                                          //                 SizedBox(
+                                          //                     width: Dimensions
+                                          //                         .PADDING_SIZE_EXTRA_SMALL),
+                                          //                 Expanded(
+                                          //                     child: Text(
+                                          //                   Get.find<SplashController>()
+                                          //                           .configModel
+                                          //                           .moduleConfig
+                                          //                           .module
+                                          //                           .showRestaurantText
+                                          //                       ? 'search_food_or_restaurant'
+                                          //                           .tr
+                                          //                       : 'search_item_or_store'
+                                          //                           .tr,
+                                          //                   style: robotoRegular
+                                          //                       .copyWith(
+                                          //                     fontSize: Dimensions
+                                          //                         .fontSizeSmall,
+                                          //                     color: Theme.of(
+                                          //                             context)
+                                          //                         .hintColor,
+                                          //                   ),
+                                          //                 )),
+                                          //               ]),
+                                          //             ),
+                                          //           ),
+                                          //         ),
+                                          //       )
+                                          //     : SizedBox.shrink(),
                                           Center(
                                             child: SizedBox(
                                               width: Dimensions.WEB_MAX_WIDTH,
@@ -690,23 +693,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                          BannerView(
-                                                              isFeatured:
-                                                                  false),
-                                                          CategoryView(),
+                                                          // BannerView(
+                                                          // isFeatured:
+                                                          //     false),
+                                                          //CategoryView(),
                                                           PopularStoreView(
                                                               isPopular: true,
                                                               isFeatured:
                                                                   false),
-                                                          ItemCampaignView(),
-                                                          PopularItemView(
-                                                              isPopular: true),
-                                                          PopularStoreView(
-                                                              isPopular: false,
-                                                              isFeatured:
-                                                                  false),
-                                                          PopularItemView(
-                                                              isPopular: false),
+                                                          //  ItemCampaignView(),
+                                                          // PopularItemView(
+                                                          //     isPopular: true),
+                                                          // PopularStoreView(
+                                                          //     isPopular: false,
+                                                          //     isFeatured:
+                                                          //         false),
+                                                          // PopularItemView(
+                                                          //     isPopular: false),
                                                           Padding(
                                                             padding: EdgeInsets
                                                                 .fromLTRB(10,
